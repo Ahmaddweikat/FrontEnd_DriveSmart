@@ -18,13 +18,13 @@ function SidebarButton({
       <button
         onClick={() => setActivePage(pageName)}
         className={`relative flex items-center justify-start w-full px-5 py-3 rounded-lg ${
-          active ? "text-green-500" : "hover:bg-gray-100"
+          active ? "text-customGreen" : "hover:bg-gray-100"
         } transition-colors duration-300`}
       >
         <FontAwesomeIcon
           icon={icon}
           className={`text-2xl transition-colors duration-300 ${
-            active ? "text-green-500" : "text-gray-400"
+            active ? "text-customGreen" : "text-gray-400"
           }`}
           style={{ minWidth: "24px", textAlign: "center" }}
         />
@@ -34,7 +34,7 @@ function SidebarButton({
           </span>
         )}
         {active && (
-          <span className="absolute right-0 top-1/2 transform -translate-y-1/2 h-12 w-1 bg-green-500 transition-all duration-300"></span>
+          <span className="absolute right-0 top-1/2 transform -translate-y-1/2 h-12 w-1 bg-customGreen transition-all duration-300"></span>
         )}
       </button>
       {!isExpanded && (
@@ -50,6 +50,6 @@ export default SidebarButton;
 const Lessons = () => <div>Lessons Page</div>;
 const UpcomingLessons = () => <div>Upcoming Lessons Page</div>;
 const MyCourses = () => <div>My Courses Page</div>;
-const Test = () => <div>Test Page</div>;
+const Profile = () => <div>Profile Page</div>;
 const Settings = () => <div>Settings Page</div>;
 const SignOut = () => <div>Sign Out Page</div>;

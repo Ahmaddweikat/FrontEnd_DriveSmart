@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -14,19 +14,21 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarButton from "./SidebarButton";
+import Logo from "../../../assets/LOGO.png";
 
 const SideBar = ({ isExpanded, activePage, setActivePage }) => {
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-100">
+    <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
       <aside
         className={`transition-width duration-300 ${
           isExpanded ? "w-80" : "w-20"
-        } bg-white text-yellow-500 flex flex-col items-center py-6 shadow-md border-r-2`}
+        } bg-white text-customGreen flex flex-col shadow-md border-r-2 h-full overflow-y-auto overflow-x-hidden custom-scrollbar`}
+        // Set overflow-x to hidden to prevent horizontal scrolling
       >
         {/* Logo */}
-        <div className="mb-6">
-          <img src="/path/to/logo.png" alt="Logo" className="h-10" />
+        <div className="mb-4 flex justify-center">
+          <img src={Logo} alt="Logo" className="h-15 w-15" />
         </div>
 
         {/* Navigation */}
@@ -80,7 +82,7 @@ const SideBar = ({ isExpanded, activePage, setActivePage }) => {
             pageName="settings"
           />
           <SidebarButton
-            icon={faRightFromBracket} // Icon for "Settings"
+            icon={faRightFromBracket}
             label="Sign out"
             isExpanded={isExpanded}
             active={activePage === "sign-out"}

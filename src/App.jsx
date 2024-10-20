@@ -13,7 +13,7 @@ import Profile from "./ProfilePage/ProfileInfoPage/Profile";
 // import Code from "./ForgetPasswordPage/Code";
 // import NewPassword from "./ForgetPasswordPage/NewPassword";
 // import NewPassword from "./ProfilePage/SettingsPage/NewPassword";
-// import Courses from "./ProfilePage/CoursesPage/Courses";
+import Courses from "./ProfilePage/CoursesPage/Courses";
 // import BookingAndScheduling from "./BookingAndSchedulingPage/BookingAndScheduling";
 // import Calendar from "./BookingAndSchedulingPage/Calendar";
 // import Day from "./BookingAndSchedulingPage/Day";
@@ -24,8 +24,14 @@ import ThoeryPage from "./ThoeryPage/ThoeryPage";
 import TheoryForm from "./TheoryFormsPage/TheoryForm";
 import QuestionsForm from "./QuestionsForm/QuestionsForm";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom"; // Import BrowserRouter, Route, and Link
+import ReactDOM from "react-dom";
 
 function App() {
-  return <QuestionsForm />;
+  return (
+    <Router>
+      <Courses />
+    </Router>
+  );
 }
+ReactDOM.render(<App />, document.getElementById("root")); // Render the App component
 export default App;

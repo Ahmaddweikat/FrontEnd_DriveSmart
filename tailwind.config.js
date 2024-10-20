@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const labelsClasses = ["indigo", "gray", "green", "blue", "red", "purple"];
+const plugin = require("tailwindcss/plugin");
 
 module.exports = {
   purge: {
@@ -40,8 +41,31 @@ module.exports = {
   },
   variants: {
     extend: {
-      animation: ["hover", "focus"], // Enable animation on hover
+      animation: ["hover", "focus"],
     },
   },
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [
+    require("@tailwindcss/forms"),
+    plugin(function ({ addComponents }) {
+      addComponents({
+        ".custom-scrollbar": {
+          "&::-webkit-scrollbar": {
+            width: "8px",
+            hight: "6px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "#e4e4e4",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "#72b626",
+            borderRadius: "10px",
+            border: "2px solid #e4e4e4",
+          },
+          "&::-webkit-scrollbar-thumb:hover": {
+            backgroundColor: "#5a5a5a",
+          },
+        },
+      });
+    }),
+  ],
 };

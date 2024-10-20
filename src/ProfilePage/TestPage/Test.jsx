@@ -7,6 +7,7 @@ import SearchAndFilter from "./components/SearchAndFilter";
 import TestList from "./components/TestList";
 
 const Tests = () => {
+  // Notification and Test data
   const notifications = [
     { id: 1, message: "Your lesson is scheduled for tomorrow.", read: false },
     {
@@ -15,26 +16,21 @@ const Tests = () => {
       read: false,
     },
     { id: 3, message: "Don't forget to submit your assignment.", read: false },
-    { id: 4, message: "Don't forget to submit your assignment.", read: false },
   ];
-  // Define a list of tests with ratings
+
   const tests = [
     {
       title: "Final Driving Test",
       date: "October 5, 2024",
       duration: "60 mins",
       tester: "Ibrahim Qadi",
-      note: "Passed with excellent marks",
       score: 28,
-      //   percantage: (tests.score / 30) * 100,
     },
-    // console.log(tests.percantage),
     {
       title: "Intermediate Test",
       date: "September 15, 2024",
       duration: "45 mins",
       tester: "Ibrahim Qadi",
-      note: "Good control, needs improvement in parking",
       score: 26,
     },
     {
@@ -42,7 +38,6 @@ const Tests = () => {
       date: "August 25, 2024",
       duration: "45 mins",
       tester: "Ibrahim Qadi",
-      note: "Passed with minor errors in lane switching",
       score: 22,
     },
     {
@@ -50,16 +45,7 @@ const Tests = () => {
       date: "August 1, 2024",
       duration: "30 mins",
       tester: "Ibrahim Qadi",
-      note: "Needs improvement in parallel parking",
       score: 18,
-    },
-    {
-      title: "Parking Test",
-      date: "August 1, 2024",
-      duration: "30 mins",
-      tester: "Ibrahim Qadi",
-      note: "Needs improvement in parallel parking",
-      score: 24,
     },
   ];
 
@@ -67,8 +53,8 @@ const Tests = () => {
   const notificationRef = useRef(null);
   const [notificationList, setNotificationList] = useState(notifications);
   const [selectedRating, setSelectedRating] = useState(0);
-  const [filter, setFilter] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState("all"); // New state for filter type
+  const [filter, setFilter] = useState(""); // Search term
+  const [selectedFilter, setSelectedFilter] = useState("all"); // Filter by status
   const [hoveredRating, setHoveredRating] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
   const [activePage, setActivePage] = useState("test");
@@ -80,6 +66,7 @@ const Tests = () => {
   const toggleNotifications = () => {
     setShowNotifications((prev) => !prev);
   };
+
   const markAsRead = (id) => {
     setNotificationList((prev) =>
       prev.map((notification) =>
@@ -87,6 +74,7 @@ const Tests = () => {
       )
     );
   };
+
   const markAllAsRead = () => {
     setNotificationList((prev) =>
       prev.map((notification) => ({ ...notification, read: true }))
@@ -111,20 +99,24 @@ const Tests = () => {
 
   // Function to filter tests
   const filteredTests = tests.filter((test) => {
+    const matchesSearch = test.title
+      .toLowerCase()
+      .includes(filter.toLowerCase()); // Search filtering
     const scoreCondition = selectedRating
       ? test.score >= selectedRating * 6
-      : true;
+      : true; // Example rating filter
+    let statusCondition = true; // Default to true
 
-    // Add filter condition based on selectedFilter state
-    let statusCondition = true;
+    // Status filter based on selectedFilter
     if (selectedFilter === "passed") {
       statusCondition = test.score > 24; // Passed tests
     } else if (selectedFilter === "failed") {
       statusCondition = test.score <= 24; // Failed tests
     }
 
-    return scoreCondition && statusCondition;
+    return matchesSearch && statusCondition; // Return true if both conditions are met
   });
+
   const totalTestsTaken = tests.length;
   const totalTestsPassed = tests.filter((test) => test.score > 24).length;
   const passRate =
@@ -139,19 +131,17 @@ const Tests = () => {
         activePage={activePage}
         setActivePage={setActivePage}
       />
-      {/* Main Content */}
       <div className="flex-1 flex flex-col">
         <TopBar
           toggleSidebar={toggleSidebar}
           toggleNotifications={toggleNotifications}
-          showNotifications={showNotifications} // Pass showNotifications as a prop
+          showNotifications={showNotifications}
           notificationList={notificationList}
           markAsRead={markAsRead}
           markAllAsRead={markAllAsRead}
         />
         <Breadcrumb />
 
-        {/* Main Body */}
         <div className="flex-1 p-8 overflow-y-auto">
           <div className="max-w-7xl mx-auto grid grid-cols-1 gap-6">
             <ProfilePanel
@@ -160,7 +150,6 @@ const Tests = () => {
               passRate={passRate}
             />
             <SearchAndFilter
-              filter={filter}
               setFilter={setFilter}
               selectedFilter={selectedFilter}
               setSelectedFilter={setSelectedFilter}

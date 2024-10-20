@@ -9,6 +9,7 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarButton from "./SidebarButton";
+import Logo from "../../../assets/LOGO.png";
 
 const SideBar = ({ isExpanded, activePage, setActivePage }) => {
   return (
@@ -17,11 +18,11 @@ const SideBar = ({ isExpanded, activePage, setActivePage }) => {
       <aside
         className={`transition-width duration-300 ${
           isExpanded ? "w-80" : "w-20"
-        } bg-white text-yellow-500 flex flex-col items-center py-6 shadow-md border-r-2`}
+        } bg-white text-customGreen flex flex-col items-center shadow-md border-r-2 overflow-y-auto overflow-x-hidden custom-scrollbar`}
       >
         {/* Logo */}
-        <div className="mb-6">
-          <img src="/path/to/logo.png" alt="Logo" className="h-10" />
+        <div className="mb-4">
+          <img src={Logo} alt="Logo" className="h-15 w-15" />
         </div>
 
         {/* Navigation */}

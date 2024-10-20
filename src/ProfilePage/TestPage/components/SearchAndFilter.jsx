@@ -15,6 +15,7 @@ const SearchAndFilter = ({
           <input
             type="text"
             placeholder="Search Test..."
+            onChange={(e) => setFilter(e.target.value)} // Update filter state
             className="flex-1 bg-gray-100 border border-gray-300 rounded-full py-2 pl-4 pr-10 text-gray-600 focus:outline-none"
           />
           <div className="flex items-center">
