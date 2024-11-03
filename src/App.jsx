@@ -1,7 +1,7 @@
 // import React, { useEffect, useState, useContext } from "react";
 import "./index.css";
-// import SignUpPage from "./SignUpPage/SignUpPage";
-// import SignInPage from "./SignInPage/SignInPage";
+import SignUpPage from "./SignUpPage/SignUpPage";
+import SignInPage from "./SignInPage/SignInPage";
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import TrainerSignUpPage from "./TrainerSignUpPage/TrainerSignUpPage";
 // import OwnerSignUpPage from "./OwnerSignUpPage/OwnerSignUpPage";
@@ -25,11 +25,14 @@ import TheoryForm from "./TheoryFormsPage/TheoryForm";
 import QuestionsForm from "./QuestionsForm/QuestionsForm";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom"; // Import BrowserRouter, Route, and Link
 import ReactDOM from "react-dom";
+import ProfileInformation from "./ProfilePage/ProfileInfoPage/components/ProfileInformation";
+import HomePage from "./HomePage/HomePage";
 
 function App() {
   return (
+    // <HomePage />
     <Router>
-      <Courses />
+      <SignInPage />
     </Router>
   );
 }
