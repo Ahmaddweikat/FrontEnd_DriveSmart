@@ -7,7 +7,6 @@ import {
   faUnlock,
   faMapMarkerAlt, // Add map marker icon for address
   faCity, // Add city icon
-  faGlobe, // Add globe icon for country
 } from "@fortawesome/free-solid-svg-icons"; // Import necessary icons
 import Button from "./SignUpButton";
 
@@ -67,30 +66,30 @@ function InputField({ onSubmit }) {
   };
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit}>
+    <form className="space-y-3" onSubmit={handleSubmit}>
       {/* First Name and Last Name */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="relative mb-4">
+      <div className="relative mb-2">
+        <div className="relative mb-2">
           <label
-            className="block text-sm font-medium text-gray-700"
+            className="block font-serif font-medium text-gray-700 text-left mb-2"
             htmlFor="firstName"
           >
-            First Name
+            Full Name
           </label>
           <input
             type="text"
             id="firstName"
-            placeholder="First Name"
+            placeholder="Ahmad Dweikat"
             value={firstName} // Bind the first name state
             onChange={(e) => setFirstName(e.target.value)} // Handle first name change
-            className="w-full p-3 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            className="w-full p-3 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-600 hover:border-customGreen"
             required // Mark as required
           />
-          <span className="absolute right-3 top-8 text-gray-400">
+          <span className="absolute right-3 top-8 text-gray-400 mt-3">
             <FontAwesomeIcon icon={faUser} />
           </span>
         </div>
-        <div className="relative mb-4">
+        {/* <div className="relative mb-4">
           <label
             className="block text-sm font-medium text-gray-700"
             htmlFor="lastName"
@@ -109,13 +108,13 @@ function InputField({ onSubmit }) {
           <span className="absolute right-3 top-8 text-gray-400">
             <FontAwesomeIcon icon={faUser} />
           </span>
-        </div>
+        </div> */}
       </div>
 
       {/* Email Field */}
-      <div className="relative mb-4">
+      <div className="relative mb-2">
         <label
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-gray-700 text-left"
           htmlFor="email"
         >
           Email
@@ -126,7 +125,7 @@ function InputField({ onSubmit }) {
           placeholder="Email address..."
           value={email} // Bind the email state
           onChange={(e) => setEmail(e.target.value)} // Handle email change
-          className="w-full p-3 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+          className="w-full p-3 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-600 hover:border-customGreen"
           required // Mark as required
           pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" // Regex for email validation
         />
@@ -135,8 +134,61 @@ function InputField({ onSubmit }) {
         </span>
       </div>
 
+      {/* Password and Confirm Password */}
+      <div className="grelative mb-2">
+        <div className="relative mb-4">
+          <label
+            className="block text-sm font-medium text-gray-700 text-left"
+            htmlFor="password"
+          >
+            Password
+          </label>
+          <input
+            type={showPassword ? "text" : "password"}
+            id="password"
+            placeholder="Password..."
+            minLength={8}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)} // Handle password change
+            className="w-full p-3 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-600 hover:border-customGreen"
+            required // Mark as required
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)} // Toggle password visibility
+            className="absolute right-3 top-8 text-gray-400"
+          >
+            <FontAwesomeIcon icon={showPassword ? faUnlock : faLock} />
+          </button>
+        </div>
+        <div className="relative mb-4">
+          <label
+            className="block text-sm font-medium text-gray-700 text-left"
+            htmlFor="confirmPassword"
+          >
+            Confirm Password
+          </label>
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            id="confirmPassword"
+            placeholder="Confirm Password..."
+            minLength={8}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)} // Handle confirm password change
+            className="w-full p-3 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-700 hover:border-customGreen"
+            required // Mark as required
+          />
+          <button
+            type="button"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)} // Toggle password visibility
+            className="absolute right-3 top-8 text-gray-400"
+          >
+            <FontAwesomeIcon icon={showConfirmPassword ? faUnlock : faLock} />
+          </button>
+        </div>
+      </div>
       {/* Gender Field */}
-      <div className="mb-4">
+      {/* <div className="mb-2">
         <label
           className="block text-sm font-medium text-gray-700"
           htmlFor="gender"
@@ -154,85 +206,9 @@ function InputField({ onSubmit }) {
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
-      </div>
-
-      {/* Password and Confirm Password */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="relative mb-4">
-          <label
-            className="block text-sm font-medium text-gray-700"
-            htmlFor="password"
-          >
-            Password
-          </label>
-          <input
-            type={showPassword ? "text" : "password"}
-            id="password"
-            placeholder="Password..."
-            minLength={8}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)} // Handle password change
-            className="w-full p-3 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-            required // Mark as required
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)} // Toggle password visibility
-            className="absolute right-3 top-8 text-gray-400"
-          >
-            <FontAwesomeIcon icon={showPassword ? faUnlock : faLock} />
-          </button>
-        </div>
-        <div className="relative mb-4">
-          <label
-            className="block text-sm font-medium text-gray-700"
-            htmlFor="confirmPassword"
-          >
-            Confirm Password
-          </label>
-          <input
-            type={showConfirmPassword ? "text" : "password"}
-            id="confirmPassword"
-            placeholder="Confirm Password..."
-            minLength={8}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)} // Handle confirm password change
-            className="w-full p-3 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-            required // Mark as required
-          />
-          <button
-            type="button"
-            onClick={() => setShowConfirmPassword(!showConfirmPassword)} // Toggle password visibility
-            className="absolute right-3 top-8 text-gray-400"
-          >
-            <FontAwesomeIcon icon={showConfirmPassword ? faUnlock : faLock} />
-          </button>
-        </div>
-      </div>
-
+      </div> */}
       {/* Address Fields */}
-      <div className="grid grid-cols-1 gap-4 mt-6">
-        <div className="relative mb-2">
-          <label
-            className="block text-sm font-medium text-gray-700"
-            htmlFor="country"
-          >
-            Country
-          </label>
-          <input
-            type="text"
-            id="country"
-            name="country"
-            placeholder="Country"
-            value={formData.country}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-            required // Mark as required
-          />
-          <span className="absolute right-3 top-8 text-gray-400">
-            <FontAwesomeIcon icon={faGlobe} />
-          </span>
-        </div>
+      {/* <div className="grid grid-cols-1 gap-4 mt-2">
         <div className="relative mb-2">
           <label
             className="block text-sm font-medium text-gray-700"
@@ -275,7 +251,7 @@ function InputField({ onSubmit }) {
             <FontAwesomeIcon icon={faMapMarkerAlt} />
           </span>
         </div>
-      </div>
+      </div> */}
 
       {/* Error Message */}
       {error && <p className="text-red-500 text-sm">{error}</p>}

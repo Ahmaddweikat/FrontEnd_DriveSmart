@@ -5,7 +5,7 @@ const SignupFooter = () => {
   return (
     <div className="text-center text-sm text-gray-500">
       Already have an account?{" "}
-      <Link to="/signin" className="text-sm text-blue-600 hover:underline">
+      <Link to="/signin" className="text-sm text-customGreen underline-shrink">
         Sign in
       </Link>
     </div>

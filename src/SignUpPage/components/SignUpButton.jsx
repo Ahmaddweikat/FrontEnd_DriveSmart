@@ -5,9 +5,9 @@ const Button = ({ type, text, onClick }) => {
     <button
       type={type}
       onClick={onClick}
-      className="bg-customRed text-black font-bold py-2 rounded-md w-full 
+      className="bg-customGreen text-black font-bold py-2 rounded-md w-full 
                transition duration-300 ease-in-out 
-               transform hover:bg-red-600 hover:scale-105  focus:outline-none focus:ring-2"
+               transform hover:bg-green-700 hover:scale-105  focus:outline-none focus:ring-2"
     >
       {text}
     </button>
