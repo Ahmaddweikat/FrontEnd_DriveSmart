@@ -14,7 +14,7 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarButton from "./SidebarButton";
-import Logo from "../../../assets/LOGO.png";
+import Logo from "../../../assets/DriveSmartLOGO.png";
 
 const SideBar = ({ isExpanded, activePage, setActivePage }) => {
   return (

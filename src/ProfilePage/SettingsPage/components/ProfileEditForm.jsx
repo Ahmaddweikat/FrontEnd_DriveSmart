@@ -1,18 +1,42 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 const ProfileEditForm = ({
   handleSave,
   selectedImage,
   profilePicture,
   handleImageChange,
 }) => {
+  // Generate arrays for months, days, and years
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const days = Array.from({ length: 31 }, (_, i) => i + 1); // Days from 1 to 31
+  const currentYear = new Date().getFullYear();
+  const years = Array.from(
+    { length: currentYear - 1899 },
+    (_, i) => currentYear - i
+  ); // Years from 1900 to current year
+
   return (
     <>
-      {/* Profile Edit Form */}
       <div className="flex-1 p-8 overflow-y-auto">
         <div className="bg-white rounded-lg shadow-lg p-6 max-w-7xl mx-auto">
-          {/* Updated Header */}
           <header className="flex items-center justify-between border-b pb-4">
             <h2 className="text-2xl font-semibold">My Profile</h2>
             <button
@@ -29,7 +53,6 @@ const ProfileEditForm = ({
           <section className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Left Column */}
             <div className="flex flex-col">
-              {/* Centered Profile Picture */}
               <div className="flex flex-col items-center mb-6">
                 <div className="w-32 h-32 bg-gray-200 rounded-full overflow-hidden">
                   <img
@@ -54,8 +77,8 @@ const ProfileEditForm = ({
               </div>
               {/* User Information Form */}
               <form>
-                {/* Name Fields Side by Side */}
                 <div className="grid grid-cols-1 gap-4">
+                  {/* Name Fields */}
                   <div className="flex space-x-4">
                     <div className="flex-1">
                       <label className="block text-sm font-medium text-gray-700">
@@ -113,7 +136,7 @@ const ProfileEditForm = ({
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Coutnry
+                      Country
                     </label>
                     <input
                       type="text"
@@ -132,7 +155,7 @@ const ProfileEditForm = ({
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 ">
+                    <label className="block text-sm font-medium text-gray-700">
                       Street
                     </label>
                     <input
@@ -147,7 +170,6 @@ const ProfileEditForm = ({
 
             {/* Right Column */}
             <div className="flex flex-col">
-              {/* Gender and Date of Birth */}
               <div className="flex justify-end mb-4">
                 <button className="bg-red-500 text-white px-4 py-1 rounded-2xl font-semibold hover:bg-red-600 transition-all duration-300 relative group flex items-center justify-between w-40">
                   Cancel
@@ -173,21 +195,11 @@ const ProfileEditForm = ({
                       Date of Birth
                     </label>
                     <div className="flex space-x-2">
-                      <select className="mt-1 w-1/3 px-3 py-2 border rounded-md">
-                        <option>September</option>
-                        <option>October</option>
-                      </select>
-                      <select className="mt-1 w-1/3 px-3 py-2 border rounded-md">
-                        <option>31</option>
-                        <option>1</option>
-                      </select>
-                      <select className="mt-1 w-1/3 px-3 py-2 border rounded-md">
-                        <option>1990</option>
-                        <option>1991</option>
-                      </select>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker />
+                      </LocalizationProvider>{" "}
                     </div>
                   </div>
-                  <div></div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
                       Payment Method

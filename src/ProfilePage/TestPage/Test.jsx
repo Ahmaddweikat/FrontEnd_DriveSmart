@@ -7,6 +7,27 @@ import SearchAndFilter from "./components/SearchAndFilter";
 import TestList from "./components/TestList";
 
 const Tests = () => {
+  const messages = [
+    {
+      id: 1,
+      name: "Yasni Abdulrahman",
+      message: "Lecture in Hall 111080...",
+      timestamp: "7/09/24 10:30 AM",
+      type: "Private",
+      profileImage: "/path-to-image-1",
+      read: false,
+    },
+    {
+      id: 2,
+      name: "Ahmed Saifuddin",
+      message: "Engineering exam details...",
+      timestamp: "31/03/24 2:15 PM",
+      type: "Private",
+      profileImage: "/path-to-image-2",
+      read: true,
+    },
+    // Add more messages if needed
+  ];
   // Notification and Test data
   const notifications = [
     { id: 1, message: "Your lesson is scheduled for tomorrow.", read: false },
@@ -58,7 +79,10 @@ const Tests = () => {
   const [hoveredRating, setHoveredRating] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
   const [activePage, setActivePage] = useState("test");
-
+  const [messagesList, setMessagesList] = useState(messages);
+  const [selectedChat, setSelectedChat] = useState(null); // Manage the selected chat
+  const [showMessageNotifications, setShowMessageNotifications] =
+    useState(false);
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
   };
@@ -80,7 +104,10 @@ const Tests = () => {
       prev.map((notification) => ({ ...notification, read: true }))
     );
   };
-
+  const toggleMessageNotifications = () => {
+    setShowMessageNotifications((prev) => !prev);
+    setShowNotifications(false); // Ensure bell notifications are closed when messages open
+  };
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -135,8 +162,11 @@ const Tests = () => {
         <TopBar
           toggleSidebar={toggleSidebar}
           toggleNotifications={toggleNotifications}
+          toggleMessageNotifications={toggleMessageNotifications}
           showNotifications={showNotifications}
+          showMessageNotifications={showMessageNotifications}
           notificationList={notificationList}
+          messagesList={messagesList} // Ensure this line is present
           markAsRead={markAsRead}
           markAllAsRead={markAllAsRead}
         />
