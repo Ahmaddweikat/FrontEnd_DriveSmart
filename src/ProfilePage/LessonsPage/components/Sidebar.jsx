@@ -1,39 +1,41 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBook,
-  faUser,
   faClipboardCheck,
-  faCog,
+  faStar as solidStar,
   faCalendarCheck,
   faBookOpen,
-  faRightFromBracket,
+  faSchool,
+  faMessage,
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarButton from "./SidebarButton";
-import Logo from "../../../assets/LOGO.png";
+import Logo from "../../../assets/DriveSmartLOGO.png";
 
 const SideBar = ({ isExpanded, activePage, setActivePage }) => {
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-100">
+    <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
       <aside
         className={`transition-width duration-300 ${
           isExpanded ? "w-80" : "w-20"
-        } bg-white text-customGreen flex flex-col items-center shadow-md border-r-2 overflow-y-auto overflow-x-hidden custom-scrollbar`}
+        } bg-white text-customGreen flex flex-col shadow-md border-r-2 h-full overflow-y-auto overflow-x-hidden custom-scrollbar`}
+        // Set overflow-x to hidden to prevent horizontal scrolling
       >
         {/* Logo */}
-        <div className="mb-4">
+        <div className="mb-4 flex justify-center">
           <img src={Logo} alt="Logo" className="h-15 w-15" />
         </div>
 
         {/* Navigation */}
         <nav className="space-y-4 w-full">
           <SidebarButton
-            icon={faUser}
-            label="Profile"
+            icon={faSchool}
+            label="School"
             isExpanded={isExpanded}
-            active={activePage === "profile"}
+            active={activePage === "school"}
             setActivePage={setActivePage}
-            pageName="profile"
+            pageName="school"
           />
           <SidebarButton
             icon={faBook}
@@ -68,20 +70,12 @@ const SideBar = ({ isExpanded, activePage, setActivePage }) => {
             pageName="test"
           />
           <SidebarButton
-            icon={faCog}
-            label="Settings"
+            icon={faMessage}
+            label="Messages"
             isExpanded={isExpanded}
-            active={activePage === "settings"}
+            active={activePage === "messages"}
             setActivePage={setActivePage}
-            pageName="settings"
-          />
-          <SidebarButton
-            icon={faRightFromBracket} // Icon for "Settings"
-            label="Sign out"
-            isExpanded={isExpanded}
-            active={activePage === "sign-out"}
-            setActivePage={setActivePage}
-            pageName="sign-out"
+            pageName="messages"
           />
         </nav>
       </aside>

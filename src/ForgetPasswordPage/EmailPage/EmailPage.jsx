@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
+import useEmailForm from "../../hooks/ForgetPassword/EmailPage/Email"; // Adjust the import path if necessary
 
 function EmailPage() {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+  const { email, error, handleEmailChange, validateEmail, resetEmail } =
+    useEmailForm();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email !== "test@example.com") {
-      setError("We cannot find your email.");
-    } else {
-      setError("");
+    if (validateEmail()) {
+      resetEmail();
       // Proceed with password reset logic
     }
   };
@@ -21,7 +20,7 @@ function EmailPage() {
         {/* Left Side - Illustration */}
         <div className="hidden lg:flex items-center justify-center p-10">
           <img
-            src="/path-to-your-illustration.png" // Replace this with your illustration path
+            src="/path-to-your-illustration.png" // Replace with your illustration path
             alt="Password reset illustration"
             className="w-80 h-80"
           />
@@ -31,7 +30,7 @@ function EmailPage() {
           {/* Logo */}
           <div className="mb-8">
             <h1 className="text-2xl font-semibold text-gray-800">
-              Driving School Complex{" "}
+              Driving School Complex
             </h1>
           </div>
           {/* Forgot Password Form */}
@@ -51,7 +50,7 @@ function EmailPage() {
                 id="email"
                 placeholder="test@example.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               {error && <p className="text-red-500 text-sm mt-2">{error}</p>}

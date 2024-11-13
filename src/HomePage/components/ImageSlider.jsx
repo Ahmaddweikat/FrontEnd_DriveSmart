@@ -1,157 +1,147 @@
-import { useState, useRef, useEffect } from "react";
-import img1 from "../Images/kenburns1.jpg";
-import img2 from "../Images/2.jpg";
-import img3 from "../Images/3.jpg";
-import img4 from "../Images/4.jpg";
+import React, { forwardRef } from "react";
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
+import HelpCenterIcon from "@mui/icons-material/HelpCenter";
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import InfoIcon from "@mui/icons-material/Info";
+import HomeIcon from "@mui/icons-material/Home";
+import useImageSlider from "../../hooks/HomePage/ImageSlider/useImageSlider";
+import sliderContent from "./constants/ImageSlider/sliderContent";
+import Dropdown from "./Dropdown";
 
-const ImageSlider = ({ isExpanded }) => {
-  const [active, setActive] = useState(0);
-  const [prev, setPrev] = useState(0);
-
-  // Refs
-  const contentRef = useRef(null);
-  const prevRef = useRef(null);
-  const nextRef = useRef(null);
-  const nameRef = useRef(null); // Initialize as a ref
-
-  const sliderContent = [
-    { img: img1, name: "Wanda Maximoff" },
-    { img: img2, name: "The Hulk" },
-    { img: img3, name: "Iron Man" },
-    { img: img4, name: "Black Panther" },
-  ];
-
-  const Slide = (type) => {
-    let local;
-    if (type === "next") {
-      local = active + 1;
-      setActive(local >= sliderContent.length ? 0 : local);
-    }
-    if (type === "prev") {
-      local = active - 1;
-      setActive(local < 0 ? sliderContent.length - 1 : local);
-    }
-    setPrev(active);
-  };
-
-  useEffect(() => {
-    // Check if refs are defined before accessing style
-    if (contentRef.current && prevRef.current && nextRef.current) {
-      // Set initial styles
-      contentRef.current.style.bottom = "-100%";
-      prevRef.current.style.left = "-10%";
-      nextRef.current.style.right = "-10%";
-
-      // Update name after a brief delay
-      setTimeout(() => {
-        if (nameRef.current) {
-          nameRef.current.innerText = sliderContent[active].name;
-        }
-        if (contentRef.current && prevRef.current && nextRef.current) {
-          contentRef.current.style.bottom = "0%";
-          prevRef.current.style.left = "0%";
-          nextRef.current.style.right = "0%";
-        }
-      }, 1000); // Adjust timeout as necessary
-    } else {
-      console.error("Refs are not set properly:", {
-        contentRef: contentRef.current,
-        prevRef: prevRef.current,
-        nextRef: nextRef.current,
-      });
-    }
-  }, [active]);
+const ImageSlider = forwardRef(({ isExpanded }, ref) => {
+  const { active, animating, showText, changeSlide, handleButtonClick } =
+    useImageSlider(sliderContent);
 
   return (
-    <div className="h-screen grid place-items-center">
-      <div className="relative shadow-lg overflow-hidden">
+    <div ref={ref} className="h-screen grid">
+      <div className="relative">
         <div
-          className="h-[500px] relative mt-8"
-          style={{
-            width: isExpanded ? "1275px" : "1500px",
-          }}
+          className="h-[650px] relative"
+          style={{ width: isExpanded ? "1275px" : "1518px" }}
         >
           {sliderContent.map((slide, i) => (
             <img
               src={slide.img}
               key={i}
-              alt="slideImg"
-              className={`h-full w-full absolute object-cover inset-0 duration-[2.5s] ease-out transition-[clip-path] ${
-                i === active ? "clip-visible" : "clip-hidden"
-              }`}
-              style={{
-                clipPath:
-                  i === active
-                    ? "ellipse(14000px 750px at 0% 0%)"
-                    : "ellipse(0 0 at 0% 0%)",
-                opacity: i === active ? 1 : 0,
-              }}
+              alt={`Slide ${i + 1}`}
+              className={`h-full w-full absolute object-cover inset-0 transition-opacity duration-700 ${
+                i === active && !animating
+                  ? "opacity-100 animate-slide-enter"
+                  : "opacity-0 animate-slide-exit"
+              } brightness-50`} // Added brightness-50 here
             />
           ))}
-          <img
-            src={sliderContent[prev].img}
-            alt="previmg"
-            className="w-full h-full object-cover"
-          />
         </div>
-        <div>
+
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+          {showText && (
+            <div className="text-center animate-fadeInUp">
+              <h1 className="text-6xl font-bold">
+                {sliderContent[active].name}
+              </h1>
+              <p className="mt-1.5 text-2xl text-red-600">
+                {sliderContent[active].desc}
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Top Container for Line and Text */}
+        <div className="absolute top-14 left-52 w-3/4 flex items-center">
+          <hr className="border-t border-white w-10/12 mx-auto" />
+          <span className="text-white text-sm ml-4 absolute top-[-35px] right-8">
+            <AccessTimeIcon
+              style={{ width: 17, height: 17, marginBottom: 2, marginRight: 4 }}
+            />
+            Works Day: Saturday - Thursday 8 AM - 8 PM
+          </span>
+        </div>
+
+        {/* Numbered Buttons for Image Navigation */}
+        <div className="absolute bottom-[15%] left-[10%] transform -translate-x-1/2 flex space-x-4">
+          {sliderContent.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => handleButtonClick(index)}
+              className={`w-8 h-8 rounded-full flex items-center justify-center font-bold transition duration-300 ${
+                index === active
+                  ? "bg-customGreen text-white scale-150"
+                  : "bg-white text-black"
+              }`}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
+
+        {/* Arrow Buttons for Image Navigation */}
+        <div className="absolute bottom-[15%] right-[5%] transform -translate-x-1/2 flex space-x-4">
           <button
-            id="back"
-            ref={prevRef}
-            onClick={() => Slide("prev")}
-            className="w-12 h-12 ml-24 absolute left-5 top-1/2 transform -translate-y-1/2 transition-all duration-300 ease-in-out bg-gray-900 text-white rounded-full hover:bg-blue-600"
+            onClick={() => changeSlide("prev")}
+            className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold transition duration-300 hover:bg-green-700"
           >
             <ArrowBackIosOutlinedIcon />
           </button>
           <button
-            id="forward"
-            ref={nextRef}
-            onClick={() => Slide("next")}
-            className="w-12 h-12 mr-24 absolute right-5 top-1/2 transform -translate-y-1/2 transition-all duration-300 ease-in-out bg-gray-900 text-white rounded-full hover:bg-blue-600"
+            onClick={() => changeSlide("next")}
+            className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold transition duration-300 hover:bg-green-700"
           >
             <ArrowForwardIosOutlinedIcon />
           </button>
-          {/* Additional button with image background */}
-          <div
-            className="absolute tp-rightarrow tparrows zeus noSwipe"
-            style={{
-              top: "50%",
-              left: "100%",
-              transform: "translateY(-50%) translateX(-160%)",
-              visibility: "hidden", // Adjust visibility based on active slide
-              opacity: 0, // Adjust opacity based on active slide
-              transition: "visibility 0s, opacity 0.5s linear", // Smooth transition
-            }}
-          >
-            <div className="tp-title-wrap">
-              <div
-                className="tp-arr-imgholder w-12 h-12 rounded-full bg-cover"
-                style={{
-                  backgroundImage: `url(${sliderContent[active].img})`, // Use active slide image
-                }}
-                onClick={() => console.log("Image Button Clicked!")} // Handle click event
-              />
-            </div>
-          </div>
         </div>
 
-        <div
-          className="text-[aliceblue] absolute w-full z-10 text-center backdrop-blur-[2px] duration-[1s] px-0 py-[15px] left-0 bottom-0 bg-[#ffffff22]"
-          ref={contentRef}
-        >
-          <h1 ref={nameRef} className="text-2xl font-bold">
-            {sliderContent[0].name}
-          </h1>
-          <p className="mt-1.5 text-sm">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio,
-            porro.
-          </p>
+        {/* Logo and Buttons Container */}
+        <div className="absolute top-4 left-32 flex items-center mt-16">
+          <div className="flex space-x-8">
+            {/* Home Button */}
+            <button className="text-white hover:text-customGreen flex items-center font-medium text-sm mx-4">
+              <HomeIcon className="h-4 w-4 mr-2" />
+              Home
+            </button>
+
+            {/* Theory Questions Dropdown */}
+            <Dropdown
+              title="Theory Questions"
+              icon={<HelpCenterIcon className="h-4 w-4 mr-2" />}
+              items={[
+                "Motorcycle Theory Questions",
+                "Car Theory Questions",
+                "Tractor Theory Questions",
+                "Light Charge Theory Questions",
+                "Heavy Charge Theory Questions",
+                "Taxi Charge Theory Questions",
+              ]}
+            />
+
+            {/* Theory Learning Dropdown */}
+            <Dropdown
+              title="Theory Learning"
+              icon={<AutoStoriesIcon className="h-4 w-4 mr-2" />}
+              items={[
+                "Steps to study theory",
+                "Traffic signals study",
+                "Study of traffic signals on the street",
+                "Study of the theory book",
+              ]}
+            />
+
+            {/* Inquiry About Dropdown */}
+            <Dropdown
+              title="Inquiry About"
+              icon={<InfoIcon className="h-4 w-4 mr-2" />}
+              items={[
+                "Theory exam results",
+                "Practical exam results",
+                "License Requirements",
+              ]}
+            />
+          </div>
         </div>
       </div>
     </div>
   );
-};
+});
 
 export default ImageSlider;

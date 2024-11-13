@@ -28,11 +28,17 @@ module.exports = {
         customGrayOption: "#5a5a5a",
         customGrayBG: "#e4e4e4",
         customGrayop: "#f3f3f3",
+        custombg: "#f1f1f1",
       },
       animation: {
         underlineShrink: "underlineShrink 0.4s ease-in-out forwards",
         gradientAnimation: "gradientAnimation 31s ease infinite",
         move: "move 1s linear infinite", // Keep this for any global use if needed
+        fadeInUp: "fadeInUp 0.5s forwards",
+        "slide-enter": "slide-enter 0.5s ease forwards",
+        "slide-exit": "slide-exit 0.5s ease forwards",
+        "fade-in": "fadeIn 1s ease-in forwards",
+        "fade-in2": "fadeIn2 2s ease-in forwards",
       },
       keyframes: {
         underlineShrink: {
@@ -41,6 +47,18 @@ module.exports = {
           "50%": { width: "50%" },
           "75%": { width: "25%" },
           "100%": { width: "0" },
+        },
+        "slide-enter": {
+          "0%": { opacity: "0", transform: "translateX(100%)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        "slide-exit": {
+          "0%": { opacity: "1", transform: "translateX(0)" },
+          "100%": { opacity: "0", transform: "translateX(-100%)" },
+        },
+        fadeInUp: {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
         move: {
           "0%": { transform: "translateX(-100%)" },
@@ -51,6 +69,14 @@ module.exports = {
           "0%": { backgroundPosition: "0% 50%" },
           "50%": { backgroundPosition: "100% 50%" },
           "100%": { backgroundPosition: "0% 50%" },
+        },
+        fadeIn: {
+          "0%": { opacity: "0", transform: "translateY(-10px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        fadeIn2: {
+          "0%": { opacity: "0", transform: "translateY(-10px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
       },
     },
@@ -92,6 +118,19 @@ module.exports = {
           background: "linear-gradient(60deg, #72B626, #C0DCA1)",
           backgroundSize: "400% 400%",
           animation: "gradientBackground 15s ease infinite",
+        },
+        ".clip-octa": {
+          clipPath:
+            "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
+        },
+        ".rotate-360": {
+          transition: "transform 0.7s ease-in-out",
+        },
+        ".rotate-360:hover": {
+          transform: "rotate(360deg)",
+        },
+        ".filter-green": {
+          filter: "sepia(1) saturate(5) hue-rotate(90deg) opacity(0.5)", // Apply green tint filter
         },
       });
     }),

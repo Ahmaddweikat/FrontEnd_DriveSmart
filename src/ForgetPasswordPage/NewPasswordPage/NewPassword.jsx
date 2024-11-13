@@ -1,22 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
+import useNewPasswordForm from "../../hooks/ForgetPassword/NewPasswordPage/useNewPasswordForm"; // Adjust the import path if necessary
 
 function NewPassword() {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
+  const {
+    password,
+    confirmPassword,
+    error,
+    success,
+    setSuccess, // Get setSuccess from the hook
+    handlePasswordChange,
+    handleConfirmPasswordChange,
+    validatePasswords,
+    resetForm,
+  } = useNewPasswordForm();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (password === "" || confirmPassword === "") {
-      setError("Both fields are required.");
-    } else if (password.length < 6) {
-      setError("Password must be at least 6 characters long.");
-    } else if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-    } else {
-      setError("");
+    if (validatePasswords()) {
+      resetForm();
       setSuccess(true);
       // Proceed with password reset logic (e.g., API call)
     }
@@ -60,7 +61,7 @@ function NewPassword() {
                 id="password"
                 placeholder="New Password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handlePasswordChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -74,7 +75,7 @@ function NewPassword() {
                 id="confirm-password"
                 placeholder="Confirm Password"
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={handleConfirmPasswordChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>

@@ -1,18 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
+import useCodeVerification from "../../hooks/ForgetPassword/CodePage/useCodeVerification"; // Adjust the path as necessary
 
 function Code() {
-  const [code, setCode] = useState("");
-  const [error, setError] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (code.length !== 6 || !/^\d{6}$/.test(code)) {
-      setError("Please enter a valid 6-digit code.");
-    } else {
-      setError("");
-      // Proceed with code verification logic
-    }
-  };
+  const { code, error, handleChange, handleSubmit } = useCodeVerification();
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">
@@ -51,7 +41,7 @@ function Code() {
                 id="code"
                 placeholder="Enter 6-digit code"
                 value={code}
-                onChange={(e) => setCode(e.target.value)}
+                onChange={handleChange}
                 maxLength="6"
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />

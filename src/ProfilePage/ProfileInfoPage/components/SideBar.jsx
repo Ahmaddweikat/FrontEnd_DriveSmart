@@ -1,17 +1,13 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBars,
-  faBell,
-  faChevronRight,
   faBook,
-  faUser,
   faClipboardCheck,
-  faCog,
   faStar as solidStar,
   faCalendarCheck,
   faBookOpen,
-  faRightFromBracket,
+  faSchool,
+  faMessage,
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarButton from "./SidebarButton";
 import Logo from "../../../assets/DriveSmartLOGO.png";
@@ -34,12 +30,12 @@ const SideBar = ({ isExpanded, activePage, setActivePage }) => {
         {/* Navigation */}
         <nav className="space-y-4 w-full">
           <SidebarButton
-            icon={faUser}
-            label="Profile"
+            icon={faSchool}
+            label="School"
             isExpanded={isExpanded}
-            active={activePage === "profile"}
+            active={activePage === "school"}
             setActivePage={setActivePage}
-            pageName="profile"
+            pageName="school"
           />
           <SidebarButton
             icon={faBook}
@@ -74,20 +70,12 @@ const SideBar = ({ isExpanded, activePage, setActivePage }) => {
             pageName="test"
           />
           <SidebarButton
-            icon={faCog}
-            label="Settings"
+            icon={faMessage}
+            label="Messages"
             isExpanded={isExpanded}
-            active={activePage === "settings"}
+            active={activePage === "messages"}
             setActivePage={setActivePage}
-            pageName="settings"
-          />
-          <SidebarButton
-            icon={faRightFromBracket}
-            label="Sign out"
-            isExpanded={isExpanded}
-            active={activePage === "sign-out"}
-            setActivePage={setActivePage}
-            pageName="sign-out"
+            pageName="messages"
           />
         </nav>
       </aside>

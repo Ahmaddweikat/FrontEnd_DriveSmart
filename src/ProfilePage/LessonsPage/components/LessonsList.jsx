@@ -13,10 +13,7 @@ const LessonsList = ({
   const filteredLessons = lessons.filter((lesson) =>
     selectedRating ? lesson.rating === selectedRating : true
   );
-  const handleFilterSelect = (rating) => {
-    setFilter(rating);
-    setSelectedRating(rating === "" ? 0 : parseInt(rating[0], 10));
-  };
+
   return (
     <>
       {/* Lessons List */}

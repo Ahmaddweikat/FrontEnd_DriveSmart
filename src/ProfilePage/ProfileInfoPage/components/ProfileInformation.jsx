@@ -1,5 +1,6 @@
 import React from "react";
 import InfoField from "./InfoField";
+import Avatar from "@mui/material/Avatar";
 
 const ProfileInformation = () => {
   return (
@@ -11,10 +12,10 @@ const ProfileInformation = () => {
           {/* Updated Header - Center Profile Picture */}
           <header className="flex flex-col items-center mb-6">
             <div className="w-28 h-28 bg-gray-200 rounded-full overflow-hidden mb-4">
-              <img
-                src="/placeholder.svg?height=128&width=128"
-                alt="Profile"
-                className="w-full h-full object-cover"
+              <Avatar
+                alt="Remy Sharp"
+                src="/static/images/avatar/1.jpg"
+                sx={{ width: 112, height: 112 }}
               />
             </div>
             <div className="text-center">

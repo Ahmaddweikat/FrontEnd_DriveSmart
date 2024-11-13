@@ -47,9 +47,3 @@ function SidebarButton({
 }
 
 export default SidebarButton;
-const Lessons = () => <div>Lessons Page</div>;
-const UpcomingLessons = () => <div>Upcoming Lessons Page</div>;
-const MyCourses = () => <div>My Courses Page</div>;
-const Profile = () => <div>Profile Page</div>;
-const Settings = () => <div>Settings Page</div>;
-const SignOut = () => <div>Sign Out Page</div>;

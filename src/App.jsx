@@ -27,13 +27,25 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import ReactDOM from "react-dom";
 import ProfileInformation from "./ProfilePage/ProfileInfoPage/components/ProfileInformation";
 import HomePage from "./HomePage/HomePage";
+import Code from "./ForgetPasswordPage/CodePage/Code";
+import EmailPage from "./ForgetPasswordPage/EmailPage/EmailPage";
+import NewPassword from "./ForgetPasswordPage/NewPasswordPage/NewPassword";
+import ChatView from "./HomePage/components/ChatView";
+import ImageSlider from "./HomePage/components/ImageSlider";
+import TopBar from "./HomePage/components/TopBar";
+import SchoolHome from "./schoolHomePage/SchoolHome";
+import BookingandScheduling from "./BookingandScheduling/BookingandScheduling";
+
+import Payment from "./BookingandScheduling/components/payment/Payment";
+import Finish from "./BookingandScheduling/components/Finish/Finish";
 
 function App() {
   return (
     // <HomePage />
-    <Router>
-      <SignInPage />
-    </Router>
+    <Finish />
+    // <Router>
+    //   <SignInPage />
+    // </Router>
   );
 }
 ReactDOM.render(<App />, document.getElementById("root")); // Render the App component

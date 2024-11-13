@@ -1,122 +1,242 @@
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faChevronDown,
-  faSignOutAlt,
-  faUser,
-  faCog,
-} from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
-import ChatView from "./ChatView";
 import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
 import CloseIcon from "@mui/icons-material/Close";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
+import InfoIcon from "@mui/icons-material/Info";
+import HomeIcon from "@mui/icons-material/Home";
+import HelpCenterIcon from "@mui/icons-material/HelpCenter";
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import HorizontalSplitOutlinedIcon from "@mui/icons-material/HorizontalSplitOutlined";
 
-function TopBar({
-  toggleSidebar,
-  toggleNotifications,
-  showNotifications,
-  markAsRead,
-  markAllAsRead,
-  toggleMessageNotifications,
-  showMessageNotifications,
-  notificationList,
-  messagesList,
-  initialMessages,
-}) {
-  const [searchQuery, setSearchQuery] = useState(""); // New state for search query
-  const [showMessagePanel, setShowMessagePanel] = useState(false); // Manage panel visibility
-  const [selectedChat, setSelectedChat] = useState(null); // Manage the selected chat
-  const [showProfileDropdown, setShowProfileDropdown] = useState(false); // Dropdown state
-  const [showHeader, setShowHeader] = useState(true); // New state for header visibility
-  const [showSearch, setShowSearch] = useState(true); // New state for header visibility
+import Badge from "@mui/material/Badge";
+import Avatar from "@mui/material/Avatar";
 
-  const unreadNotificationCount = notificationList.filter(
-    (n) => !n.read
-  ).length;
-  const unreadMessageCount = messagesList.filter((m) => !m.read).length;
+import ChatView from "./ChatView";
+
+import useNotifications from "../../../hooks/HomePage/TopBar/useNotifications";
+import useMessages from "../../../hooks/HomePage/TopBar/useMessages";
+import useDropdown from "../../../hooks/HomePage/TopBar/useDropdown";
+
+import { messages } from "../../../HomePage/components/constants/Message/messages"; // Adjust the path to your messages
+import { notifications } from "../../../HomePage/components/constants/Notifications/notifications"; // Adjust the path to your messages
+
+function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
+  const { notificationList, unreadCount, markAsRead, markAllAsRead } =
+    useNotifications(notifications);
+
+  const {
+    messagesList,
+    selectedChat,
+    showMessagePanel,
+    setShowMessagePanel,
+    searchQuery,
+    setSearchQuery,
+    filteredMessages,
+    openChat,
+    closeChat,
+  } = useMessages(messages);
+
+  const { dropdownState, toggleDropdown, closeDropdowns } = useDropdown();
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+
+  const toggleNotifications = () => {
+    setShowNotifications((prev) => !prev);
+  };
+
+  // Count unread messages
+  const unreadMessageCount = filteredMessages.filter((msg) => !msg.read).length;
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   const handleProfileDropdown = () => {
     setShowProfileDropdown((prev) => !prev);
   };
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value); // Update search query
-  };
 
-  const handleChatOpen = (message) => {
-    setSelectedChat(message); // Ensure message is unique per chat
-    setShowHeader(false);
-    setShowSearch(false);
+  // Define the handleKeyDown function
+  const handleKeyDown = (event, dropdown) => {
+    if (event.key === "Escape") {
+      if (dropdown === "profile") {
+        setShowProfileDropdown(false);
+      }
+      // You can add more dropdown handling logic here if needed
+    }
   };
-
-  const handleChatClose = () => {
-    setSelectedChat(null); // Close the chat view and show the message panel
-    setShowMessagePanel(true);
-    setShowHeader(true); // Show the header again when closing the chat
-    setShowSearch(true);
-  };
-
-  const filteredMessages = messagesList.filter((message) =>
-    message.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   return (
-    <div className="bg-white shadow p-4 flex justify-between items-center h-16 sticky top-0 z-50">
+    <div className="bg-white shadow p-4 flex justify-between items-center relative h-20 z-10">
+      {/* Logo and Buttons */}
       <div className="relative flex items-center w-1/2">
+        {/* Sidebar Toggle Button */}
         <button
           onClick={toggleSidebar}
-          className="text-gray-600 hover:text-gray-800 border-r-2 border-gray-300 pr-5 h-16 flex items-center"
+          className="text-gray-600 hover:text-gray-800 border-r-2 border-gray-300 pr-5 h-20 flex items-center"
         >
-          <FontAwesomeIcon icon={faBars} className="h-5 w-5" />
+          <HorizontalSplitOutlinedIcon className="h-5 w-5" />
         </button>
+
+        <button className="text-gray-600 hover:text-customGreen flex items-center font-medium text-base mx-4">
+          <HomeIcon className="h-4 w-4 mr-2" />
+          Home
+        </button>
+
+        {/* Theory Questions Dropdown */}
+        <div
+          className="relative mx-2"
+          onMouseEnter={() => toggleDropdown("theoryQuestions")}
+          onMouseLeave={closeDropdowns}
+        >
+          <button
+            className={`text-gray-600 flex items-center mr-2 font-medium text-base ${
+              dropdownState.theoryQuestions
+                ? "text-customGreen"
+                : "hover:text-customGreen"
+            }`}
+          >
+            <HelpCenterIcon className="h-4 w-4 mr-2" />
+            Theory Questions
+            <ExpandMoreOutlinedIcon
+              sx={{ width: 20, height: 20, marginLeft: "2px" }}
+            />{" "}
+          </button>
+          {dropdownState.theoryQuestions && (
+            <div className="absolute left-0 top-full bg-white border rounded shadow-lg z-50 w-48 font-medium text-base">
+              {/* Theory questions options here */}
+              <button className="w-full text-left py-2 px-4 hover:bg-gray-200">
+                Motorcycle Theory Questions
+              </button>
+              <button className="w-full text-left py-2 px-4 hover:bg-gray-200">
+                Car Theory Questions
+              </button>
+              <button className="w-full text-left py-2 px-4 hover:bg-gray-200">
+                Light Charge Theory Questions
+              </button>
+              <button className="w-full text-left py-2 px-4 hover:bg-gray-200">
+                Heavy Charge Theory Questions
+              </button>
+              <button className="w-full text-left py-2 px-4 hover:bg-gray-200">
+                Taxi Charge Theory Questions
+              </button>
+            </div>
+          )}
+        </div>
+        {/* Theory Learning Dropdown */}
+        <div
+          className="relative mx-2"
+          onMouseEnter={() => toggleDropdown("theoryLearning")}
+          onMouseLeave={closeDropdowns}
+        >
+          <button
+            className={`text-gray-600 flex items-center mr-2 font-medium text-base ${
+              dropdownState.theoryLearning
+                ? "text-customGreen"
+                : "hover:text-customGreen"
+            }`}
+          >
+            <AutoStoriesIcon className="h-4 w-4 mr-2" />
+            Theory Learning
+            <ExpandMoreOutlinedIcon
+              sx={{ width: 20, height: 20, marginLeft: "4px" }}
+            />{" "}
+          </button>
+          {dropdownState.theoryLearning && (
+            <div className="absolute left-0 top-full bg-white border rounded shadow-lg z-50 w-48 font-medium text-base">
+              {/* Theory questions options here */}
+              <button className="w-full text-left py-2 px-4 hover:bg-gray-200">
+                Steps to study theory
+              </button>
+              <button className="w-full text-left py-2 px-4 hover:bg-gray-200">
+                Traffic signals study
+              </button>
+              <button className="w-full text-left py-2 px-4 hover:bg-gray-200">
+                Study of traffic signals on the street
+              </button>
+              <button className="w-full text-left py-2 px-4 hover:bg-gray-200">
+                Study of the theory book
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Inquiry About Dropdown */}
+        <div
+          className="relative mx-2"
+          onMouseEnter={() => toggleDropdown("inquiryAbout")}
+          onMouseLeave={closeDropdowns}
+        >
+          <button
+            className={`text-gray-600 flex items-center mr-2 font-medium text-base ${
+              dropdownState.inquiryAbout
+                ? "text-customGreen"
+                : "hover:text-customGreen"
+            }`}
+          >
+            <InfoIcon className="h-4 w-4 mr-2" />
+            Inquiry About
+            <ExpandMoreOutlinedIcon
+              sx={{ width: 20, height: 20, marginLeft: "4px" }}
+            />
+          </button>
+          {dropdownState.inquiryAbout && (
+            <div className="absolute left-0 top-full bg-white border rounded shadow-lg z-50 w-48 font-medium text-base">
+              {/* Theory questions options here */}
+              <button className="w-full text-left py-2 px-4 hover:bg-gray-200">
+                Theory exam results
+              </button>
+              <button className="w-full text-left py-2 px-4 hover:bg-gray-200">
+                Practical exam results
+              </button>
+              <button className="w-full text-left py-2 px-4 hover:bg-gray-200">
+                License Requirements
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
+      {/* Notifications and Messages */}
       <div className="flex items-center space-x-6">
         <div className="relative">
           <button
             onClick={toggleNotifications}
-            className="text-gray-500 hover:text-gray-700 border-x-2 h-16 pr-4 pl-4"
+            className="text-gray-500 hover:text-gray-700 h-16 pr-2 pl-2 relative"
           >
-            <NotificationsNoneOutlinedIcon
-              style={{ width: "30px", height: "30px" }}
-            />
-            {unreadNotificationCount > 0 && (
-              <span className="absolute top-2 right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                {unreadNotificationCount}
-              </span>
-            )}
+            <Badge
+              badgeContent={unreadCount}
+              classes={{ badge: "bg-red-500 text-white" }}
+              overlap="circular"
+            >
+              <NotificationsNoneOutlinedIcon
+                style={{ width: "30px", height: "30px" }}
+              />
+            </Badge>
           </button>
 
           {showNotifications && (
-            <div className="absolute top-16 right-0 bg-white border rounded shadow-lg z-50 w-64">
-              <div className="p-4">
-                <h4 className="font-semibold flex justify-between items-center">
-                  Notifications
-                  <button
-                    onClick={() => markAllAsRead("notification")}
-                    className="text-sm text-blue-500 hover:underline"
+            <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-300 shadow-lg rounded-md">
+              <ul className="max-h-60 overflow-y-auto">
+                {notificationList.map((notification) => (
+                  <li
+                    key={notification.id}
+                    onClick={() => markAsRead(notification.id)} // Mark as read on click
+                    className={`p-2 cursor-pointer ${
+                      notification.read ? "bg-gray-100" : "bg-white"
+                    }`}
                   >
-                    Mark All as Read
-                  </button>
-                </h4>
-                {notificationList.length > 0 ? (
-                  notificationList.map((notification) => (
-                    <div
-                      key={notification.id}
-                      className={`py-2 border-b last:border-b-0 ${
-                        notification.read ? "text-gray-500" : "font-semibold"
-                      }`}
-                      onClick={() =>
-                        markAsRead(notification.id, "notification")
-                      }
-                    >
-                      {notification.message}
-                    </div>
-                  ))
-                ) : (
-                  <div>No notifications</div>
-                )}
-              </div>
+                    {notification.message}
+                  </li>
+                ))}
+              </ul>
+              {notificationList.length === 0 && (
+                <div className="p-2 text-gray-500">No notifications</div>
+              )}
             </div>
           )}
         </div>
@@ -124,12 +244,8 @@ function TopBar({
         {/* Message Notifications */}
         <div className="relative">
           <button
-            onClick={() => {
-              setShowMessagePanel((prev) => !prev); // Toggle message panel visibility
-
-              toggleMessageNotifications(); // Call the existing function as well
-            }}
-            className="text-gray-500 hover:text-gray-700 border-x-2 h-16 pr-4 pl-4"
+            onClick={() => setShowMessagePanel((prev) => !prev)}
+            className="text-gray-500 hover:text-gray-700 h-16 pr-4 pl-4"
           >
             <MessageOutlinedIcon
               style={{ width: "25px", height: "25px", marginTop: "4px" }}
@@ -140,61 +256,43 @@ function TopBar({
               </span>
             )}
           </button>
+
           {/* Message Panel */}
           {showMessagePanel && (
-            <div
-              className={`fixed inset-y-0 right-0 w-96 bg-white border shadow-lg z-50 mt-16 h-full`}
-            >
+            <div className="fixed inset-y-0 right-0 w-96 bg-white border shadow-lg z-50 mt-16 h-full">
               <div className="flex justify-end mr-2">
-                <button
-                  onClick={() => {
-                    setShowMessagePanel((prev) => !prev); // Toggle message panel visibility
-                  }}
-                >
+                <button onClick={() => setShowMessagePanel(false)}>
                   <CloseIcon
                     style={{ width: "20px", height: "20px", marginTop: "4px" }}
                   />
                 </button>
               </div>
-              {showSearch && (
-                <div className="flex justify-center">
-                  {/* Search Bar */}
-                  <input
-                    type="text"
-                    placeholder="Search Messages"
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                    className="border rounded p-2 w-80 mb-4"
-                  />
-                </div>
-              )}
 
-              {/* {showHeader && ( // Conditionally render the header
-                <div className="flex justify-between items-center p-4 border-b">
-                  <h4 className="font-semibold">Messages</h4>
-                  <button className="text-sm text-blue-500 hover:underline">
-                    See all
-                  </button>
-                </div>
-              )} */}
+              {/* Search Bar */}
+              <div className="flex justify-center">
+                <input
+                  type="text"
+                  placeholder="Search Messages"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  className="border rounded p-2 w-80 mb-4"
+                />
+              </div>
 
               <div className="mt-3 h-full overflow-hidden flex flex-col">
                 {selectedChat ? (
                   <ChatView
-                    messagesList={messagesList.filter(
-                      (msg) => msg.id === selectedChat.id
-                    )}
-                    onClose={handleChatClose}
-                    initialMessages={messagesList}
+                    message={selectedChat} // Pass the selected chat message to ChatView
+                    onClose={() => openChat(null)} // Function to close the chat view
                   />
                 ) : (
                   <div className="overflow-y-auto flex-1">
-                    {filteredMessages.length > 0 ? ( // Check against filtered messages
+                    {filteredMessages.length > 0 ? (
                       filteredMessages.map((message) => (
                         <div
                           key={message.id}
                           className="flex items-center justify-between p-2 border-b last:border-b-0 hover:bg-gray-200 cursor-pointer"
-                          onClick={() => handleChatOpen(message)} // Open chat on click
+                          onClick={() => openChat(message)} // Open chat on click
                         >
                           <img
                             src={message.profileImage || "/default-avatar.png"}
@@ -228,44 +326,40 @@ function TopBar({
             </div>
           )}
         </div>
+        {/* Profile Dropdown */}
+        <div className="relative">
+          <button
+            onClick={handleProfileDropdown}
+            className="flex items-center space-x-2"
+            aria-expanded={showProfileDropdown}
+            onKeyDown={(e) => handleKeyDown(e, "profile")}
+          >
+            {/* Avatar placed here before the name */}
+            <Avatar
+              alt="Remy Sharp"
+              src="/static/images/avatar/1.jpg"
+              sx={{ width: 40, height: 40 }}
+            />
+            <span className="font-medium text-gray-600">Remy Sharp</span>
+            <ExpandMoreOutlinedIcon sx={{ width: 20, height: 20 }} />
+          </button>
 
-        <div className="flex items-center space-x-4">
-          <div className="relative">
-            <button
-              onClick={handleProfileDropdown}
-              className="flex items-center space-x-2"
-            >
-              <img
-                src="/path/to/profile-picture.jpg"
-                alt="Profile"
-                className="w-8 h-8 rounded-full object-cover"
-              />
-              <span className="text-gray-700 font-medium">Ahmad Dweikat</span>
-              <FontAwesomeIcon icon={faChevronDown} className="text-gray-600" />
-            </button>
-
-            {showProfileDropdown && (
-              <div className="absolute right-0 mt-4 w-48 bg-white border rounded shadow-lg z-50">
-                <ul className="py-2">
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center space-x-2">
-                    <FontAwesomeIcon icon={faUser} className="text-gray-600" />
-                    <span>Profile</span>
-                  </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center space-x-2">
-                    <FontAwesomeIcon icon={faCog} className="text-gray-600" />
-                    <span>Settings</span>
-                  </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center space-x-2">
-                    <FontAwesomeIcon
-                      icon={faSignOutAlt}
-                      className="text-gray-600"
-                    />
-                    <span>Sign Out</span>
-                  </li>
-                </ul>
-              </div>
-            )}
-          </div>
+          {showProfileDropdown && (
+            <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-50">
+              <button className="w-full text-left px-4 py-2 hover:bg-gray-200">
+                <AccountCircleOutlinedIcon className="mr-2" />
+                Profile
+              </button>
+              <button className="w-full text-left px-4 py-2 hover:bg-gray-200">
+                <SettingsOutlinedIcon className="mr-2" />
+                Settings
+              </button>
+              <button className="w-full text-left px-4 py-2 hover:bg-gray-200">
+                <LogoutOutlinedIcon className="mr-2" />
+                Logout
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
