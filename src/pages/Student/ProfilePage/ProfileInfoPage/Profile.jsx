@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import TopBar from "../../components/ProfileTopBar/TopBar";
-import SideBar from "../../components/ProfileSideBar/Sidebar";
+import TopBar from "../../../../components/ProfileTopBar/TopBar";
+import SideBar from "../../../../components/ProfileSideBar/Sidebar";
 import Breadcrumb from "./components/Breadcrumb";
 import ProfileInformation from "./components/ProfileInformation";
-import useNotificationsMessages from "../../hooks/HomePage/TopBar/useNotifications";
-import useSidebarState from "../../hooks/useSidebarState"; // Import custom hook
+import useNotificationsMessages from "../../../../hooks/useNotificationsState";
+import useSidebarState from "../../../../hooks/useSidebarState";
 
 const Profile = () => {
   const [activePage, setActivePage] = useState("profile");

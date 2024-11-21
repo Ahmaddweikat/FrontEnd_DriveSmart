@@ -1,10 +1,10 @@
 // sliderContent.js
-import img1 from "../../../Images/111.jpg";
-import img2 from "../../../Images/44.jpg";
-import img3 from "../../../Images/333.jpg";
+import img1 from "../../../../../assets/HomePage/ImageSlider/Images/111.jpg";
+import img2 from "../../../../../assets/HomePage/ImageSlider/Images/44.jpg";
+import img3 from "../../../../../assets/HomePage/ImageSlider/Images/333.jpg";
 
-import img11 from "../../../Images/alquds.jpg";
-import img12 from "../../../Images/alquds2.jpg";
+import img11 from "../../../../../assets/HomePage/ImageSlider/Images/alquds.jpg";
+import img12 from "../../../../../assets/HomePage/ImageSlider/Images/alquds2.jpg";
 
 const sliderContent = [
   { img: img1, name: "DRIVE SMART", desc: "Learn Faster, Drive Smarter" },

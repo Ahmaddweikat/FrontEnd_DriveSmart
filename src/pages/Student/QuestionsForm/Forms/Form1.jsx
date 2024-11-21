@@ -1,14 +1,14 @@
-import optionAImage from "./Images/a.png";
-import optionBImage from "./Images/b.png";
-import optionCImage from "./Images/c.png";
-import optionDImage from "./Images/d.png";
-import optionD7Image from "./Images/dimage.png";
+import optionAImage from "../../../../assets/Questions/Images/a.png";
+import optionBImage from "../../../../assets/Questions/Images/b.png";
+import optionCImage from "../../../../assets/Questions/Images/c.png";
+import optionDImage from "../../../../assets/Questions/Images/d.png";
+import optionD7Image from "../../../../assets/Questions/Images/dimage.png";
 
 export const questions = [
   {
     id: 1,
     question: "What does the sign mean?",
-    image: require("./Images/question1.png"),
+    image: require("../../../../assets/Questions/Images/question1.png"),
     options: [
       "Junction on the left.",
       "Stop line on the road surface.",
@@ -49,7 +49,7 @@ export const questions = [
   {
     id: 3,
     question: "What does the sign mean?",
-    image: require("./Images/Q3.png"),
+    image: require("../../../../assets/Questions/Images/Q3.png"),
     options: [
       "The pedestrian crossing is about 150 metres away.",
       "Pedestrian only.",
@@ -61,7 +61,7 @@ export const questions = [
   {
     id: 4,
     question: "What does the sign mean?",
-    image: require("./Images/Q4.png"),
+    image: require("../../../../assets/Questions/Images/Q4.png"),
     options: [
       "Entry of mechanical vehicles is prohibited.",
       "It is forbidden to stop or stop except to implement a legal order.",
@@ -73,7 +73,7 @@ export const questions = [
   {
     id: 5,
     question: "What does the sign end with?",
-    image: require("./Images/Q7.png"),
+    image: require("../../../../assets/Questions/Images/Q7.png"),
     options: [
       "The end of a narrow road or a nearby intersection.",
       "Only the nearest intersection.",
@@ -89,5 +89,4 @@ export const questions = [
     ],
     correctAnswer: 0,
   },
-  // Add more questions if needed
 ];

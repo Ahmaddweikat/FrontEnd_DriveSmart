@@ -1,6 +1,13 @@
 import React from "react";
+import { tests } from "../constant/tests";
 
-const ProfilePanel = ({ totalTestsTaken, totalTestsPassed, passRate }) => {
+const ProfilePanel = () => {
+  const totalTestsTaken = tests.length;
+  const totalTestsPassed = tests.filter((test) => test.score > 24).length;
+  const passRate =
+    totalTestsTaken > 0
+      ? ((totalTestsPassed / totalTestsTaken) * 100).toFixed(1)
+      : 0;
   return (
     <>
       {/* Profile Panel */}

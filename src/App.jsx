@@ -1,14 +1,12 @@
 import "./index.css";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import ReactDOM from "react-dom";
-
-// import Test from "./ProfilePage/TestPage/Test";
-import SchoolsPage from "./pages/SchoolsPage/SchoolsPagelsPage";
+import QuestionsForm from "./pages/Student/QuestionsForm/QuestionsForm";
 function App() {
   return (
-    <SchoolsPage />
+    <QuestionsForm />
     // <Router>
-    //   <Test />
+    //   <Settings />
     // </Router>
   );
 }

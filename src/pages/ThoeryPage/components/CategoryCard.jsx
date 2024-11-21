@@ -5,9 +5,9 @@ const CategoryCard = ({ image, label }) => (
     {/* Image Section */}
     <div className="flex justify-center bg-white p-6 relative">
       <img
-        src={require(`../Images/${image}`)} // Ensure this path is correct
+        src={getImage(image)}
         alt={label}
-        className="h-24 object-contain transition-transform duration-700 ease-in-out group-hover:animate-move group-hover:filter group-hover:brightness-0 group-hover:contrast-100" // Use group-hover to apply the effect
+        className="h-24 object-contain transition-transform duration-700 ease-in-out group-hover:animate-move group-hover:filter group-hover:brightness-0 group-hover:contrast-100"
       />
     </div>
     {/* Label Section */}
@@ -18,3 +18,13 @@ const CategoryCard = ({ image, label }) => (
 );
 
 export default CategoryCard;
+
+const images = require.context(
+  "../../../assets/ThoeryPage/Images",
+  false,
+  /\.(png|jpe?g|svg)$/
+);
+
+function getImage(name) {
+  return images(`./${name}`);
+}

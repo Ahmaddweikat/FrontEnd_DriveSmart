@@ -29,7 +29,7 @@ const SearchAndFilter = ({
           <select
             id="difficulty-filter"
             value={selectedFilter}
-            onChange={(e) => setSelectedFilter(e.target.value)} // Update difficulty filter
+            onChange={(e) => setSelectedFilter(e.target.value)}
             className="border border-gray-300 rounded-md px-2 py-1"
           >
             <option value="all">All</option>

@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import TopBar from "../../components/ProfileTopBar/TopBar";
-import Sidebar from "../../components/ProfileSideBar/Sidebar.jsx";
+import TopBar from "../../../../components/ProfileTopBar/TopBar.jsx";
+import Sidebar from "../../../../components/ProfileSideBar/Sidebar.jsx";
 import ProfilePanel from "./components/ProfilePanel";
 import SearchAndFilter from "./components/SearchAndFilter";
 import CoursesList from "./components/CoursesList";
-import useNotifications from "../../hooks/useNotificationsState.js";
 
-import { useMessages } from "./hooks/useMessages";
-import { useCourseFilter } from "./hooks/useCourseFilter";
+import useNotifications from "../../../../hooks/useNotificationsState.js";
 
-import { notifications } from "../../HomePage/components/constants/Notifications/notifications";
-import { messages } from "../../HomePage/components/constants/Message/messages";
+import useMessages from "../../../../hooks/useMessages.js";
+import useCourseFilter from "./hooks/useCourseFilter";
+
+import { notifications } from "../../../../constants/Notifications/notifications.js";
+import { messages } from "../../../../constants/Message/messages.js";
 import { courses } from "./constant/courses.js";
-import useSidebarState from "../../hooks/useSidebarState"; // Import custom hook
+import useSidebarState from "../../../../hooks/useSidebarState.js"; // Import custom hook
 
 const Courses = () => {
   const [activePage, setActivePage] = useState("courses");
@@ -25,12 +26,9 @@ const Courses = () => {
   } = useNotifications(notifications);
 
   const { toggleMessageNotifications } = useMessages(messages);
-
   const { setFilter, selectedFilter, setSelectedFilter, applyFilter } =
     useCourseFilter();
-
   const filteredCourses = applyFilter(courses);
-
   const { isExpanded, toggleSidebar } = useSidebarState();
 
   return (

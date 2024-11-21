@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import TopBar from "../../components/ProfileTopBar/TopBar";
-import Sidebar from "./components/Sidebar";
+import TopBar from "../../../../components/ProfileTopBar/TopBar";
+import Sidebar from "../../../../components/ProfileSideBar/Sidebar";
 import Breadcrumb from "./components/Breadcrumb";
 import ProfilePanel from "./components/ProfilePanel";
 import SearchAndFilter from "./components/SearchAndFilter";
 import LessonsList from "./components/LessonsList";
-import useNotificationsState from "./hooks/useNotificationsState"; // Import custom hook
+import useNotificationsState from "../../../../hooks/useNotificationsState"; // Import custom hook
 import useRatingFulter from "./hooks/useRatingFilter"; // Import custom hook
 import useSearchState from "./hooks/useSearchState"; // Import custom hook
-import useSidebarState from "../../hooks/useSidebarState"; // Import custom hook
+import useSidebarState from "../../../../hooks/useSidebarState"; // Import custom hook
 import { lessons } from "./constants/Lessons"; // Assuming lessons are imported
 
 const Lessons = () => {

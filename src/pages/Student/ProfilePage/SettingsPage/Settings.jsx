@@ -1,16 +1,15 @@
 import React from "react";
-import TopBar from "../../components/ProfileTopBar/TopBar";
-import SideBar from "../../components/ProfileSideBar/Sidebar";
+import TopBar from "../../../../components/ProfileTopBar/TopBar";
+import SideBar from "../../../../components/ProfileSideBar/Sidebar";
 import Breadcrumb from "./components/Breadcrumb";
 import ProfileEditForm from "./components/ProfileEditForm";
-import useNotifications from "../../hooks/useNotificationsState";
+import useNotifications from "../../../../hooks/useNotificationsState";
 import useProfilePicture from "./hooks/useProfilePicture";
-import useSidebar from "../../hooks/useSidebarState";
-import { notifications } from "../../HomePage/components/constants/Notifications/notifications";
-import { messages } from "../../HomePage/components/constants/Message/messages";
+import useSidebar from "../../../../hooks/useSidebarState";
+import { notifications } from "../../../../constants/Notifications/notifications";
+import { messages } from "../../../../constants/Message/messages";
 
 const Settings = () => {
-  // Using the custom hooks
   const {
     notificationList,
     showNotifications,

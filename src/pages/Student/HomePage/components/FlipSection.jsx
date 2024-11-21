@@ -1,6 +1,5 @@
 import React from "react";
-import { licenseSections } from "./constants/FlipSection/licenseSections"; // Adjust the path as needed
-
+import { licenseSections } from "../constants/FlipSection/licenseSections"; // Adjust the path as needed
 const FlipSection = () => {
   return (
     <div className="flex justify-center items-center p-4 perspective">
@@ -14,15 +13,13 @@ const FlipSection = () => {
             }}
           >
             <div className="absolute w-full h-full backface-hidden bg-transparent rounded-lg shadow-2xl p-6 flex flex-col items-center justify-center transition-all duration-300">
-              {/* Icon - Change to white on hover */}
               <div className="text-customGreen group-hover:text-white transition-all duration-300">
                 {section.icon}
               </div>
-              {/* Title - Move down with mt-2 and change text color and underline on hover */}
+
               <h2 className="text-2xl font-semibold text-customGreen mt-4 border-b-2 border-customGreen group-hover:text-white group-hover:border-white transition-all duration-300">
                 {section.title}
               </h2>
-
               <p className="text-customGreen mt-8 group-hover:text-white transition-all duration-300">
                 {section.description}
               </p>

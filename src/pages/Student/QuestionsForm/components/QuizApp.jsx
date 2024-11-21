@@ -4,7 +4,6 @@ import { faCheck, faTimes, faFlag } from "@fortawesome/free-solid-svg-icons";
 import { questions } from "../Forms/Form1"; // Import the questions array
 
 const QuizApp = () => {
-  // States for handling selected question and answer
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(10); // 10 seconds for each question
   const [isTimeUp, setIsTimeUp] = useState(false);

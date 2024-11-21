@@ -1,5 +1,5 @@
 import React from "react";
-import { cards } from "./constants/FlipCard/cards"; // Adjust the import path as necessary
+import { cards } from "../constants/FlipCard/cards"; // Adjust the import path as necessary
 
 const FlipCard = () => {
   return (

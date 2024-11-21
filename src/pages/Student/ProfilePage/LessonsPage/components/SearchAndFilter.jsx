@@ -30,7 +30,6 @@ const SearchAndFilter = ({
     <div className="mb-6 flex items-center space-x-6">
       {/* Search Bar */}
       <div className="flex flex-1 space-x-4">
-        <label className="text-base font-semibold">Search Lessons</label>
         <input
           type="text"
           placeholder="Search by lesson title"

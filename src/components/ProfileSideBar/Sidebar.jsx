@@ -1,15 +1,13 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBook,
   faClipboardCheck,
-  faStar as solidStar,
   faCalendarCheck,
   faBookOpen,
   faSchool,
   faMessage,
 } from "@fortawesome/free-solid-svg-icons";
-import SidebarButton from "../../ProfilePage/CoursesPage/components/SidebarButton";
+import SidebarButton from "./SidebarButton";
 import Logo from "../../assets/DRIVESMART.png";
 
 const SideBar = ({ isExpanded, activePage, setActivePage }) => {

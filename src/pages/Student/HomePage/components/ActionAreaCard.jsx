@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
-import useCardData from "./constants/ActionCardsData/cardsData"; // Adjust the path as needed
+import useCardData from "../constants/ActionCardsData/cardsData";
 
 export default function ActionAreaCard({ isExpanded }) {
   const cardsData = useCardData();

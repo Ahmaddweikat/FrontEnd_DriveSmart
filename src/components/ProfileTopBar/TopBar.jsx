@@ -7,11 +7,11 @@ import Badge from "@mui/material/Badge";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import HorizontalSplitOutlinedIcon from "@mui/icons-material/HorizontalSplitOutlined";
 
-import useNotifications from "../../HomePage/hooks/HomePage/TopBar/useNotifications";
-import useMessages from "../../HomePage/hooks/HomePage/TopBar/useMessages";
+import useNotifications from "../../hooks/useNotificationsState";
+import useMessages from "../../hooks/useMessages";
 
-import { notifications } from "../../HomePage/constants/Notifications/notifications";
-import { messages } from "../../HomePage/constants/Message/messages";
+import { notifications } from "../../constants/Notifications/notifications";
+import { messages } from "../../constants/Message/messages";
 
 function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
   const { notificationList, unreadCount, markAsRead } =

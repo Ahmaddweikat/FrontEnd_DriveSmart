@@ -5,46 +5,57 @@ import Breadcrumb from "./components/Breadcrumb";
 import ProfilePanel from "./components/ProfilePanel";
 import SearchAndFilter from "./components/SearchAndFilter";
 import TestList from "./components/TestList";
-import useNotifications from "../../../../hooks/useNotificationsState";
 import useTests from "./hooks/useTest";
-import useSidebar from "../../../../hooks/useSidebarState";
-import useMessages from "./hooks/useMessages";
-import { notifications } from "../../../../HomePage/constants/Notifications/notifications";
-import { messages } from "../../../../HomePage/constants/Message/messages";
+import useSidebarState from "../../../../hooks/useSidebarState";
+import useNotificationsState from "../../../../hooks/useNotificationsState";
 
 const Tests = () => {
   const {
     filteredTests,
     setFilter,
-    setSelectedRating,
     setSelectedFilter,
     totalTestsTaken,
     totalTestsPassed,
     passRate,
   } = useTests();
+  const {
+    notificationList,
+    showNotifications,
+    toggleNotifications,
+    markAsRead,
+    markAllAsRead,
+  } = useNotificationsState();
 
-  const [filter, setFilterState] = useState(""); // Search filter state
-  const [selectedFilter, setSelectedFilterState] = useState("all"); // Status filter state
+  const [activePage, setActivePage] = useState("test");
+  const [filter, setFilterState] = useState("");
+  const [selectedFilter, setSelectedFilterState] = useState("all");
+  const { isExpanded, toggleSidebar } = useSidebarState();
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-100">
-      <SideBar />
+      <SideBar
+        isExpanded={isExpanded}
+        activePage={activePage}
+        setActivePage={setActivePage}
+      />
       <div className="flex-1 flex flex-col">
-        <TopBar />
+        <TopBar
+          toggleSidebar={toggleSidebar}
+          toggleNotifications={toggleNotifications}
+          showNotifications={showNotifications}
+          notificationList={notificationList}
+          markAsRead={markAsRead}
+          markAllAsRead={markAllAsRead}
+        />
         <Breadcrumb />
         <div className="flex-1 p-8 overflow-y-auto">
           <div className="max-w-7xl mx-auto grid grid-cols-1 gap-6">
-            <ProfilePanel
-              totalTestsTaken={totalTestsTaken}
-              totalTestsPassed={totalTestsPassed}
-              passRate={passRate}
-            />
+            <ProfilePanel />
             <SearchAndFilter
               filter={filter}
-              setFilter={setFilterState}
+              setFilter={setFilter}
               selectedFilter={selectedFilter}
-              setSelectedFilter={setSelectedFilterState}
-              setSelectedRating={setSelectedRating}
+              setSelectedFilter={setSelectedFilter}
             />
             <TestList filteredTests={filteredTests} />
           </div>

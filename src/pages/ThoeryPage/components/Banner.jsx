@@ -1,11 +1,10 @@
 import React from "react";
 import CategoryCard from "./CategoryCard";
-import backgroundImage from "../Images/roadSignss.jpg"; // Adjust the path according to your file structure
+import backgroundImage from "../../../assets/ThoeryPage/Images/roadSignss.jpg";
 
 const Banner = () => {
   return (
     <>
-      {" "}
       {/* Banner */}
       <section
         className="relative min-h-[35vh] md:min-h-[35vh] bg-cover bg-center"

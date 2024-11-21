@@ -15,14 +15,14 @@ import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
 
-import ChatView from "./ChatView";
+import ChatView from "../ChatView";
 
-import useNotifications from "../../hooks/HomePage/TopBar/useNotifications";
-import useMessages from "../../hooks/HomePage/TopBar/useMessages";
-import useDropdown from "../../hooks/HomePage/TopBar/useDropdown";
+import useNotifications from "../../hooks/useNotificationsState";
+import useMessages from "../../hooks/useMessages";
+import useDropdown from "../../hooks/useDropdown";
 
-import { messages } from "./constants/Message/messages"; // Adjust the path to your messages
-import { notifications } from "./constants/Notifications/notifications"; // Adjust the path to your messages
+import { messages } from "../../constants/Message/messages";
+import { notifications } from "../../constants/Notifications/notifications";
 
 function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
   const { notificationList, unreadCount, markAsRead, markAllAsRead } =

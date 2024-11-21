@@ -1,9 +1,9 @@
-import img1 from "../../../Images/alquds1.jpg";
-import img2 from "../../../Images/logo.png";
-import img3 from "../../../Images/mekkawe.svg";
-import img4 from "../../../Images/falasteen_logo.png";
-import img5 from "../../../Images/sama.png";
-import img6 from "../../../Images/Dweikat.png";
+import img1 from "../../../../../assets/HomePage/schools/images/alquds1.jpg";
+import img2 from "../../../../../assets/HomePage/schools/images/logo.png";
+import img3 from "../../../../../assets/HomePage/schools/svgs/mekkawe.svg";
+import img4 from "../../../../../assets/HomePage/schools/images/falasteen_logo.png";
+import img5 from "../../../../../assets/HomePage/schools/images/sama.png";
+import img6 from "../../../../../assets/HomePage/schools/images/Dweikat.png";
 
 const useCardData = () => {
   const cardsData = [

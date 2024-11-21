@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useCourseFilter = () => {
+const useCourseFilter = () => {
   const [filter, setFilter] = useState(""); // Search term
   const [selectedFilter, setSelectedFilter] = useState("all"); // Difficulty filter
 
@@ -33,3 +33,4 @@ export const useCourseFilter = () => {
     applyFilter,
   };
 };
+export default useCourseFilter;

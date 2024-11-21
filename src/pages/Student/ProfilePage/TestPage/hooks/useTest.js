@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { tests } from "../constant/tests"; // assuming tests are imported here
+import { tests } from "../constant/tests";
 
 const useTests = () => {
-  const [filter, setFilter] = useState(""); // Search filter state
-  const [selectedFilter, setSelectedFilter] = useState("all"); // Status filter state
+  const [filter, setFilter] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState("all");
 
   // This will hold the filtered tests
   const [filteredTests, setFilteredTests] = useState(tests);
