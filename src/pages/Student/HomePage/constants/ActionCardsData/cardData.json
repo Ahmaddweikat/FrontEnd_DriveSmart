@@ -1,0 +1,76 @@
+{
+  "cardsData": [
+    {
+      "image": "../../../Images/alquds1.jpg",
+      "title": "AL-QUDS",
+      "description": "Al-Qudus is Driving school in Nablus city and it's one of the best 5 in the city.",
+      "city": "Nablus",
+      "address": "Amman Street",
+      "phone": 2322222,
+      "email": "alquds@example.com",
+      "rating": 5,
+      "managerId": 123,
+      "website": "https://alquds-alhadetha.com"
+    },
+    {
+      "image": "../../../Images/logo.png",
+      "title": "AL-RAJAA",
+      "description": "Al-Rajaa is Driving school in Nablus city and it's one of the best 5 in the city.",
+      "city": "Nablus",
+      "address": "Omar ben alkhatab Street",
+      "phone": 2322222,
+      "email": "alrajaa@example.com",
+      "rating": 5,
+      "managerId": 123,
+      "website": "https://alraja-sch.com"
+    },
+    {
+      "image": "../../../Images/mekkawe.svg",
+      "title": "MEKKAWI",
+      "description": "Al-Mekkawi is Driving school in Nablus city and it's one of the best 5 in the city.",
+      "city": "Nablus",
+      "address": "Rahbat Street",
+      "phone": 2322222,
+      "email": "mekkawi@example.com",
+      "rating": 5,
+      "managerId": 123,
+      "website": "https://mekkawe.com"
+    },
+    {
+      "image": "../../../Images/falasteen_logo.png",
+      "title": "PALESTINE",
+      "description": "Al-Rajaa is Driving school in Nablus city and it's one of the best 5 in the city.",
+      "city": "Berah",
+      "address": "next to alomare mosque",
+      "phone": 2322222,
+      "email": "falesteen@example.com",
+      "rating": 5,
+      "managerId": 123,
+      "website": "http://www.falasteen-ds.ps/"
+    },
+    {
+      "image": "../../../Images/sama.png",
+      "title": "SAMA",
+      "description": "Al-Rajaa is Driving school in Nablus city and it's one of the best 5 in the city.",
+      "city": "Ramallah",
+      "address": "Ersal Street",
+      "phone": 2322222,
+      "email": "sama@example.com",
+      "rating": 5,
+      "managerId": 123,
+      "website": "https://alraja-sch.com"
+    },
+    {
+      "image": "../../../Images/Dweikat.png",
+      "title": "DWEIKAT",
+      "description": "Al-Rajaa is Driving school in Nablus city and it's one of the best 5 in the city.",
+      "city": "Nablus",
+      "address": "almadaress Street",
+      "phone": 2322222,
+      "email": "dweikat@example.com",
+      "rating": 5,
+      "managerId": 123,
+      "website": "https://www.dwikatschool.com/"
+    }
+  ]
+}
