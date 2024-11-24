@@ -1,10 +1,10 @@
 import "./index.css";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import ReactDOM from "react-dom";
-import QuestionsForm from "./pages/Student/QuestionsForm/QuestionsForm";
+import SchoolsPage from "./pages/SchoolsPage/SchoolsPage";
 function App() {
   return (
-    <QuestionsForm />
+    <SchoolsPage />
     // <Router>
     //   <Settings />
     // </Router>
