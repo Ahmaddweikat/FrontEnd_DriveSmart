@@ -1,6 +1,6 @@
 import React from "react";
 import SideBar from "../../components/SideBar";
-import img from "../images/test.jpg";
+import img from "../../../../../assets/BookingAndScheduling/Images/test.jpg";
 import PaymentMethod from "./components/PaymentMethod";
 const Payment = () => {
   return (

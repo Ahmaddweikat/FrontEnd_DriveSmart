@@ -1,10 +1,11 @@
 import "./index.css";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import ReactDOM from "react-dom";
-import SchoolsPage from "./pages/SchoolsPage/SchoolsPage";
+import Type from "./pages/Student/BookingandScheduling/components/TypePage/Type";
+
 function App() {
   return (
-    <SchoolsPage />
+    <Type />
     // <Router>
     //   <Settings />
     // </Router>

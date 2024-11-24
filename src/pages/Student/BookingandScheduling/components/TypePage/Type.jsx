@@ -6,10 +6,10 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardActions from "@mui/material/CardActions";
-import img from "../images/test.jpg";
-import img2 from "./images/learning.jpg";
-import img3 from "./images/practial.jpeg";
-import img4 from "./images/revision.png";
+import img from "../../../../../assets/BookingAndScheduling/Images/test.jpg";
+import img2 from "../../../../../assets/BookingAndScheduling/type/images/learning.jpg";
+import img3 from "../../../../../assets/BookingAndScheduling/type/images/practial.jpeg";
+import img4 from "../../../../../assets/BookingAndScheduling/type/images/revision.png";
 import SideBar from "../SideBar";
 
 const Type = () => {

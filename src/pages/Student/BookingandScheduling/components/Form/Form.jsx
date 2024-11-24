@@ -1,6 +1,6 @@
 import React from "react";
 import SideBar from "../SideBar";
-import img from "../Form/components/images/head.png";
+import img from "../../../../../assets/BookingAndScheduling/Images/test.jpg";
 import Data from "./components/Data";
 
 const Form = () => {
@@ -22,7 +22,12 @@ const Form = () => {
             </h2>
             <div className="absolute inset-0 p-12 mt-6 animate-fade-in2">
               <div className="bg-white p-4 rounded-lg shadow-lg">
-                <Data />
+                <Data
+                  studentName="Ahmad Dweikat"
+                  studentId="12345"
+                  schoolName="Al-Quds"
+                  typeOfLicence="Private"
+                />
               </div>
             </div>
           </div>

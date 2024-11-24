@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import dayjs from "dayjs";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import React from "react";
+import { trainers, cars } from "../../../constants/trainerCarTimes";
+import { useBooking } from "../../../hooks/useBooking";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import Radio from "@mui/material/Radio";
@@ -10,88 +10,29 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Button from "@mui/material/Button";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import dayjs from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"; // Add this line
 
-const trainerCarTimes = {
-  "Trainer A": {
-    "Car 1": ["08:00", "08:40", "09:20", "10:00", "10:40"],
-    "Car 2": ["08:40", "09:20", "10:00", "10:40", "11:20"],
-    "Car 3": ["09:00", "09:40", "10:20", "11:00", "11:40"],
-  },
-  "Trainer B": {
-    "Car 1": ["08:00", "08:40", "09:20", "10:00", "10:40"],
-    "Car 3": ["09:00", "09:40", "10:20", "11:00", "11:40"],
-  },
-  "Trainer C": {
-    "Car 2": ["08:00", "08:40", "09:20", "10:00", "10:40"],
-    "Car 3": ["09:00", "09:40", "10:20", "11:00", "11:40"],
-  },
-};
-
-const trainers = ["Trainer A", "Trainer B", "Trainer C"];
-const cars = ["Car 1", "Car 2", "Car 3"];
-
-const Data = () => {
-  const [value, setValue] = useState(dayjs());
-  const [times, setTimes] = useState([]);
-  const [studentName, setStudentName] = useState("");
-  const [studentId, setStudentId] = useState("");
-  const [schoolName, setSchoolName] = useState("");
-  const [typeOfLicence, setTypeOfLicence] = useState("");
-  const [selectedTrainer, setSelectedTrainer] = useState("");
-  const [selectedCar, setSelectedCar] = useState("");
-  const [bookingType, setBookingType] = useState("once");
-  const [availableTimes, setAvailableTimes] = useState([]);
-  const [selectedTime, setSelectedTime] = useState(""); // State to track selected time
-  const minDate = dayjs().isAfter(value) ? dayjs() : value; // Ensure today or selected date
-  const maxDate = minDate.add(15, "day"); // 15 days from minDate
-  const [dateRange, setDateRange] = useState("");
-
-  useEffect(() => {
-    const loadTimes = () => {
-      if (!selectedTrainer) return setTimes([]);
-
-      const allCarTimes =
-        selectedCar === "Any Car"
-          ? Object.values(trainerCarTimes[selectedTrainer]).flat()
-          : trainerCarTimes[selectedTrainer][selectedCar] || [];
-
-      setTimes([...new Set(allCarTimes)]);
-    };
-
-    loadTimes();
-  }, [selectedTrainer, selectedCar]);
-
-  useEffect(() => {
-    if (bookingType === "daily") {
-      const timesForRange = [];
-      const startDate = minDate.format("D MMMM"); // e.g., "November 13"
-      const endDate = minDate.add(14, "day").format("D MMMM"); // e.g., "November 27"
-
-      timesForRange.push({
-        dateRange: `${startDate} to ${endDate}`,
-        times: times, // Available times for the entire range
-      });
-
-      setAvailableTimes(timesForRange);
-    } else {
-      setAvailableTimes([{ date: value.format("YYYY-MM-DD"), times }]);
-    }
-  }, [value, bookingType, times, minDate]);
-
-  const handleDateChange = (newValue) => {
-    setValue(newValue);
-  };
-
-  const handleBookingTypeChange = (event) => {
-    setBookingType(event.target.value);
-  };
+const Data = ({ studentName, studentId, schoolName, typeOfLicence }) => {
+  const {
+    value,
+    setValue,
+    times,
+    availableTimes,
+    selectedTime,
+    handleTimeSelect,
+    selectedTrainer,
+    setSelectedTrainer,
+    selectedCar,
+    setSelectedCar,
+    bookingType,
+    setBookingType,
+    minDate,
+    maxDate,
+  } = useBooking();
 
   const disablePastDates = (date) => {
     return dayjs(date).isBefore(dayjs(), "day");
-  };
-  const handleTimeSelect = (time) => {
-    // Set selected time and toggle active class
-    setSelectedTime(time === selectedTime ? "" : time); // Deselect if already selected
   };
 
   return (
@@ -162,18 +103,13 @@ const Data = () => {
 
       <div className="mt-4">
         <FormControl>
-          <FormLabel
-            sx={{
-              color: "#4b5563",
-              fontWeight: 600,
-            }}
-          >
+          <FormLabel sx={{ color: "#4b5563", fontWeight: 600 }}>
             Daily / Once
           </FormLabel>
           <RadioGroup
             row
             value={bookingType}
-            onChange={handleBookingTypeChange}
+            onChange={(e) => setBookingType(e.target.value)}
           >
             <FormControlLabel
               value="daily"
@@ -202,7 +138,7 @@ const Data = () => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateCalendar
               value={value}
-              onChange={handleDateChange}
+              onChange={setValue}
               shouldDisableDate={disablePastDates}
             />
           </LocalizationProvider>
@@ -241,7 +177,7 @@ const Data = () => {
                               selectedTime === time ? "#72b626" : "#f3f3f3",
                           },
                         }}
-                        onClick={() => handleTimeSelect(time)} // Handle time selection
+                        onClick={() => handleTimeSelect(time)}
                       >
                         {time}
                       </Button>
@@ -258,6 +194,7 @@ const Data = () => {
             </p>
           )}
         </div>
+
         <div className="mt-4 text-center">
           <Button
             variant="outlined"

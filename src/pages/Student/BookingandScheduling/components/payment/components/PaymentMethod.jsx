@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import visa from "./images/visa.svg";
-import cash from "./images/cash.svg";
-import mastercard from "./images/mastercard.svg";
+import visa from "../../../../../../assets/BookingAndScheduling/svgs/visa.svg";
+import cash from "../../../../../../assets/BookingAndScheduling/svgs/cash.svg";
+import mastercard from "../../../../../../assets/BookingAndScheduling/svgs/mastercard.svg";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -11,26 +11,19 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button"; // Import Button component
+import Button from "@mui/material/Button";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+
+import { useCardInput } from "../../../hooks/useCardInput";
+import { useDateInput } from "../../../hooks/useDateInput";
+
 function PaymentPage() {
   const [paymentMethod, setPaymentMethod] = useState("CreditCard");
-  const [date, setDate] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [cvv, setCvv] = useState("");
 
-  const handleCardNumberChange = (e) => {
-    let value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-    value = value.slice(0, 16); // Limit to 16 characters
-    // Format with spaces after every 4 digits
-    value = value.replace(/(.{4})/g, "$1 ").trim();
-    setCardNumber(value);
-  };
-
-  const handleCvvChange = (e) => {
-    const value = e.target.value.replace(/\D/g, "").slice(0, 3); // Limit to 3 characters
-    setCvv(value);
-  };
+  // Using custom hooks for payment form logic
+  const { cardNumber, cvv, handleCardNumberChange, handleCvvChange } =
+    useCardInput();
+  const { date, handleDateChange } = useDateInput();
 
   return (
     <div className="max-w-5xl mx-auto p-6 bg-white shadow-md rounded-md font-sans">
@@ -120,7 +113,7 @@ function PaymentPage() {
                         id="month-select"
                         value={date}
                         label="Month"
-                        onChange={(e) => setDate(e.target.value)}
+                        onChange={handleDateChange}
                       >
                         <MenuItem value="">
                           <em>None</em>
@@ -161,14 +154,15 @@ function PaymentPage() {
                     onChange={handleCvvChange}
                     sx={{
                       minWidth: 120,
-                      marginRight: "45px",
+                      marginRight: "60px",
                       marginTop: "12px",
+
                       "& .MuiInputBase-root": {
-                        height: "55px", // This targets the height of the input field
+                        height: "55px",
                       },
                     }}
                     InputLabelProps={{
-                      className: "flex items-center justify-center w-full mt-2", // This centers the label horizontally
+                      className: "flex items-center justify-center w-full mt-2",
                     }}
                   />
                 </div>
