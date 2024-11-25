@@ -1,5 +1,5 @@
 import React from "react";
-import useNewPasswordForm from "../../hooks/ForgetPassword/NewPasswordPage/useNewPasswordForm"; // Adjust the import path if necessary
+import useNewPasswordForm from "./hooks/useNewPasswordForm";
 
 function NewPassword() {
   const {

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
-import useMessages from "../../hooks/HomePage/ChatView/useMessages";
-import useMessageInput from "../../hooks/HomePage/ChatView/useMessageInput";
+import useMessageInput from './../../Student/HomePage/hooks/ChatView/useMessageInput';
+import useMessages from './../../../hooks/useMessages';
+
 
 const ChatView = ({ initialMessages = [], onClose }) => {
   const { messagesList, addMessage } = useMessages(initialMessages);

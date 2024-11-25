@@ -1,5 +1,5 @@
 import React from "react";
-import { licenseSections } from "../../HomePage/components/constants/FlipSection/licenseSections"; // Adjust the path as needed
+import { licenseSections } from "./../../Student/HomePage/constants/FlipSection/licenseSections";
 
 const FlipSection = () => {
   return (

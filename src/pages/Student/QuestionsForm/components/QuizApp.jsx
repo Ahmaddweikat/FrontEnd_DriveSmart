@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes, faFlag } from "@fortawesome/free-solid-svg-icons";
-import { questions } from "../Forms/Form1"; // Import the questions array
+import { questions } from "../data/Form1"; // Import the questions array
 
 const QuizApp = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);

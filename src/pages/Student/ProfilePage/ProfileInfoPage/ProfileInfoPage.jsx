@@ -6,7 +6,7 @@ import ProfileInformation from "./components/ProfileInformation";
 import useNotificationsMessages from "../../../../hooks/useNotificationsState";
 import useSidebarState from "../../../../hooks/useSidebarState";
 
-const Profile = () => {
+const ProfileInfoPage = () => {
   const [activePage, setActivePage] = useState("profile");
   const {
     notificationList,
@@ -40,4 +40,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfileInfoPage;

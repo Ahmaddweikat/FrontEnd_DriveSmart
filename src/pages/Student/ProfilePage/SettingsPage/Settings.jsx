@@ -7,7 +7,6 @@ import useNotifications from "../../../../hooks/useNotificationsState";
 import useProfilePicture from "./hooks/useProfilePicture";
 import useSidebar from "../../../../hooks/useSidebarState";
 import { notifications } from "../../../../constants/Notifications/notifications";
-import { messages } from "../../../../constants/Message/messages";
 
 const Settings = () => {
   const {

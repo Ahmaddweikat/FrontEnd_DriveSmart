@@ -1,5 +1,5 @@
 import React from "react";
-import img from "../components/images/test.jpg";
+import img from "./../../../../assets/BookingAndScheduling/Images/test.jpg";
 import Button from "@mui/material/Button";
 import ScheduleSendOutlinedIcon from "@mui/icons-material/ScheduleSendOutlined";
 const Content = () => {

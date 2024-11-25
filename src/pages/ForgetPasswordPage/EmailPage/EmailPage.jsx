@@ -1,5 +1,5 @@
 import React from "react";
-import useEmailForm from "../../hooks/ForgetPassword/EmailPage/Email"; // Adjust the import path if necessary
+import useEmailForm from "./hooks/useEmailForm";
 
 function EmailPage() {
   const { email, error, handleEmailChange, validateEmail, resetEmail } =

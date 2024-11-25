@@ -11,7 +11,7 @@ import useSearchState from "./hooks/useSearchState"; // Import custom hook
 import useSidebarState from "../../../../hooks/useSidebarState"; // Import custom hook
 import { lessons } from "./constants/Lessons"; // Assuming lessons are imported
 
-const Lessons = () => {
+const LessonsPage = () => {
   const [activePage, setActivePage] = useState("lessons");
   const [filter, setFilter] = useState({}); // Filter state initialized here
 
@@ -76,4 +76,4 @@ const Lessons = () => {
   );
 };
 
-export default Lessons;
+export default LessonsPage;

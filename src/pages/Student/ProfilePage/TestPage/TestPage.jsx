@@ -9,7 +9,7 @@ import useTests from "./hooks/useTest";
 import useSidebarState from "../../../../hooks/useSidebarState";
 import useNotificationsState from "../../../../hooks/useNotificationsState";
 
-const Tests = () => {
+const TestPage = () => {
   const {
     filteredTests,
     setFilter,
@@ -65,4 +65,4 @@ const Tests = () => {
   );
 };
 
-export default Tests;
+export default TestPage;

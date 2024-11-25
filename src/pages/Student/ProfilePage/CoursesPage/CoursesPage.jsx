@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import TopBar from "../../../../components/ProfileTopBar/TopBar.jsx";
 import Sidebar from "../../../../components/ProfileSideBar/Sidebar.jsx";
-import ProfilePanel from "./components/ProfilePanel";
-import SearchAndFilter from "./components/SearchAndFilter";
-import CoursesList from "./components/CoursesList";
+import ProfilePanel from "./components/ProfilePanel.jsx";
+import SearchAndFilter from "./components/SearchAndFilter.jsx";
+import CoursesList from "./components/CoursesList.jsx";
 
 import useNotifications from "../../../../hooks/useNotificationsState.js";
 
 import useMessages from "../../../../hooks/useMessages.js";
-import useCourseFilter from "./hooks/useCourseFilter";
+import useCourseFilter from "./hooks/useCourseFilter.js";
 
 import { notifications } from "../../../../constants/Notifications/notifications.js";
 import { messages } from "../../../../constants/Message/messages.js";
 import { courses } from "./constant/courses.js";
 import useSidebarState from "../../../../hooks/useSidebarState.js"; // Import custom hook
 
-const Courses = () => {
+const CoursesPage = () => {
   const [activePage, setActivePage] = useState("courses");
   const {
     notificationList,
@@ -68,4 +68,4 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+export default CoursesPage;

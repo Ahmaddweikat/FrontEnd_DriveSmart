@@ -1,5 +1,5 @@
 import React from "react";
-import useCodeVerification from "../../hooks/ForgetPassword/CodePage/useCodeVerification"; // Adjust the path as necessary
+import useCodeVerification from './hooks/useCodeVerification';
 
 function Code() {
   const { code, error, handleChange, handleSubmit } = useCodeVerification();
