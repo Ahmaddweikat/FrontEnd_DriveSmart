@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 // import BackgroundImage from "./components/images/SideImage.jpg";
 import SideImage from "./components/images/2.jpg";
 
-const TrainerSignUpPage = () => {
+const SignUpPage = () => {
   const vehicleOptions = ["Car", "Truck", "Motorcycle", "Bus"];
   const availabilityOptions = [
     "Select your availability",
@@ -94,4 +94,4 @@ const TrainerSignUpPage = () => {
   );
 };
 
-export default TrainerSignUpPage;
+export default SignUpPage;
