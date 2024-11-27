@@ -5,7 +5,7 @@ import Button from "./components/Button";
 import Footer from "./components/Footer";
 import SideImage from "./components/images/p.jpg";
 
-const OwnerSignUpPage = () => {
+const SignUpPage = () => {
   const [ownerName, setOwnerName] = useState("");
   const [schoolName, setSchoolName] = useState("");
   const [email, setEmail] = useState("");
@@ -167,4 +167,4 @@ const OwnerSignUpPage = () => {
   );
 };
 
-export default OwnerSignUpPage;
+export default SignUpPage;
