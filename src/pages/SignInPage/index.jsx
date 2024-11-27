@@ -1,14 +1,29 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
-// import Logo from "./components/Logo";
+import { Controller, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import Logo from "../../assets/DRIVESMART.png";
+import backgroundImage from "../../assets/LoginPage/images/Wallpaper.jpg";
+import Footer from "./components/Footer";
 import InputField from "./components/InputField";
 import RememberMe from "./components/RememberMe";
 import SignInButton from "./components/SignInButton";
-import Footer from "./components/Footer";
-import backgroundImage from "../../assets/LoginPage/images/Wallpaper.jpg"; // Adjust the path according to your file structure
-import { Link } from "react-router-dom"; // Import Link for routing
-import Logo from "../../assets/DRIVESMART.png";
+import useSignIn from "./hooks/useSignIn";
+import { signInSchema } from "./schemas/signInSchema";
 
 function SignInPage() {
+  const { signIn, isLoading, error } = useSignIn();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(signInSchema),
+  });
+
+  const onSubmit = (data) => signIn(data);
+
   return (
     <div
       className="flex justify-center items-center min-h-screen bg-cover bg-center"
@@ -28,11 +43,46 @@ function SignInPage() {
         </h1>
 
         {/* Sign-in Form */}
-        <form className="space-y-4">
-          <InputField type="email" placeholder="Email" label="Email" />
-          <InputField type="password" placeholder="Password" label="Password" />
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <InputField
+                type="email"
+                placeholder="Email"
+                label="Email"
+                {...field}
+              />
+            )}
+          />
+          {errors.email && (
+            <span className="text-red-500 text-sm">{errors.email.message}</span>
+          )}
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <InputField
+                type="password"
+                placeholder=" Password"
+                label="Password"
+                {...field}
+              />
+            )}
+          />
+          {errors.password && (
+            <span className="text-red-500 text-sm">
+              {errors.password.message}
+            </span>
+          )}
           <RememberMe />
-          <SignInButton />
+          <SignInButton isLoading={isLoading} />
+          {error && (
+            <p className="text-red-500 text-sm">
+              The password or email you entered is incorrect.
+            </p>
+          )}
         </form>
         {/* Register Link */}
         <p className="mt-6 text-sm text-gray-600">
