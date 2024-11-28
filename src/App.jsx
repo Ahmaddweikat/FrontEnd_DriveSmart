@@ -1,14 +1,14 @@
 import "./index.css";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import ReactDOM from "react-dom";
-import TrafficSigns from "./pages/TrafficSigns/TrafficSigns";
+import SignUpPage from "./pages/Student/SignUpPage/SignUpPage";
 
 function App() {
   return (
-    <TrafficSigns />
-    // <Router>
-    //   <Settings />
-    // </Router>
+    // <Form />
+    <Router>
+      <SignUpPage />
+    </Router>
   );
 }
 ReactDOM.render(<App />, document.getElementById("root")); // Render the App component
