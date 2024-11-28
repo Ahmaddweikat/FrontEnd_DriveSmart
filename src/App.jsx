@@ -1,11 +1,11 @@
 import "./index.css";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import ReactDOM from "react-dom";
-import Type from "./pages/Student/BookingandScheduling/components/TypePage/Type";
+import TrafficSigns from "./pages/TrafficSigns/TrafficSigns";
 
 function App() {
   return (
-    <Type />
+    <TrafficSigns />
     // <Router>
     //   <Settings />
     // </Router>
