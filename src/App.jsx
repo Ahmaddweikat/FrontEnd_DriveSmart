@@ -1,11 +1,11 @@
 import "./index.css";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import ReactDOM from "react-dom";
-import Form from "./pages/Student/BookingandScheduling/components/Form/Form";
+import GetALicense from "./pages/Student/GetALicense/GetALicense";
 
 function App() {
   return (
-    <Form />
+    <GetALicense />
     // <Router>
     //   <SignUpPage />
     // </Router>
