@@ -11,7 +11,7 @@ import NorthIcon from "@mui/icons-material/North";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import FlipSection from "./components/FlipSection";
 
-import useScrollManagement from "./hooks/useScrollManagement";
+import useScrollManagement from "../../../hooks/useScrollManagement";
 import useNotifications from "../../../hooks/useNotificationsState";
 import useMessages from "../../../hooks/useMessages";
 
