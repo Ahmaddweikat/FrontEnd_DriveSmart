@@ -6,7 +6,7 @@ function GenderSection() {
       <label className="block text-sm font-medium text-gray-600 mb-1">
         Gender
       </label>
-      <div className="flex space-x-4">
+      <div className="flex space-x-4 w-full border border-gray-300 p-2 rounded-lg focus:ring-customGreen hover:border-customGreen">
         <label className="flex items-center space-x-2">
           <input
             type="radio"
