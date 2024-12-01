@@ -1,4 +1,3 @@
-// ProfilePanel.js
 import React from "react";
 
 const ProfilePanel = ({ lessons = [] }) => {
