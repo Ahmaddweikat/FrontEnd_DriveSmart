@@ -1,19 +1,18 @@
-import TopBar from "../../../components/HomeTopBar/TopBar";
-import Footer from "../../../components/Footer";
-import ImageSlider from "./components/ImageSlider";
-import ActionAreaCard from "./components/ActionAreaCard";
-import EmojiTransportationIcon from "@mui/icons-material/EmojiTransportation";
 import AccessAlarmsIcon from "@mui/icons-material/AccessAlarms";
-import TrafficOutlinedIcon from "@mui/icons-material/TrafficOutlined";
-import TimeCard from "./components/FlipCard";
-import Button from "@mui/material/Button";
-import NorthIcon from "@mui/icons-material/North";
+import EmojiTransportationIcon from "@mui/icons-material/EmojiTransportation";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import NorthIcon from "@mui/icons-material/North";
+import TrafficOutlinedIcon from "@mui/icons-material/TrafficOutlined";
+import Button from "@mui/material/Button";
+import Footer from "../../components/Footer";
+import ActionAreaCard from "./components/ActionAreaCard";
+import TimeCard from "./components/FlipCard";
 import FlipSection from "./components/FlipSection";
+import ImageSlider from "./components/ImageSlider";
 
-import useNotifications from "../../../hooks/useNotificationsState";
-import useMessages from "../../../hooks/useMessages";
-import useScrollManagement from "./../../../hooks/useScrollManagement";
+import useMessages from "../../hooks/useMessages";
+import useNotifications from "../../hooks/useNotificationsState";
+import useScrollManagement from "./../../hooks/useScrollManagement";
 
 const HomePage = () => {
   const { showBackToTop, showTopBar } = useScrollManagement();
@@ -32,26 +31,6 @@ const HomePage = () => {
   };
   return (
     <div className="grid grid-row-5 bg-custombg">
-      <div
-        className={`fixed top-0 left-0 w-full transition-transform transform z-50 ${
-          showTopBar
-            ? "translate-y-0 opacity-100"
-            : "-translate-y-full opacity-0"
-        }`}
-      >
-        {showTopBar && (
-          <TopBar
-            toggleNotifications={toggleNotifications}
-            toggleMessageNotifications={toggleMessageNotifications}
-            showNotifications={showNotifications}
-            showMessageNotifications={showMessageNotifications}
-            notificationList={notificationList}
-            messagesList={messagesList}
-            markAsRead={markAsRead}
-            markAllAsRead={markAllAsRead}
-          />
-        )}
-      </div>
       <div>
         <ImageSlider />
       </div>

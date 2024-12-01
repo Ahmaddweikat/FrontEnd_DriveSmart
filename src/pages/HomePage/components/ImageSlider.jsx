@@ -1,13 +1,13 @@
-import React, { forwardRef } from "react";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
-import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import InfoIcon from "@mui/icons-material/Info";
+import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import HomeIcon from "@mui/icons-material/Home";
-import useImageSlider from "../hooks/ImageSlider/useImageSlider";
+import InfoIcon from "@mui/icons-material/Info";
+import React, { forwardRef } from "react";
 import sliderContent from "../constants/ImageSlider/sliderContent";
+import useImageSlider from "../hooks/ImageSlider/useImageSlider";
 import Dropdown from "./Dropdown";
 
 const ImageSlider = forwardRef(({ isExpanded }, ref) => {
