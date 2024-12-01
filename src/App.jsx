@@ -1,14 +1,14 @@
 import "./index.css";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import ReactDOM from "react-dom";
-import Lessons from "./pages/Student/ProfilePage/LessonsPage/Lessons";
+import GetALicense from "./pages/Student/GetALicense/GetALicense";
 
 function App() {
   return (
-    // <GetALicense />
-    <Router>
-      <Lessons />
-    </Router>
+    <GetALicense />
+    // <Router>
+    //   <SignUpPage />
+    // </Router>
   );
 }
 ReactDOM.render(<App />, document.getElementById("root")); // Render the App component

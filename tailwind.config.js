@@ -29,6 +29,7 @@ module.exports = {
         customGrayBG: "#e4e4e4",
         customGrayop: "#f3f3f3",
         custombg: "#f1f1f1",
+        customGold: "#FFD700",
       },
       animation: {
         underlineShrink: "underlineShrink 0.4s ease-in-out forwards",
