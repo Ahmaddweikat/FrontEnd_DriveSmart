@@ -3,12 +3,12 @@ import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 
 const SearchAndFilter = ({
-  handleFilterSelect, // Function to handle filter selection
+  handleFilterSelect,
   selectedRating,
   setHoveredRating,
   hoveredRating,
-  setSearchTerm, // Function to set search term
-  resetRating, // Function to reset rating to 'All'
+  setSearchTerm,
+  resetRating,
 }) => {
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -24,6 +24,7 @@ const SearchAndFilter = ({
 
   const handleClear = () => {
     resetRating();
+    setSearchTerm("");
   };
 
   return (
