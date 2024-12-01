@@ -4,7 +4,7 @@ import licenseInfo from "./constant/licenseInfo";
 import Footer from "../../../components/Footer";
 import HeaderSection from "./components/HeaderSection";
 import LicenseCard from "./components/LicenseCard";
-import ChatApp from "../../ChatApp/ChatApp"; // Make sure this import is correct
+import ChatApp from "../../../components/ChatApp/ChatApp"; // Make sure this import is correct
 import CloseIcon from "@mui/icons-material/Close";
 
 const GetALicense = () => {
