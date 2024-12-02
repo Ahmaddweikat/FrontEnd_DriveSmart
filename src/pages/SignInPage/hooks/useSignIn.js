@@ -18,7 +18,7 @@ const useSignIn = () => {
 
       // Navigate based on user role
       const user = useAuthStore.getState().user;
-      navigate(`/${user.role}/dashboard`);
+      navigate(`/${user.role}`);
     },
   });
 

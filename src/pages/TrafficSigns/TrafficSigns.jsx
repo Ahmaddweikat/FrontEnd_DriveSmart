@@ -1,19 +1,17 @@
 import React from "react";
-import WarningSigns from "./constants/WarningSigns";
+import backgroundImage from "../../assets/TrafficSigns/SideImage.jpg";
+import Footer from "../../components/Footer";
 import GuidanceSigns from "./constants/GuidanceSign";
+import HelpfulSignals from "./constants/HelpingSigns";
 import InquirySigns from "./constants/InquirySigns";
 import RoadSurfaceSigns from "./constants/Signspaintedontheroadsurface";
 import TrafficLightsSigns from "./constants/TrafficlightsandlanecontrolSigns";
-import HelpfulSignals from "./constants/HelpingSigns";
-import Footer from "../../components/Footer";
-import TopBar from "../../components/HomeTopBar/TopBar";
-import backgroundImage from "../../assets/TrafficSigns/SideImage.jpg";
+import WarningSigns from "./constants/WarningSigns";
 const TrafficSigns = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* TopBar */}
       <div className="mb-12">
-        <TopBar />
         <section className="relative min-h-[60vh] md:min-h-[60vh] bg-cover bg-center">
           <div
             className={`h-full w-full absolute object-cover inset-0 transition-opacity duration-700`}
