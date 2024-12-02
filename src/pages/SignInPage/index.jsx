@@ -26,10 +26,10 @@ function SignInPage() {
 
   return (
     <div
-      className="flex justify-center items-center min-h-screen bg-cover bg-center"
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-      }}
+      className="flex justify-center items-center min-h-screen bg-cover bg-center bg-gray-100"
+      // style={{
+      //   backgroundImage: `url(${backgroundImage})`,
+      // }}
     >
       <div className="relative w-full max-w-md p-8 bg-white text-center rounded-lg shadow-lg mx-4">
         {/* Logo inside the input panel */}
@@ -38,7 +38,7 @@ function SignInPage() {
         </div>
 
         {/* Sign-in Heading below the logo */}
-        <h1 className="text-4xl font-serif font-bold mb-8 text-left text-gray-800">
+        <h1 className="text-4xl font-bold mb-8 text-left text-gray-800">
           Sign in
         </h1>
 
@@ -93,14 +93,14 @@ function SignInPage() {
         </p>
 
         {/* OR Separator */}
-        <div className="flex items-center mt-6 mb-4">
+        {/* <div className="flex items-center mt-6 mb-4">
           <hr className="w-full border-gray-300" />
           <span className="px-2 text-gray-500">or</span>
           <hr className="w-full border-gray-300" />
-        </div>
+        </div> */}
 
         {/* Google Sign-in Button with SVG Logo */}
-        <button className="w-full flex items-center justify-center border border-gray-300 text-gray-700 py-2 rounded hover:bg-gray-100">
+        {/* <button className="w-full flex items-center justify-center border border-gray-300 text-gray-700 py-2 rounded hover:bg-gray-100">
           <svg
             className="h-5 w-5 mr-2"
             focusable="false"
@@ -129,7 +129,7 @@ function SignInPage() {
             ></path>
           </svg>
           Sign in with Google
-        </button>
+        </button> */}
         {/* Footer Component */}
         <div className="mt-8">
           <Footer />

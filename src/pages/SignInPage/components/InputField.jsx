@@ -12,7 +12,7 @@ function InputField({ type, placeholder, label, ...otherProps }) {
     <div className="mb-4">
       <div className="flex justify-between items-center mb-1">
         <label
-          className="block font-serif font-medium text-base text-gray-700 text-left"
+          className="block font-medium text-base text-gray-700 text-left"
           htmlFor={placeholder}
         >
           {label}
