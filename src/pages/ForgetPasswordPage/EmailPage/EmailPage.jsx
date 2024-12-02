@@ -30,7 +30,7 @@ function EmailPage() {
         <div className="w-full lg:w-96 flex flex-col justify-center">
           <form onSubmit={handleSubmit(onSubmit)}>
             <h1 className="text-2xl font-semibold text-gray-800 mb-5">
-              Forgot Password
+              Forget Password
             </h1>
             <p className="text-sm text-gray-500 mb-4">
               Enter your email and we'll send you a code to reset your password.

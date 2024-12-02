@@ -24,7 +24,7 @@ import useFilter from "./hooks/useFilter";
 import usePagination from "./hooks/usePagination";
 import useFilteredCards from "./hooks/useFilteredCards";
 
-const HomePage = () => {
+const SchoolsPage = () => {
   const cardsData = useCardData();
 
   const {
@@ -216,4 +216,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default SchoolsPage;
