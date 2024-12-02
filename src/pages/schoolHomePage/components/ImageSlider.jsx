@@ -6,10 +6,11 @@ import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import InfoIcon from "@mui/icons-material/Info";
 import HomeIcon from "@mui/icons-material/Home";
-import useImageSlider from "../../hooks/HomePage/ImageSlider/useImageSlider";
-import { sliderContent2 } from "../../HomePage/components/constants/ImageSlider/sliderContent";
+
 import Dropdown from "./Dropdown";
-import logo from "../../HomePage/Images/alqudsLogo.png";
+// import logo from "../../HomePage/Images/alqudsLogo.png";
+import { sliderContent2 } from "./../../Student/HomePage/constants/ImageSlider/sliderContent";
+import useImageSlider from "./../../Student/HomePage/hooks/ImageSlider/useImageSlider";
 
 console.log(sliderContent2); // This will display the second array
 

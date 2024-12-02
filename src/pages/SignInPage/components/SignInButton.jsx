@@ -1,12 +1,12 @@
 import React from "react";
 
-function SignInButton() {
+function SignInButton({ isLoading }) {
   return (
     <button
       type="submit"
-      className="w-full bg-customRed text-black font-normal p-3 rounded-lg hover:bg-red-600 transition-colors font-serif"
+      className="w-full text-black font-normal p-3 rounded-lg transition-colors shadow-md bg-customGreen text-white hover:bg-green-600"
     >
-      Sign In
+      {isLoading ? "Loading..." : "Sign in"}
     </button>
   );
 }

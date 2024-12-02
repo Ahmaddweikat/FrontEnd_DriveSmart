@@ -39,7 +39,7 @@ const SchoolHome = () => {
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [showTopBar, setShowTopBar] = useState(false);
+  const [showTopBar, setShowTopBar] = useState(true);
   const notificationRef = useRef(null);
   const [notificationList, setNotificationList] = useState(notifications);
   const [messagesList, setMessagesList] = useState(messages);

@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
 import CloseIcon from "@mui/icons-material/Close";
@@ -11,24 +10,20 @@ import InfoIcon from "@mui/icons-material/Info";
 import HomeIcon from "@mui/icons-material/Home";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
-
 import ChatView from "./ChatView";
 
-import useNotifications from "../../hooks/HomePage/TopBar/useNotifications";
-import useMessages from "../../hooks/HomePage/TopBar/useMessages";
-import useDropdown from "../../hooks/HomePage/TopBar/useDropdown";
-
-import { messages } from "../../HomePage/components/constants/Message/messages"; // Adjust the path to your messages
-import { notifications } from "../../HomePage/components/constants/Notifications/notifications"; // Adjust the path to your messages
-
-import logo from "../../HomePage/Images/alqudsLogo.png";
+import logo from "../../../assets/HomePage/ImageSlider/Images/alqudsLogo.png";
+import useDropdown from "./../../../hooks/useDropdown";
+import useMessages from "./../../Student/HomePage/hooks/ChatView/useMessages";
+import useNotificationsState from "./../../../hooks/useNotificationsState";
+import { notifications } from "./../../../constants/Notifications/notifications";
+import { messages } from "./../../../constants/Message/messages";
 
 function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
   const { notificationList, unreadCount, markAsRead, markAllAsRead } =
-    useNotifications(notifications);
+    useNotificationsState(notifications);
 
   const {
     messagesList,
@@ -37,7 +32,7 @@ function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
     setShowMessagePanel,
     searchQuery,
     setSearchQuery,
-    filteredMessages,
+    filteredMessages = [],
     openChat,
     closeChat,
   } = useMessages(messages);
@@ -51,7 +46,9 @@ function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
   };
 
   // Count unread messages
-  const unreadMessageCount = filteredMessages.filter((msg) => !msg.read).length;
+  const unreadMessageCount = (filteredMessages || []).filter(
+    (msg) => !msg.read
+  ).length;
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
