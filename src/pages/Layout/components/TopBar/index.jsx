@@ -1,17 +1,17 @@
-import { useState } from "react";
-import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
-import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
 import CloseIcon from "@mui/icons-material/Close";
-import Avatar from "@mui/material/Avatar";
-import Badge from "@mui/material/Badge";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import HorizontalSplitOutlinedIcon from "@mui/icons-material/HorizontalSplitOutlined";
-
-import useNotifications from "../../hooks/useNotificationsState";
-import useMessages from "../../hooks/useMessages";
-
-import { notifications } from "../../constants/Notifications/notifications";
-import { messages } from "../../constants/Message/messages";
+import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import Avatar from "@mui/material/Avatar";
+import Badge from "@mui/material/Badge";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { messages } from "../../../../constants/Message/messages";
+import { notifications } from "../../../../constants/Notifications/notifications";
+import useMessages from "../../../../hooks/useMessages";
+import useNotifications from "../../../../hooks/useNotificationsState";
+import useAuthStore from "../../../../store/auth.store";
 
 function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
   const { notificationList, unreadCount, markAsRead } =
@@ -36,6 +36,8 @@ function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
   const handleProfileDropdown = () => {
     setShowProfileDropdown((prev) => !prev);
   };
+
+  const { user, logout } = useAuthStore();
 
   return (
     <div className="bg-white shadow p-4 flex justify-between items-center relative h-20 z-10">
@@ -214,13 +216,20 @@ function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
           </button>
           {showProfileDropdown && (
             <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-50">
-              <button className="w-full text-left px-4 py-2 hover:bg-gray-200">
-                Profile
-              </button>
-              <button className="w-full text-left px-4 py-2 hover:bg-gray-200">
-                Settings
-              </button>
-              <button className="w-full text-left px-4 py-2 hover:bg-gray-200">
+              <Link to={`/${user.role}/profile`}>
+                <button className="w-full text-left px-4 py-2 hover:bg-gray-200">
+                  Profile
+                </button>
+              </Link>
+              <Link to={`/${user.role}/settings`}>
+                <button className="w-full text-left px-4 py-2 hover:bg-gray-200">
+                  Settings
+                </button>
+              </Link>
+              <button
+                onClick={() => logout()}
+                className="w-full text-left px-4 py-2 hover:bg-gray-200"
+              >
                 Logout
               </button>
             </div>

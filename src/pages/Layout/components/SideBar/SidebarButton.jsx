@@ -1,22 +1,14 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom"; // Import BrowserRouter, Route, and Link
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
-function SidebarButton({
-  icon,
-  label,
-  isExpanded,
-  active,
-  setActivePage,
-  pageName,
-}) {
+function SidebarButton({ icon, label, isExpanded, active, pageName }) {
   return (
     <Link
       to={`/${pageName}`}
       className="group relative flex items-center w-full"
     >
       <button
-        onClick={() => setActivePage(pageName)}
         className={`relative flex items-center justify-start w-full px-5 py-3 rounded-lg ${
           active ? "text-customGreen" : "hover:bg-gray-100"
         } transition-colors duration-300`}
@@ -34,7 +26,7 @@ function SidebarButton({
           </span>
         )}
         {active && (
-          <span className="absolute right-0 top-1/2 transform -translate-y-1/2 h-12 w-1 bg-customGreen transition-all duration-300"></span>
+          <span className="absolute right-0 top-1/2 transform -translate-y-1/2 h-12 w-1 bg-customGreen transition-all duration-300" />
         )}
       </button>
       {!isExpanded && (
