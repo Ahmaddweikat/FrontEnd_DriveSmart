@@ -1,136 +1,85 @@
 import React, { useState } from "react";
-import visa from "../../payment/components/images/visa.svg";
-import mastercard from "../../payment/components/images/mastercard.svg";
-import lessonImage from "../../TypePage/images/practial.jpeg";
-const Details = () => {
-  const [studentName, setStudentName] = useState("Ahmad Dweikat");
-  const [studentId, setStudentId] = useState("1234");
-  const [schoolName, setSchoolName] = useState("Al-Quds");
-  const [typeOfLicence, setTypeOfLicence] = useState("Private");
-  const [trainerName, setTrainerName] = useState("John Doe");
-  const [typeOfBooking, setTypeOfBooking] = useState("Daily");
-  const [paymentType, setPaymentType] = useState("Credit Card");
+import { Box, Typography, Grid, TextField, Button, Divider, MenuItem } from "@mui/material";
 
+import CalculateIcon from '@mui/icons-material/Calculate';
+
+const LESSON_TYPES = [
+  { type: "Theoretical Lesson", cost: 75 },
+  { type: "Practical Lesson", cost: 90 },
+  { type: "Revision Lesson", cost: 60 }
+];
+
+const Details = ({ selectedLessonType, numberOfLessons }) => {
+
+  const calculateTotalCost = () => {
+    const lessonType = LESSON_TYPES.find(lesson => lesson.type === selectedLessonType);
+    return lessonType ? lessonType.cost * numberOfLessons : 0;
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Booking confirmed", {
+      lessonType: selectedLessonType,
+      numberOfLessons,
+      totalCost: calculateTotalCost()
+    });
+  };
   return (
-    <div className="flex justify-center items-center min-h-screen ">
-      <div className="max-w-4xl w-full bg-white shadow-md rounded-lg p-2 flex">
-        {/* Left Section - Booking & Payment Details */}
-        <div className="w-2/3 pr-8 border-r">
-          <div className="mb-6">
-            <h1 className="text-3xl font-semibold">Checkout</h1>
-          </div>
-          <div className="mb-6">
-            <h2 className="text-lg font-semibold mb-4">Booking Details</h2>
+    <Box component="form" onSubmit={handleSubmit}>
+      <Box sx={{ 
+        mt: 4, 
+        p: 3, 
+        bgcolor: 'rgba(114, 182, 38, 0.1)', 
+        borderRadius: 2,
+        border: '1px dashed #72b626'
+      }}>
+        <Typography variant="h6">
+          <CalculateIcon color="primary" />
+          Selected Lesson Details
+        </Typography>
+        <Box sx={{ mt: 2 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+            <Typography color="text.secondary">Lesson Type:</Typography>
+            <Typography fontWeight={500}>{selectedLessonType}</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+            <Typography color="text.secondary">Cost per lesson:</Typography>
+            <Typography fontWeight={500}>
+              ${LESSON_TYPES.find(lesson => lesson.type === selectedLessonType)?.cost || 0}
+            </Typography>
+          </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+            <Typography color="text.secondary">Number of lessons:</Typography>
+            <Typography fontWeight={500}>{numberOfLessons}</Typography>
+          </Box>
+          <Divider sx={{ my: 2 }} />
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Typography variant="h6">Total Cost:</Typography>
+            <Typography variant="h5" color="primary" fontWeight={600}>
+              ${calculateTotalCost()}
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
 
-            <div className="space-y-4">
-              <div className="flex gap-x-16">
-                <div className="flex items-center">
-                  <span className="text-gray-600 font-semibold">
-                    Student Name:
-                  </span>
-                  <span className="text-lg ml-2">{studentName}</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="text-gray-600 font-semibold">
-                    Student ID:
-                  </span>
-                  <span className="text-lg ml-2">{studentId}</span>
-                </div>
-              </div>
-              <div className="flex gap-x-32">
-                <div className="flex items-center">
-                  <span className="text-gray-600 font-semibold">
-                    School Name:
-                  </span>
-                  <span className="text-lg ml-2">{schoolName}</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="text-gray-600 font-semibold">
-                    License Type:
-                  </span>
-                  <span className="text-lg ml-2">{typeOfLicence}</span>
-                </div>
-              </div>
-              <div className="flex gap-x-28">
-                <div className="flex items-center">
-                  <span className="text-gray-600 font-semibold">
-                    Trainer Name:
-                  </span>
-                  <span className="text-lg ml-2">{trainerName}</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="text-gray-600 font-semibold">
-                    Type of Booking:
-                  </span>
-                  <span className="text-lg ml-2">{typeOfBooking}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mb-6">
-            <h2 className="text-lg font-semibold">Payment Details</h2>
-            <form>
-              <label className="block mb-2 text-sm font-medium text-gray-600">
-                Type of Payment
-              </label>
-              <div className="flex items-center space-x-2 mb-4">
-                <span className="text-gray-800 font-medium">Credit Card</span>
-                <img src={visa} alt="Visa" className="w-8" />
-                <img src={mastercard} alt="Mastercard" className="w-8" />
-              </div>
-
-              <button className="w-full mt-6 bg-customGreen text-white font-semibold py-2 rounded hover:bg-green-600">
-                Pay 1350₪
-              </button>
-            </form>
-          </div>
-        </div>
-
-        {/* Right Section - Order Summary */}
-        <div className="w-1/3 pl-8">
-          <div className="mb-6">
-            <h2 className="text-lg font-semibold">
-              Your Bookin and appoinment
-            </h2>
-            <p className="text-sm text-gray-500">Lessons Booking</p>
-          </div>
-          {/* Order items */}
-          <div className="space-y-4 mb-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                {/* Replace cube with an image */}
-                <img
-                  src={lessonImage}
-                  alt="Lesson Icon"
-                  className="w-12 h-12 rounded"
-                />
-                <div>
-                  <p className="font-semibold">Practical Lesson</p>
-                  <p className="text-sm text-gray-500">15 Lessons</p>
-                </div>
-              </div>
-              <p>1350₪</p>
-            </div>
-          </div>
-          {/* Order Summary */}
-          <div className="border-t pt-4">
-            <div className="flex justify-between mb-2">
-              <p>Lesson Price</p>
-              <p>90₪</p>
-            </div>
-            <div className="flex justify-between mb-4">
-              <p>Number of Lessons</p>
-              <p>15</p>
-            </div>
-            <div className="flex justify-between font-semibold">
-              <p>Total</p>
-              <p>1350₪</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <Button
+        type="submit"
+        variant="contained"
+        fullWidth
+        sx={{
+          mt: 3,
+          bgcolor: '#72b626',
+          color: 'white',
+          py: 1.5,
+          fontSize: '1.1rem',
+          fontWeight: 500,
+          '&:hover': {
+            bgcolor: '#5a9320'
+          }
+        }}
+      >
+        Confirm Booking
+      </Button>
+    </Box>
   );
 };
-
 export default Details;
