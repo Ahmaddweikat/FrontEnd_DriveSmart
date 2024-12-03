@@ -3,14 +3,17 @@ import { Tabs, Tab, Box } from "@mui/material";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PlayLessonOutlinedIcon from "@mui/icons-material/PlayLessonOutlined";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
-import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import Data from "./components/Data";
 import { formSchema } from "./schemas/formSchema";
-
+import TabPanel from "./components/DataComponents/components/TabPanel";
+import Home from "../../BookingandScheduling";
+import LessonType from "../TypePage/Type";
+import Finish from "../Finish/Finish";
 const Form = () => {
   const [value, setValue] = useState(0);
-
+  const [selectedLessonType, setSelectedLessonType] = useState("");
+  const [numberOfLessons, setNumberOfLessons] = useState(1);
   const validateStep = (newValue) => {
     try {
       formSchema.parse({ currentStep: newValue, isComplete: false });
@@ -84,40 +87,27 @@ const Form = () => {
         sx={{
           overflow: "auto",
           flexGrow: 1,
-          paddingBottom: "80px", // Add padding to ensure button visibility
+          paddingBottom: "80px", 
         }}
       >
         <TabPanel value={value} index={0}>
-          Home
+          <Home/>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Lesson Type Content
+        <LessonType/>        
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <Data
-          />
+          <Data/>
         </TabPanel>
-        <TabPanel value={value} index={4}>
-          Finish Content
+        <TabPanel value={value} index={3}>
+        <Finish 
+        selectedLessonType={selectedLessonType}
+        numberOfLessons={numberOfLessons}
+        />
         </TabPanel>
       </Box>
     </Box>
   );
 };
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`booking-tabpanel-${index}`}
-      aria-labelledby={`booking-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
-}
 
 export default Form;
