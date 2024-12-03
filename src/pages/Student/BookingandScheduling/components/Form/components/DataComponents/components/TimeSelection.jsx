@@ -17,6 +17,35 @@ export function TimeSelection({
   selectedCars,
   handleCarSelect,
 }) {
+   const getUpcomingDates = (selectedDays) => {
+    const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const referenceDate = new Date(); 
+    const dates = {};
+  
+    selectedDays.forEach(day => {
+      const targetDayIndex = weekdays.indexOf(day);
+      const currentDayIndex = referenceDate.getDay(); 
+      let daysToAdd;
+      
+      if (targetDayIndex < currentDayIndex) {
+        daysToAdd = 7 - (currentDayIndex - targetDayIndex);
+      } else {
+        daysToAdd = targetDayIndex - currentDayIndex;
+      }
+
+      const date = new Date(referenceDate);
+      date.setDate(date.getDate() + daysToAdd);
+  
+      dates[day] = date.toLocaleDateString('en-US', { 
+        month: 'short', 
+        day: 'numeric',
+        year: 'numeric'
+      });
+    });
+  
+    return dates;
+  };
+  
   return (
     <div>
       <TextField
@@ -64,11 +93,15 @@ export function TimeSelection({
                   </div>
                   {selectedTrainer === trainer && (
                     <div className="mt-2">
-                      <p className="text-sm text-gray-500">
-                        Select the days for booking:
-                      </p>
-                      <FormGroup row>
-                        {availableDays.map((day) => (
+                    <p className="text-sm text-gray-500">
+                      Select the days for booking:
+                    </p>
+                    <FormGroup row>
+                      {availableDays.map((day) => {
+                        // Only calculate date if the day is selected
+                        const date = selectedDays.includes(day) ? 
+                          getUpcomingDates([day])[day] : null;
+                        return (
                           <FormControlLabel
                             key={day}
                             control={
@@ -78,11 +111,16 @@ export function TimeSelection({
                                 onChange={handleDayChange}
                               />
                             }
-                            label={day}
+                            label={
+                              <span>
+                                {day}
+                              </span>
+                            }
                           />
-                        ))}
-                      </FormGroup>
-                    </div>
+                        );
+                      })}
+                    </FormGroup>
+                  </div>
                   )}
                 </div>
               ))}
@@ -102,7 +140,7 @@ export function TimeSelection({
                 return (
                   <div key={day} className="mt-2">
                     <h5 className="text-md font-semibold text-gray-700">
-                      {day}
+                      {day} ({getUpcomingDates([day])[day]})
                     </h5>
                     {filteredCarsForDay.length === 0 ? (
                       <p className="text-gray-500">

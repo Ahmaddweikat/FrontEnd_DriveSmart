@@ -15,50 +15,49 @@ const Data = () => {
   const handleGoogleAuth = () => {
     setIsAuthenticated(true);
       };
-  const {
-    filteredTrainers,
-    selectedBookingTab,
-    selectedTimeInput,
-    selectedDays,
-    selectedCars,
-    availableTimes,
-    selectedTrainer,
-    selectedCar,
-    value,
-    selectedTime,
-    setSelectedBookingTab,
-    setSelectedCar,
-    setValue,
-    handleCarSelect,
-    handleTimeInputChange,
-    handleTimeSelect,
-    handleDayChange,
-    handleTrainerSelect,
-  } = useBookingState();
+      const {
+        filteredTrainers,
+        selectedBookingTab,
+        selectedTimeInput,
+        selectedDays,
+        selectedCars,
+        availableTimes,
+        selectedTrainer,
+        selectedCar,
+        selectedDates,
+        setSelectedDates,
+        selectedTime,
+        setSelectedBookingTab,
+        setSelectedCar,
+        handleCarSelect,
+        handleTimeInputChange,
+        handleTimeSelect,
+        handleDayChange,
+        handleTrainerSelect,
+      } = useBookingState();
 
-  const handleBooking = () => {
-    const transformedSelectedCars = Object.entries(selectedCars).reduce((acc, [day, car]) => {
-      acc[day] = [car];
-      return acc;
-    }, {});
+      const handleBooking = () => {
+        const transformedSelectedCars = Object.entries(selectedCars).reduce((acc, [day, car]) => {
+          acc[day] = [car];
+          return acc;
+        }, {});
+    
 
-    const bookingData = selectedBookingTab === 0
-      ? {
-          trainer: selectedTrainer || '',
-          car: selectedCar || '',
-          date: value?.toDate(),
-          time: selectedTime || '',
-          selectedDays: [],
-          selectedCars: {}
-        }
-      : {
-          trainer: selectedTrainer || '',
-          car: selectedCar || '',
-          date: null,
-          time: selectedTimeInput || '',
-          selectedDays: Array.isArray(selectedDays) ? selectedDays : [],
-          selectedCars: transformedSelectedCars
-        };
+        const bookingData = selectedBookingTab === 0
+        ? {
+            trainer: selectedTrainer || '',
+            car: selectedCar || '',
+            selectedDates: selectedDates || {},
+            selectedDays: [],
+            selectedCars: {}
+          }
+        : {
+            trainer: selectedTrainer || '',
+            car: selectedCar || '',
+            selectedDates: {},
+            selectedDays: Array.isArray(selectedDays) ? selectedDays : [],
+            selectedCars: transformedSelectedCars
+          };
 
     try {
       const validatedData = bookingSchema.parse(bookingData);
@@ -155,13 +154,13 @@ const Data = () => {
       </Tabs>
 
       <Box sx={{ padding: 2 }} className={!isAuthenticated ? 'filter blur-sm' : ''}>
-        {selectedBookingTab === 0 && (
+         {selectedBookingTab === 0 && (
           <DateSelection
-            value={value}
-            setValue={setValue}
+            selectedDates={selectedDates}
+            setSelectedDates={setSelectedDates}
             availableTimes={availableTimes}
             handleTimeSelect={handleTimeSelect}
-            selectedTime={selectedTime}
+            selectedTimes={selectedDates}
             disabled={!isAuthenticated}
           />
         )}

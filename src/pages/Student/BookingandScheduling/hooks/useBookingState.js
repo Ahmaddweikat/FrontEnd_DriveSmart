@@ -13,16 +13,20 @@ export function useBookingState() {
   const [selectedCar, setSelectedCar] = useState(null);
   const [value, setValue] = useState(dayjs());
   const [selectedTime, setSelectedTime] = useState("");
+  const [selectedDates, setSelectedDates] = useState({});
 
   useEffect(() => {
     if (selectedTrainer && selectedCar && value) {
       const dayOfWeek = value.format("dddd");
       const availableTimes =
         trainerCarTimes[selectedTrainer]?.[dayOfWeek]?.[selectedCar] || [];
-      if (availableTimes.length === 0) {
-        console.log("No available times for this selection.");
-      }
       setAvailableTimes(availableTimes);
+      
+      // Filter trainers based on the selected date's day of the week
+      const availableTrainers = Object.keys(trainerCarTimes).filter(trainer => {
+        return trainerCarTimes[trainer][dayOfWeek] !== undefined;
+      });
+      setFilteredTrainers(availableTrainers);
     }
   }, [selectedTrainer, selectedCar, value]);
 
@@ -40,7 +44,16 @@ export function useBookingState() {
       );
     }
   };
-
+  useEffect(() => {
+    if (value) {
+      const dayOfWeek = value.format("dddd");
+      const availableTrainers = Object.keys(trainerCarTimes).filter(trainer => {
+        return trainerCarTimes[trainer][dayOfWeek] !== undefined;
+      });
+      setFilteredTrainers(availableTrainers);
+    }
+  }, [value]);
+  
   const handleTimeInputChange = (event) => {
     setSelectedTimeInput(event.target.value);
     filterTrainersByTime(event.target.value);
@@ -69,20 +82,12 @@ export function useBookingState() {
     setFilteredTrainers(availableTrainers);
   };
 
-  const handleTimeSelect = (time) => {
-    setSelectedTime(time === selectedTime ? "" : time);
-
-    if (time !== selectedTime) {
-      const trainersAtTime = Object.keys(trainerCarTimes).filter((trainer) =>
-        Object.values(trainerCarTimes[trainer]).some((carTimes) =>
-          Object.values(carTimes).flat().includes(time)
-        )
-      );
-      setFilteredTrainers(trainersAtTime);
-    } else {
-      setFilteredTrainers([]);
-    }
-  };
+  const handleTimeSelect = (dateStr, time) => {
+    setSelectedDates(prev => ({
+        ...prev,
+        [dateStr]: time
+    }));
+};
 
   const handleDayChange = (event) => {
     const day = event.target.value;
@@ -120,5 +125,8 @@ export function useBookingState() {
     handleTimeSelect,
     handleDayChange,
     handleTrainerSelect,
+    selectedDates,
+    setSelectedDates,
+    handleTimeSelect,
   };
 }
