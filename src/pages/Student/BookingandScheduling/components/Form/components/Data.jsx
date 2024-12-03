@@ -3,13 +3,13 @@ import { Tabs, Tab, Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
 import { useBookingState } from "../../../hooks/useBookingState";
-import { StudentInfo } from "./components/StudentInfo";
-import { TrainerCarSelection } from "./components/TrainerCarSelection";
-import { DateSelection } from "./components/DateSelection";
-import { TimeSelection } from "./components/TimeSelection";
+import { TrainerCarSelection } from "../components/DataComponents/components/TrainerCarSelection";
+import { DateSelection } from "../components/DataComponents/components/DateSelection";
+import { TimeSelection } from "../components/DataComponents/components/TimeSelection";
 import { trainers, cars } from "../../../constants/trainerCarTimes";
 import { bookingSchema } from "../schemas/bookingSchema";
-import {GoogleColoredIcon} from './components/GoogleColoredIcon';
+import {GoogleColoredIcon} from '../components/DataComponents/components/GoogleColoredIcon';
+
 const Data = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const handleGoogleAuth = () => {
@@ -81,28 +81,28 @@ const Data = () => {
             <h2 className="text-xl font-semibold mb-4 text-gray-700">Authentication Required</h2>
             <p className="text-gray-600 mb-6">Please sign in with Google Calendar to access booking features</p>
             <Button
-  variant="contained"
-  startIcon={<GoogleColoredIcon />}  // Note the component is now properly rendered
-  onClick={handleGoogleAuth}
-  sx={{
-    backgroundColor: '#fff',
-    color: '#757575',
-    textTransform: 'none',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-    border: '1px solid #ddd',
-    borderRadius: '4px',
-    padding: '10px 20px',
-    fontWeight: 500,
-    fontSize: '16px',
-    '&:hover': {
-      backgroundColor: '#f5f5f5',
-      boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-    },
-    minWidth: '250px'
-  }}
->
-  Sign in with Google Calendar
-</Button>
+            variant="contained"
+            startIcon={<GoogleColoredIcon />} 
+            onClick={handleGoogleAuth}
+            sx={{
+              backgroundColor: '#fff',
+              color: '#757575',
+              textTransform: 'none',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+              border: '1px solid #ddd',
+              borderRadius: '4px',
+              padding: '10px 20px',
+              fontWeight: 500,
+              fontSize: '16px',
+              '&:hover': {
+                backgroundColor: '#f5f5f5',
+                boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+              },
+              minWidth: '250px'
+            }}
+          >
+            Sign in with Google Calendar
+          </Button>
           </div>
         </div>
       )}
