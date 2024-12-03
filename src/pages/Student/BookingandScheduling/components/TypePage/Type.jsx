@@ -1,45 +1,30 @@
 import React from "react";
 import { Box } from "@mui/material";
-import SchoolIcon from '@mui/icons-material/School';
-import DriveEtaIcon from '@mui/icons-material/DriveEta';
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import img2 from "../../../../../assets/BookingAndScheduling/type/images/learning.jpg";
-import img3 from "../../../../../assets/BookingAndScheduling/type/images/practial.jpeg";
-import img4 from "../../../../../assets/BookingAndScheduling/type/images/revision.png";
+
 import LessonCard from "./components/LessonCard";
+import {lessons} from "../../constants/lessons"
 
 const Type = ({ onSelectLesson }) => {
-  const lessons = [
-    {
-      title: "Theoretical Lesson",
-      description: "Theoretical lesson focuses on understanding driving signs and rules of the road through comprehensive classroom instruction.",
-      image: img2,
-      icon: SchoolIcon,
-      price: "75"
-    },
-    {
-      title: "Practical Lesson",
-      description: "Hands-on driving experience to master vehicle control, road safety, and real-world driving scenarios.",
-      image: img3,
-      icon: DriveEtaIcon,
-      price: "90"
-    },
-    {
-      title: "Revision Lesson",
-      description: "Comprehensive review session to reinforce your driving skills and prepare for your driving test.",
-      image: img4,
-      icon: AutoStoriesIcon,
-      price: "60"
-    }
-  ];
+  const studentLessonCount = 10; // Example value
+  const REQUIRED_LESSONS = 15;
 
-  const handleLessonSelect = (lessonTitle) => {
-    console.log("Selected lesson:", lessonTitle);
+  const lessonsWithLockStatus = lessons.map(lesson => ({
+    ...lesson,
+    isLocked: lesson.type === "revision" ? studentLessonCount < REQUIRED_LESSONS : false,
+    description: lesson.type === "revision" && studentLessonCount < REQUIRED_LESSONS
+      ? `${lesson.description} (Requires ${REQUIRED_LESSONS} lessons, you have ${studentLessonCount})`
+      : lesson.description
+  }));
+
+  const handleLessonSelect = (lesson) => {
+    if (lesson.isLocked) {
+      return;
+    }
+    console.log("Selected lesson:", lesson.title);
     if (onSelectLesson) {
-      onSelectLesson(lessonTitle);
+      onSelectLesson(lesson.title);
     }
   };
-
   return (
     <Box sx={{ 
       minHeight: '100vh',
@@ -59,11 +44,11 @@ const Type = ({ onSelectLesson }) => {
           },
           gap: 4
         }}>
-          {lessons.map((lesson, index) => (
+          {lessonsWithLockStatus.map((lesson, index) => (
             <LessonCard 
               key={index} 
               {...lesson} 
-              onSelect={() => handleLessonSelect(lesson.title)}
+              onSelect={() => handleLessonSelect(lesson)}
             />
           ))}
         </Box>
