@@ -7,6 +7,7 @@ export function TrainerCarSelection({
   setSelectedCar,
   trainers,
   cars,
+  disabled 
 }) {
   return (
     <div className="grid grid-cols-2 gap-4">
@@ -15,6 +16,7 @@ export function TrainerCarSelection({
           Select Trainer
         </label>
         <select
+          disabled={disabled}
           value={selectedTrainer}
           onChange={(e) => handleTrainerSelect(e.target.value)}
           className="w-3/4 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-customGreen bg-white"
@@ -32,6 +34,7 @@ export function TrainerCarSelection({
           Select Car
         </label>
         <select
+          disabled={disabled}
           value={selectedCar}
           onChange={(e) => setSelectedCar(e.target.value)}
           className="w-3/4 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-customGreen bg-white"

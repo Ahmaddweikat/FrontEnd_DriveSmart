@@ -24,7 +24,6 @@ const Form = () => {
   const handleChange = (event, newValue) => {
     if (validateStep(newValue)) {
       setValue(newValue);
-      console.log("Moving to step:", newValue);
     }
   };
 
@@ -96,10 +95,6 @@ const Form = () => {
         </TabPanel>
         <TabPanel value={value} index={2}>
           <Data
-            studentName="Ahmad Dweikat"
-            studentId="12345"
-            schoolName="Al-Quds"
-            typeOfLicence="Private"
           />
         </TabPanel>
         <TabPanel value={value} index={4}>

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Tabs, Tab, Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
@@ -9,8 +9,12 @@ import { DateSelection } from "./components/DateSelection";
 import { TimeSelection } from "./components/TimeSelection";
 import { trainers, cars } from "../../../constants/trainerCarTimes";
 import { bookingSchema } from "../schemas/bookingSchema";
-
-const Data = ({ studentName, studentId, schoolName, typeOfLicence }) => {
+import {GoogleColoredIcon} from './components/GoogleColoredIcon';
+const Data = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const handleGoogleAuth = () => {
+    setIsAuthenticated(true);
+      };
   const {
     filteredTrainers,
     selectedBookingTab,
@@ -71,13 +75,63 @@ const Data = ({ studentName, studentId, schoolName, typeOfLicence }) => {
   };
   return (
     <div className="max-w-full mx-auto mt-2 relative min-h-full bg-white flex flex-col flex-grow">
-      <div className="p-2 bg-white w-full">
-        <StudentInfo
-          studentName={studentName}
-          studentId={studentId}
-          schoolName={schoolName}
-          typeOfLicence={typeOfLicence}
-        />
+      {!isAuthenticated && (
+        <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="text-center p-8 rounded-lg bg-white shadow-lg">
+            <h2 className="text-xl font-semibold mb-4 text-gray-700">Authentication Required</h2>
+            <p className="text-gray-600 mb-6">Please sign in with Google Calendar to access booking features</p>
+            <Button
+  variant="contained"
+  startIcon={<GoogleColoredIcon />}  // Note the component is now properly rendered
+  onClick={handleGoogleAuth}
+  sx={{
+    backgroundColor: '#fff',
+    color: '#757575',
+    textTransform: 'none',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+    border: '1px solid #ddd',
+    borderRadius: '4px',
+    padding: '10px 20px',
+    fontWeight: 500,
+    fontSize: '16px',
+    '&:hover': {
+      backgroundColor: '#f5f5f5',
+      boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+    },
+    minWidth: '250px'
+  }}
+>
+  Sign in with Google Calendar
+</Button>
+          </div>
+        </div>
+      )}
+
+      <div className={`p-2 bg-white w-full ${!isAuthenticated ? 'filter blur-sm' : ''}`}>
+        {isAuthenticated && (
+          <div className="flex justify-between items-center mb-4">
+            <span className="text-green-600 flex items-center">
+              <span className="mr-2">●</span>
+              Connected to Google Calendar
+            </span>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => setIsAuthenticated(false)}
+              sx={{
+                borderColor: '#72b626',
+                color: '#72b626',
+                '&:hover': {
+                  borderColor: '#6aa51f',
+                  backgroundColor: 'rgba(114, 182, 38, 0.04)',
+                },
+              }}
+            >
+              Disconnect
+            </Button>
+          </div>
+        )}
+        
         <TrainerCarSelection
           selectedTrainer={selectedTrainer}
           selectedCar={selectedCar}
@@ -85,6 +139,7 @@ const Data = ({ studentName, studentId, schoolName, typeOfLicence }) => {
           setSelectedCar={setSelectedCar}
           trainers={trainers}
           cars={cars}
+          disabled={!isAuthenticated}
         />
       </div>
 
@@ -92,12 +147,14 @@ const Data = ({ studentName, studentId, schoolName, typeOfLicence }) => {
         value={selectedBookingTab}
         onChange={(event, newValue) => setSelectedBookingTab(newValue)}
         aria-label="Booking Tabs"
+        className={!isAuthenticated ? 'filter blur-sm' : ''}
+        disabled={!isAuthenticated}
       >
-        <Tab label="Date" />
-        <Tab label="Time" />
+        <Tab label="Date" disabled={!isAuthenticated} />
+        <Tab label="Time" disabled={!isAuthenticated} />
       </Tabs>
 
-      <Box sx={{ padding: 2 }}>
+      <Box sx={{ padding: 2 }} className={!isAuthenticated ? 'filter blur-sm' : ''}>
         {selectedBookingTab === 0 && (
           <DateSelection
             value={value}
@@ -105,6 +162,7 @@ const Data = ({ studentName, studentId, schoolName, typeOfLicence }) => {
             availableTimes={availableTimes}
             handleTimeSelect={handleTimeSelect}
             selectedTime={selectedTime}
+            disabled={!isAuthenticated}
           />
         )}
 
@@ -119,22 +177,25 @@ const Data = ({ studentName, studentId, schoolName, typeOfLicence }) => {
             handleDayChange={handleDayChange}
             selectedCars={selectedCars}
             handleCarSelect={handleCarSelect}
+            disabled={!isAuthenticated}
           />
         )}
       </Box>
 
-      <div className="flex justify-center">
+      <div className={`flex justify-center ${!isAuthenticated ? 'filter blur-sm' : ''}`}>
         <Button
           variant="contained"
           color="primary"
           endIcon={<KeyboardTabOutlinedIcon />}
           onClick={handleBooking}
+          disabled={!isAuthenticated}
           sx={{
             fontWeight: "bold",
             textTransform: "none",
             backgroundColor: "#72b626",
             marginBottom: "40px",
             "&:hover": { backgroundColor: "#6aa51f" },
+            opacity: !isAuthenticated ? 0.7 : 1,
           }}
         >
           Next
