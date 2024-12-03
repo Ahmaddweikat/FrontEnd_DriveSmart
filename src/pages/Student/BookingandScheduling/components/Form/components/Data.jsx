@@ -1,13 +1,14 @@
 import React from "react";
 import { Tabs, Tab, Box } from "@mui/material";
 import Button from "@mui/material/Button";
-import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
 import { useBookingState } from "../../../hooks/useBookingState";
 import { StudentInfo } from "./components/StudentInfo";
 import { TrainerCarSelection } from "./components/TrainerCarSelection";
 import { DateSelection } from "./components/DateSelection";
 import { TimeSelection } from "./components/TimeSelection";
 import { trainers, cars } from "../../../constants/trainerCarTimes";
+import { bookingSchema } from "../schemas/bookingSchema";
 
 const Data = ({ studentName, studentId, schoolName, typeOfLicence }) => {
   const {
@@ -32,11 +33,44 @@ const Data = ({ studentName, studentId, schoolName, typeOfLicence }) => {
   } = useBookingState();
 
   const handleBooking = () => {
-    alert("Booking successfully made!");
-  };
+    const transformedSelectedCars = Object.entries(selectedCars).reduce((acc, [day, car]) => {
+      acc[day] = [car];
+      return acc;
+    }, {});
 
+    const bookingData = selectedBookingTab === 0
+      ? {
+          trainer: selectedTrainer || '',
+          car: selectedCar || '',
+          date: value?.toDate(),
+          time: selectedTime || '',
+          selectedDays: [],
+          selectedCars: {}
+        }
+      : {
+          trainer: selectedTrainer || '',
+          car: selectedCar || '',
+          date: null,
+          time: selectedTimeInput || '',
+          selectedDays: Array.isArray(selectedDays) ? selectedDays : [],
+          selectedCars: transformedSelectedCars
+        };
+
+    try {
+      const validatedData = bookingSchema.parse(bookingData);
+      console.log("Validated booking data:", validatedData);
+
+      alert("Booking successfully made!");
+    } catch (error) {
+      console.error("Validation error:", error.errors);
+      const errorMessages = error.errors.map(err => 
+        `${err.path.join('.')}: ${err.message}`
+      ).join('\n');
+      alert(`Please fix the following errors:\n${errorMessages}`);
+    }
+  };
   return (
-    <div className="max-w-full mx-auto mt-2 relative">
+    <div className="max-w-full mx-auto mt-2 relative min-h-full bg-white flex flex-col flex-grow">
       <div className="p-2 bg-white w-full">
         <StudentInfo
           studentName={studentName}
@@ -93,16 +127,17 @@ const Data = ({ studentName, studentId, schoolName, typeOfLicence }) => {
         <Button
           variant="contained"
           color="primary"
-          startIcon={<AssignmentTurnedInIcon />}
+          endIcon={<KeyboardTabOutlinedIcon />}
           onClick={handleBooking}
           sx={{
             fontWeight: "bold",
             textTransform: "none",
             backgroundColor: "#72b626",
+            marginBottom: "40px",
             "&:hover": { backgroundColor: "#6aa51f" },
           }}
         >
-          Booking
+          Next
         </Button>
       </div>
     </div>

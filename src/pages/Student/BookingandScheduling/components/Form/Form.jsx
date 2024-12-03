@@ -1,40 +1,128 @@
-import React from "react";
-import SideBar from "../SideBar";
-import img from "../../../../../assets/BookingAndScheduling/Images/test.jpg";
+import React, { useState } from "react";
+import { Tabs, Tab, Box } from "@mui/material";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import PlayLessonOutlinedIcon from "@mui/icons-material/PlayLessonOutlined";
+import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
+import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import Data from "./components/Data";
+import { formSchema } from "./schemas/formSchema";
 
 const Form = () => {
+  const [value, setValue] = useState(0);
+
+  const validateStep = (newValue) => {
+    try {
+      formSchema.parse({ currentStep: newValue, isComplete: false });
+      return true;
+    } catch (error) {
+      console.error("Step validation error:", error.errors);
+      return false;
+    }
+  };
+
+  const handleChange = (event, newValue) => {
+    if (validateStep(newValue)) {
+      setValue(newValue);
+      console.log("Moving to step:", newValue);
+    }
+  };
+
   return (
-    <div className="flex">
-      <SideBar />
-      {/* Main Content */}
-      <div className="flex-1 overflow-hidden">
-        <div className="max-w-screen-xl mx-auto">
-          {/* Image with Heading */}
-          <div className="relative">
-            <img
-              src={img}
-              alt="honpme"
-              className="w-full h-auto filter-green"
-            />
-            <h2 className="absolute inset-0 flex items-start justify-start pt-8 pl-6 text-white text-3xl font-bold bg-black bg-opacity-50 opacity-0 animate-fade-in">
-              Booking and Scheduling
-            </h2>
-            <div className="absolute inset-0 p-12 mt-6 animate-fade-in2">
-              <div className="bg-white p-4 rounded-lg shadow-lg">
-                <Data
-                  studentName="Ahmad Dweikat"
-                  studentId="12345"
-                  schoolName="Al-Quds"
-                  typeOfLicence="Private"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Box
+      sx={{
+        width: "100%",
+        minHeight: "100vh",
+        backgroundColor: "white",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+          position: "sticky",
+          top: 0,
+          backgroundColor: "white",
+          zIndex: 1,
+        }}
+      >
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="booking process tabs"
+          sx={{
+            "& .MuiTab-root.Mui-selected": {
+              color: "#72b626",
+            },
+
+            "& .MuiTabs-indicator": {
+              backgroundColor: "#72b626",
+            },
+          }}
+        >
+          <Tab icon={<HomeOutlinedIcon />} label="Home" iconPosition="start" />
+          <Tab
+            icon={<PlayLessonOutlinedIcon />}
+            label="Lesson Type"
+            iconPosition="start"
+          />
+          <Tab
+            icon={<BorderColorOutlinedIcon />}
+            label="Booking and Scheduling"
+            iconPosition="start"
+          />
+          <Tab
+            icon={<CheckCircleOutlineOutlinedIcon />}
+            label="Finish"
+            iconPosition="start"
+          />
+        </Tabs>
+      </Box>
+
+      <Box
+        sx={{
+          overflow: "auto",
+          flexGrow: 1,
+          paddingBottom: "80px", // Add padding to ensure button visibility
+        }}
+      >
+        <TabPanel value={value} index={0}>
+          Home
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          Lesson Type Content
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <Data
+            studentName="Ahmad Dweikat"
+            studentId="12345"
+            schoolName="Al-Quds"
+            typeOfLicence="Private"
+          />
+        </TabPanel>
+        <TabPanel value={value} index={4}>
+          Finish Content
+        </TabPanel>
+      </Box>
+    </Box>
   );
 };
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`booking-tabpanel-${index}`}
+      aria-labelledby={`booking-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  );
+}
 
 export default Form;

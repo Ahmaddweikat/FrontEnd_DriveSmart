@@ -17,40 +17,54 @@ export function DateSelection({
   };
 
   return (
-    <div className="flex space-x-8 shadow-lg">
-      <div className="w-1/2">
+    <div className="flex flex-col md:flex-row md:space-x-8">
+      <div className="w-full md:w-1/2">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateCalendar
             value={value}
             onChange={setValue}
             shouldDisableDate={disablePastDates}
+            sx={{
+              boxShadow: "none",
+              "& .MuiPaper-root": {
+                boxShadow: "none",
+              },
+            }}
           />
         </LocalizationProvider>
       </div>
-      <div className="w-1/2">
+      <div className="w-full md:w-1/2">
         {availableTimes.length > 0 ? (
           <div className="mt-6">
-            <h4 className="text-lg font-bold mb-4 text-gray-800">
+            <h4 className="text-lg font-semibold mb-4 text-gray-800">
               Available Times:
             </h4>
-            {availableTimes.map((time, index) => (
-              <Button
-                key={index}
-                variant="outlined"
-                color="primary"
-                sx={{
-                  margin: "5px",
-                  fontWeight: 600,
-                  color: "#72b626",
-                }}
-                onClick={() => handleTimeSelect(time)}
-              >
-                {time}
-              </Button>
-            ))}
+
+            <div className="flex flex-wrap gap-2">
+              {availableTimes.map((time, index) => (
+               <Button
+               key={index}
+               variant="outlined"
+               color="primary"
+               sx={{
+                 fontWeight: 600,
+                 color: selectedTime === time ? "white" : "#72b626",
+                 borderColor: "#72b626",
+                 backgroundColor: selectedTime === time ? "#72b626" : "transparent",
+                 "&:hover": {
+                   borderColor: "#72b626",
+                   backgroundColor: selectedTime === time ? "#72b626" : "rgba(114, 182, 38, 0.04)",
+                 },
+               }}
+               onClick={() => handleTimeSelect(time)}
+             >
+               {time}
+             </Button>
+              ))}
+            </div>
           </div>
         ) : (
-          <span>No available times</span>
+          <span className="text-gray-600">No available times</span>
         )}
       </div>
     </div>
