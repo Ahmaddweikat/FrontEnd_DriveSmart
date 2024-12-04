@@ -1,64 +1,72 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useConversations } from "./hooks/useConversations";
+import React from "react";
 import SearchBar from "./components/SearchBar";
 import ChatItem from "./components/ChatItem";
 import MessageBubble from "./components/MessageBubble";
 import EmojiPicker from "emoji-picker-react";
 import smileyIcon from "../../assets/ChatApp/Svg/smiley.svg";
 import SendIcon from "@mui/icons-material/Send";
+import { useChat } from "./hooks/useChat";
+import { useMessageHandlers } from "./hooks/useMessageHandlers";
+import { useDateFormatter } from "./hooks/useDateFormatter";
 
 const ChatApp = () => {
-  const [selectedChatId, setSelectedChatId] = useState(1);
-  const [newMessage, setNewMessage] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
-  const { conversations, addMessageToConversation } = useConversations();
+  const {
+    currentChat,
+    newMessage,
+    setNewMessage,
+    addMessageToConversation,
+    selectedChatId,
+    setSelectedChatId,
 
-  const currentChat = conversations.find((chat) => chat.id === selectedChatId);
+    searchQuery,
+    setSearchQuery,
+    emojiPickerVisible,
+    setEmojiPickerVisible,
 
-  const filteredConversations = conversations.filter((chat) =>
-    chat.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
-  );
-
-  const chatWindowRef = useRef(null);
+    filteredConversations,
+    chatWindowRef,
+  } = useChat();
 
   const handleSendMessage = () => {
     if (!newMessage.trim()) return;
+
     addMessageToConversation(selectedChatId, newMessage);
     setNewMessage("");
-    setEmojiPickerVisible(false); // Close emoji picker after sending message
+
+    // Log active chat data after sending message
+    console.log("Chat Update:", {
+      chatId: currentChat.id,
+      name: currentChat.name,
+      latestMessage: {
+        sender: "You",
+        text: newMessage,
+        time: new Date().toLocaleTimeString(),
+        date: new Date().toLocaleDateString(),
+      },
+      allMessages: currentChat.messages,
+    });
   };
 
-  const handleEmojiClick = (emoji) => {
-    setNewMessage((prevMessage) => prevMessage + emoji.emoji);
-  };
+  const { handleEmojiClick, handleInputClick } = useMessageHandlers(
+    setNewMessage,
+    addMessageToConversation,
+    selectedChatId,
+    setEmojiPickerVisible
+  );
 
-  const handleInputClick = () => {
-    setEmojiPickerVisible(false);
-  };
+  const { formatDate } = useDateFormatter();
 
-  useEffect(() => {
-    if (chatWindowRef.current) {
-      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
-    }
-  }, [currentChat?.messages]);
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const options = { day: "2-digit", month: "long" }; // Format: Day Month (e.g., 01 December)
-    return date.toLocaleDateString("en-UK", options);
-  };
   return (
-    <div className="flex h-[95vh] w-[200vh] justify-center items-center">
-      <div className="w-5/6 h-5/6 flex bg-white border rounded-lg shadow-lg">
-        <div className="w-1/4 bg-white border-r overflow-y-auto">
-          <div className="p-4">
+    <div className="flex h-screen w-full bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg overflow-hidden">
+      <div className="flex w-full h-full">
+        <div className="w-1/4 bg-white border-r border-gray-200 overflow-y-auto">
+          <div className="p-4 border-b border-gray-100 sticky top-0 bg-white z-10">
             <SearchBar
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
             />
           </div>
-          <div>
+          <div className="divide-y divide-gray-100">
             {filteredConversations.map((chat) => (
               <ChatItem
                 key={chat.id}
@@ -70,82 +78,92 @@ const ChatApp = () => {
           </div>
         </div>
 
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-col flex-1 bg-gray-50">
           {currentChat && (
-            <div className="p-4 bg-gray-50 border-b flex items-center justify-between">
+            <div className="px-6 py-4 bg-white border-b border-gray-200 flex items-center justify-between shadow-sm">
               <div className="flex items-center relative">
-                <img
-                  src={currentChat.avatar}
-                  alt={`${currentChat.name}'s avatar`}
-                  className="w-11 h-11 rounded-full border-2 mr-4"
-                />
+                <div className="relative">
+                  <img
+                    src={currentChat.avatar}
+                    alt={`${currentChat.name}'s avatar`}
+                    className="w-12 h-12 rounded-full border-2 border-gray-200 mr-4"
+                  />
+                  {currentChat.status === "Online" && (
+                    <div className="absolute bottom-0.5 right-5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white"></div>
+                  )}
+                </div>
                 <div>
-                  <div className="font-semibold text-orange-400">
+                  <div className="font-semibold text-gray-800 text-lg">
                     {currentChat.name}
                   </div>
-                  <div className="text-sm text-blue-950">
+                  <div className="text-sm text-gray-500">
                     {currentChat.status}
                   </div>
                 </div>
               </div>
             </div>
           )}
-          <div ref={chatWindowRef} className="flex-1 p-4 overflow-y-auto">
+
+          <div
+            ref={chatWindowRef}
+            className="flex-1 p-6 overflow-y-auto bg-gradient-to-b from-gray-50 to-white"
+          >
             {currentChat?.messages.map((msg, idx) => (
               <div key={idx}>
                 {idx === 0 ||
                 currentChat.messages[idx - 1].date !== msg.date ? (
-                  <div className="text-center text-base text-customGreen my-4">
-                    {formatDate(msg.date)}
+                  <div className="flex items-center justify-center my-6">
+                    <div className="text-sm text-gray-500 bg-white px-4 py-1 rounded-full shadow-sm border border-gray-100">
+                      {formatDate(msg.date)}
+                    </div>
                   </div>
                 ) : null}
 
-                <MessageBubble key={idx} msg={msg} currentChat={currentChat} />
+                <MessageBubble msg={msg} currentChat={currentChat} />
               </div>
             ))}
           </div>
-          {emojiPickerVisible && (
-            <div className="absolute bottom-18 left-56 right-0 z-50">
-              <EmojiPicker onEmojiClick={handleEmojiClick} />
-            </div>
-          )}
-          <div className="p-4 border-t flex relative items-center">
+
+          <div className="p-4 bg-white border-t border-gray-200 flex items-center space-x-4">
             <button
               onClick={() => setEmojiPickerVisible((prev) => !prev)}
-              className="mr-2 p-2 rounded-full"
+              className="p-2 rounded-full hover:bg-gray-100 transition-colors"
               aria-label="Open Emoji Picker"
             >
               <img src={smileyIcon} alt="smiley" className="w-6 h-6" />
             </button>
 
-            <input
-              type="text"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              onClick={handleInputClick} // Close emoji picker when the input is clicked
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  handleSendMessage();
-                }
-              }}
-              placeholder="Type your message here"
-              className="w-1/3 px-4 py-2 border-none rounded-lg"
-              aria-label="Message input"
-            />
+            <div className="flex-1 relative">
+              <input
+                type="text"
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                onClick={handleInputClick}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+
+                    handleSendMessage(newMessage);
+                  }
+                }}
+                placeholder="Type your message here..."
+                className="w-full px-4 py-3 bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+                aria-label="Message input"
+              />
+              {emojiPickerVisible && (
+                <div className="absolute bottom-full right-0 mb-2">
+                  <EmojiPicker onEmojiClick={handleEmojiClick} />
+                </div>
+              )}
+            </div>
 
             <button
-              onClick={handleSendMessage}
-              className="ml-auto px-1.5 py-1.5 bg-customGreen text-white rounded-full"
+              onClick={() => handleSendMessage(newMessage)}
+              className="p-3 bg-blue-500 hover:bg-blue-600 text-white rounded-full transition-colors shadow-sm"
               aria-label="Send Message"
             >
               <SendIcon
-                sx={{
-                  width: 30,
-                  height: 32,
-                  transform: "rotate(310deg)",
-                  marginLeft: 0.5,
-                }}
+                sx={{ width: 24, height: 24, transform: "rotate(310deg)" }}
               />
             </button>
           </div>

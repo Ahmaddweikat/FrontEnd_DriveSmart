@@ -6,46 +6,46 @@ const MessageBubble = ({ msg, currentChat }) => {
 
   return (
     <div className={`mb-4 flex ${isSender ? "justify-end" : ""}`}>
-      {/* Avatar for the receiver */}
       {!isSender && (
         <img
           src={currentChat.avatar}
           alt="Receiver Avatar"
-          className="w-10 h-10 rounded-full mr-3 border-2"
+          className="w-8 h-8 rounded-full mr-2 border-2 border-gray-200 shadow-sm"
         />
       )}
 
-      <div className="max-w-lg">
-        <div className="flex items-center text-sm text-gray-600 mb-1">
+      <div className="max-w-[45%]">
+        <div className="flex items-center text-xs mb-0.5">
           {!isSender && (
             <>
-              <span className="font-medium text-blue-900">{msg.sender}</span>
-              <span className="ml-2 text-red-500 text-xs">{msg.time}</span>
+              <span className="font-medium text-gray-700">{msg.sender}</span>
+              <span className="ml-2 text-gray-400">{msg.time}</span>
             </>
           )}
           {isSender && (
             <>
-              <span className="ml-auto text-red-500 text-xs">{msg.time}</span>
-              <span className="font-medium ml-2 mr-1 text-blue-900">Me</span>
+              <span className="ml-auto text-gray-400">{msg.time}</span>
+              <span className="font-medium ml-2 mr-1 text-gray-700">Me</span>
             </>
           )}
         </div>
 
         <div
-          className={`p-2 rounded-lg ${
+          className={`p-2 rounded-xl shadow-sm ${
             isSender
-              ? "bg-blue-500 text-white rounded-br-none"
-              : "bg-gray-100 text-gray-800 rounded-bl-none"
+              ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-br-md"
+              : "bg-white border border-gray-100 text-gray-800 rounded-bl-md"
           }`}
         >
-          <p className="whitespace-pre-line">{msg.text}</p>
+          <p className="whitespace-pre-line text-sm leading-snug">{msg.text}</p>
         </div>
       </div>
+
       {isSender && (
         <img
           src={av}
           alt="Your Avatar"
-          className="mb-4 w-10 h-10 rounded-full ml-3 border-2"
+          className="w-8 h-8 rounded-full ml-2 border-2 border-gray-200 shadow-sm"
         />
       )}
     </div>

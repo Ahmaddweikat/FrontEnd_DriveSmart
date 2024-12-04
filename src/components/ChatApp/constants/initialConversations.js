@@ -35,5 +35,125 @@ const initialConversations = [
       },
     ],
   },
+  {
+    id: 3,
+    name: "Trainer C",
+    avatar: img,
+    status: "Online",
+    messages: [
+      {
+        sender: "Trainer A",
+        text: "Hello , how are?",
+        date: "27 July",
+        time: "22:37",
+      },
+      {
+        sender: "You",
+        text: "Hi , I'm good",
+        date: "27 July",
+        time: "22:40",
+      },
+    ],
+  },
+  {
+    id: 4,
+    name: "Trainer D",
+    avatar: img,
+    status: "Online",
+    messages: [
+      {
+        sender: "Trainer A",
+        text: "Hello , how are?",
+        date: "27 July",
+        time: "22:37",
+      },
+      {
+        sender: "You",
+        text: "Hi , I'm good",
+        date: "27 July",
+        time: "22:40",
+      },
+    ],
+  },
+  {
+    id: 5,
+    name: "Trainer D",
+    avatar: img,
+    status: "Online",
+    messages: [
+      {
+        sender: "Trainer A",
+        text: "Hello , how are?",
+        date: "27 July",
+        time: "22:37",
+      },
+      {
+        sender: "You",
+        text: "Hi , I'm good",
+        date: "27 July",
+        time: "22:40",
+      },
+    ],
+  },
+  {
+    id: 6,
+    name: "Trainer D",
+    avatar: img,
+    status: "Online",
+    messages: [
+      {
+        sender: "Trainer A",
+        text: "Hello , how are?",
+        date: "27 July",
+        time: "22:37",
+      },
+      {
+        sender: "You",
+        text: "Hi , I'm good",
+        date: "27 July",
+        time: "22:40",
+      },
+    ],
+  },
+  {
+    id: 7,
+    name: "Trainer D",
+    avatar: img,
+    status: "Online",
+    messages: [
+      {
+        sender: "Trainer A",
+        text: "Hello , how are?",
+        date: "27 July",
+        time: "22:37",
+      },
+      {
+        sender: "You",
+        text: "Hi , I'm good",
+        date: "27 July",
+        time: "22:40",
+      },
+    ],
+  },
+  {
+    id: 8,
+    name: "Trainer D",
+    avatar: img,
+    status: "Online",
+    messages: [
+      {
+        sender: "Trainer A",
+        text: "Hello , how are?",
+        date: "27 July",
+        time: "22:37",
+      },
+      {
+        sender: "You",
+        text: "Hi , I'm good",
+        date: "27 July",
+        time: "22:40",
+      },
+    ],
+  },
 ];
 export default initialConversations;
