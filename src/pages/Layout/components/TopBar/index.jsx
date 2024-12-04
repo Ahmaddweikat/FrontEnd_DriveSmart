@@ -7,24 +7,22 @@ import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { messages } from "../../../../constants/Message/messages";
 import { notifications } from "../../../../constants/Notifications/notifications";
-import useMessages from "../../../../hooks/useMessages";
 import useNotifications from "../../../../hooks/useNotificationsState";
 import useAuthStore from "../../../../store/auth.store";
+import ChatApp from "../../../ChatApp/ChatApp";
 
 function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
   const { notificationList, unreadCount, markAsRead } =
     useNotifications(notifications);
-  const { messagesList, unreadMessageCount, openChat } = useMessages(messages);
+
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
 
-  // Add missing state variables
-  const [showMessagePanel, setShowMessagePanel] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showChatPanel, setShowChatPanel] = useState(false);
+  const [SelectedChatId, setSelectedChatId] = useState(null);
 
-  // Handle search query change
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
@@ -122,83 +120,54 @@ function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
           )}
         </div>
 
-        {/* Message Notifications */}
-        <div className="relative">
-          <button
-            onClick={() => setShowMessagePanel((prev) => !prev)}
-            className="text-gray-500 hover:text-gray-700 h-16 pr-4 pl-4"
-          >
-            <MessageOutlinedIcon
-              style={{ width: "25px", height: "25px", marginTop: "4px" }}
-            />
-            {unreadMessageCount > 0 && (
-              <span className="absolute top-2 right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                {unreadMessageCount}
-              </span>
-            )}
-          </button>
-          {/* Message Panel */}
-          {showMessagePanel && (
-            <div className="fixed inset-y-0 right-0 w-96 bg-white border shadow-xl rounded-lg z-50 mt-16 h-full transition-transform transform ease-in-out">
-              <div className="flex justify-between p-4">
-                <h3 className="text-lg font-semibold text-gray-700">
-                  Messages
-                </h3>
-                <button onClick={() => setShowMessagePanel(false)}>
-                  <CloseIcon
-                    style={{ width: "20px", height: "20px", color: "#6B7280" }}
-                  />
-                </button>
+        {/* Message Button */}
+        <button
+          onClick={() => {
+            setShowChatPanel((prev) => !prev);
+            setSelectedChatId(null); // Reset selected chat when opening panel
+          }}
+          className="text-gray-500 hover:text-gray-700 h-16 pr-4 pl-4"
+        >
+          <MessageOutlinedIcon
+            style={{ width: "25px", height: "25px", marginTop: "4px" }}
+          />
+        </button>
+        {/* Chat Panel */}
+        {showChatPanel && (
+          <div className="fixed top-20 right-0 w-96 bg-white shadow-xl z-50 h-[calc(100vh-5rem)]">
+            <div className="flex flex-col h-full">
+              {/* Sticky Header */}
+              <div className="sticky top-0 bg-white z-10">
+                <div className="flex justify-between items-center p-4 border-b border-gray-200">
+                  <h3 className="text-lg font-semibold">Messages</h3>
+                  <button
+                    onClick={() => setShowChatPanel(false)}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <CloseIcon style={{ width: "20px", height: "20px" }} />
+                  </button>
+                </div>
               </div>
 
-              {/* Search Bar */}
-              <div className="px-4 py-2 border-t border-b border-gray-200">
-                <input
-                  type="text"
-                  placeholder="Search Messages"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  className="w-full p-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-customGreen text-sm"
-                />
+              {/* Chat Content */}
+              <div className="flex-1 overflow-hidden">
+                <ChatApp isTopBarChat={true} />
               </div>
 
-              {/* Messages List */}
-              <div className="mt-3 h-full overflow-y-auto">
-                {messagesList.length > 0 ? (
-                  messagesList.map((message) => (
-                    <div
-                      key={message.id}
-                      className="flex items-center justify-between p-4 border-b last:border-b-0 hover:bg-gray-50 cursor-pointer transition duration-200"
-                      onClick={() => openChat(message)}
-                    >
-                      <img
-                        src={message.profileImage || "/default-avatar.png"}
-                        alt="Profile"
-                        className="w-12 h-12 rounded-full mr-4"
-                      />
-                      <div className="flex-1">
-                        <h5 className="text-sm font-semibold text-gray-800">
-                          {message.name}
-                        </h5>
-                        <p className="text-xs text-gray-500 truncate">
-                          {message.message}
-                        </p>
-                      </div>
-                      <span className="text-xs text-gray-400">
-                        {message.timestamp}
-                      </span>
-                    </div>
-                  ))
-                ) : (
-                  <div className="p-4 text-center text-gray-500">
-                    No messages available
-                  </div>
-                )}
+              {/* Footer with See All Button */}
+              <div className="p-4 border-t border-gray-200 bg-white">
+                <Link to="/student/messages">
+                  <button
+                    className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors duration-200"
+                    onClick={() => setShowChatPanel(false)}
+                  >
+                    See All Messages
+                  </button>
+                </Link>
               </div>
             </div>
-          )}
-        </div>
-
+          </div>
+        )}
         {/* Profile Dropdown */}
         <div className="relative">
           <button

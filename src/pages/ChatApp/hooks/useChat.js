@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useConversations } from "./useConversations";
 
 export const useChat = () => {
-  const [selectedChatId, setSelectedChatId] = useState(1);
+  const [selectedChatId, setSelectedChatId] = useState(0);
   const [newMessage, setNewMessage] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
