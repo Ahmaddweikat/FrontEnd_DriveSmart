@@ -15,25 +15,31 @@ export function useBookingState() {
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedDates, setSelectedDates] = useState({});
 
+  // Reset all states when changing tabs
+  useEffect(() => {
+    setSelectedTrainer(null);
+    setSelectedCar(null);
+    setSelectedTimeInput("");
+    setSelectedDays([]);
+    setSelectedCars({});
+    setSelectedDates({});
+    setAvailableTimes([]);
+  }, [selectedBookingTab]);
+
   useEffect(() => {
     if (selectedTrainer && selectedCar && value) {
       const dayOfWeek = value.format("dddd");
-      const availableTimes =
-        trainerCarTimes[selectedTrainer]?.[dayOfWeek]?.[selectedCar] || [];
-      setAvailableTimes(availableTimes);
-      
-      // Filter trainers based on the selected date's day of the week
-      const availableTrainers = Object.keys(trainerCarTimes).filter(trainer => {
-        return trainerCarTimes[trainer][dayOfWeek] !== undefined;
-      });
-      setFilteredTrainers(availableTrainers);
+      const times = trainerCarTimes[selectedTrainer]?.[dayOfWeek]?.[selectedCar] || [];
+      setAvailableTimes(times);
+    } else {
+      setAvailableTimes([]);
     }
   }, [selectedTrainer, selectedCar, value]);
 
   const handleCarSelect = (car, day) => {
     setSelectedCars((prevState) => ({
       ...prevState,
-      [day]: prevState[day] === car ? null : car,
+      [day]: car
     }));
 
     if (selectedTrainer && car && day) {
@@ -44,6 +50,7 @@ export function useBookingState() {
       );
     }
   };
+
   useEffect(() => {
     if (value) {
       const dayOfWeek = value.format("dddd");
@@ -53,41 +60,100 @@ export function useBookingState() {
       setFilteredTrainers(availableTrainers);
     }
   }, [value]);
-  
-  const handleTimeInputChange = (event) => {
-    setSelectedTimeInput(event.target.value);
-    filterTrainersByTime(event.target.value);
-    setSelectedDays([]);
-    setAvailableTimes([]);
-  };
 
   const filterTrainersByTime = (time) => {
-    const availableTrainers = Object.keys(trainerCarTimes).reduce(
-      (acc, trainer) => {
-        const availableDays = Object.keys(trainerCarTimes[trainer]).filter(
-          (day) =>
-            Object.values(trainerCarTimes[trainer][day]).some((times) =>
-              times.includes(time)
-            )
-        );
+    if (!time) {
+      return Object.keys(trainerCarTimes).map(trainer => ({
+        trainer,
+        availableDays: Object.keys(trainerCarTimes[trainer])
+      }));
+    }
 
-        if (availableDays.length > 0) {
-          acc.push({ trainer, availableDays: [...new Set(availableDays)] });
+    return Object.entries(trainerCarTimes).reduce((acc, [trainer, schedule]) => {
+      const availableDays = Object.entries(schedule).reduce((days, [day, carSchedule]) => {
+        const hasTimeSlot = Object.values(carSchedule).some(times => times.includes(time));
+        if (hasTimeSlot) {
+          days.push(day);
         }
-        return acc;
-      },
-      []
-    );
+        return days;
+      }, []);
 
-    setFilteredTrainers(availableTrainers);
+      if (availableDays.length > 0) {
+        acc.push({
+          trainer,
+          availableDays: [...new Set(availableDays)]
+        });
+      }
+      return acc;
+    }, []);
+  };
+
+  const handleTimeInputChange = (event) => {
+    const newTime = event.target.value;
+    setSelectedTimeInput(newTime);
+    setSelectedTrainer(null);
+    setSelectedDays([]);
+    setSelectedCars({});
+    
+    const filtered = filterTrainersByTime(newTime);
+    setFilteredTrainers(filtered);
+    
+    if (selectedTrainer && !filtered.some(t => t.trainer === selectedTrainer)) {
+      setSelectedTrainer(null);
+    }
+  };
+
+  const handleTrainerSelect = (trainer) => {
+    setSelectedTrainer(trainer);
+    setSelectedCar(null);
+    setSelectedDays([]);
+    setSelectedCars({});
+    
+    if (selectedTimeInput && trainer) {
+      const filtered = filterTrainersByTime(selectedTimeInput);
+      const trainerAvailable = filtered.some(t => t.trainer === trainer);
+      
+      if (!trainerAvailable) {
+        setSelectedTimeInput("");
+        setSelectedDays([]);
+        setSelectedCars({});
+      }
+    }
+  };
+
+  const handleDateChange = (date) => {
+    const dateStr = date.format('YYYY-MM-DD');
+    const dayOfWeek = date.format('dddd');
+    
+    if (selectedTrainer && !trainerCarTimes[selectedTrainer]?.[dayOfWeek]) {
+      return;
+    }
+    
+    setSelectedDates(prev => {
+      const newDates = { ...prev };
+      if (dateStr in newDates) {
+        delete newDates[dateStr];
+      } else {
+        newDates[dateStr] = null;
+      }
+      return newDates;
+    });
+
+    if (selectedTrainer && selectedCar) {
+      const times = trainerCarTimes[selectedTrainer]?.[dayOfWeek]?.[selectedCar] || [];
+      setAvailableTimes(times);
+    }
   };
 
   const handleTimeSelect = (dateStr, time) => {
     setSelectedDates(prev => ({
-        ...prev,
-        [dateStr]: time
+      ...prev,
+      [dateStr]: {
+        ...prev[dateStr],
+        time: time
+      }
     }));
-};
+  };
 
   const handleDayChange = (event) => {
     const day = event.target.value;
@@ -98,13 +164,12 @@ export function useBookingState() {
     );
   };
 
-  const handleTrainerSelect = (trainer) => {
-    if (trainer !== selectedTrainer) {
-      setSelectedTrainer(trainer);
-      setSelectedDays([]);
-      setSelectedCars({});
-    }
-  };
+  useEffect(() => {
+    setSelectedCar(null);
+    setSelectedDates({});
+    setSelectedDays([]);
+    setSelectedCars({});
+  }, [selectedTrainer]);
 
   return {
     filteredTrainers,
@@ -127,6 +192,6 @@ export function useBookingState() {
     handleTrainerSelect,
     selectedDates,
     setSelectedDates,
-    handleTimeSelect,
+    handleDateChange,
   };
 }

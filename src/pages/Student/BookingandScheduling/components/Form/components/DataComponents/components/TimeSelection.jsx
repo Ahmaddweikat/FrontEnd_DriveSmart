@@ -1,9 +1,25 @@
 import React from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import {
+  TextField,
+  Button,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Paper,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  Box,
+  Chip,
+  Fade,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import PersonIcon from '@mui/icons-material/Person';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import { trainerCarTimes } from "../../../../../constants/trainerCarTimes";
 
 export function TimeSelection({
@@ -17,11 +33,11 @@ export function TimeSelection({
   selectedCars,
   handleCarSelect,
 }) {
-   const getUpcomingDates = (selectedDays) => {
+  const getUpcomingDates = (selectedDays) => {
     const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const referenceDate = new Date(); 
     const dates = {};
-  
+    
     selectedDays.forEach(day => {
       const targetDayIndex = weekdays.indexOf(day);
       const currentDayIndex = referenceDate.getDay(); 
@@ -47,140 +63,230 @@ export function TimeSelection({
   };
   
   return (
-    <div>
-      <TextField
-        label="Select Time"
-        type="time"
-        value={selectedTimeInput}
-        onChange={handleTimeInputChange}
-        sx={{ width: "33.33%" }}
-        variant="outlined"
-      />
+    <Box sx={{ py: 2 }}>
+      <Paper elevation={0} sx={{ p: 3, backgroundColor: '#f8f9fa', borderRadius: 2, mb: 4 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+          <AccessTimeIcon sx={{ color: '#72b626' }} />
+          <Typography variant="h6" component="h2" sx={{ fontWeight: 600 }}>
+            Select Your Preferred Time
+          </Typography>
+        </Box>
+        <TextField
+          label="Select Time"
+          type="time"
+          value={selectedTimeInput}
+          onChange={handleTimeInputChange}
+          sx={{
+            width: "300px",
+            '& .MuiOutlinedInput-root': {
+              backgroundColor: '#fff',
+              '&:hover': {
+                '& > fieldset': {
+                  borderColor: '#72b626',
+                }
+              }
+            }
+          }}
+          variant="outlined"
+        />
+      </Paper>
 
-      {filteredTrainers.length > 0 && (
-        <div className="mt-4 grid grid-cols-2 gap-8">
-          <div>
-            <h4 className="font-bold text-gray-800">Available Trainers:</h4>
-            <div className="space-y-2">
-              {filteredTrainers.map(({ trainer, availableDays }) => (
-                <div key={trainer} className="mb-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-lg font-semibold">{trainer}</span>
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        px: 2, // Smaller padding for a smaller button
-                        py: 1, // Adjust vertical padding for smaller button size
-                        mt: 1,
-                        borderColor:
-                          selectedTrainer === trainer ? "#72b626" : "gray",
-                        backgroundColor:
-                          selectedTrainer === trainer ? "#72b626" : "white",
-                        color: selectedTrainer === trainer ? "white" : "black",
-                        "&:hover": {
-                          backgroundColor:
-                            selectedTrainer === trainer
-                              ? "#72b626"
-                              : "lightgray",
-                        },
-                        fontSize: "0.875rem",
-                      }}
-                      onClick={() => handleTrainerSelect(trainer)}
-                    >
-                      {selectedTrainer === trainer ? "Selected" : "Select"}{" "}
-                      {/* Change text when selected */}
-                    </Button>
-                  </div>
-                  {selectedTrainer === trainer && (
-                    <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Select the days for booking:
-                    </p>
-                    <FormGroup row>
-                      {availableDays.map((day) => {
-                        // Only calculate date if the day is selected
-                        const date = selectedDays.includes(day) ? 
-                          getUpcomingDates([day])[day] : null;
-                        return (
-                          <FormControlLabel
-                            key={day}
-                            control={
-                              <Checkbox
-                                value={day}
-                                checked={selectedDays.includes(day)}
-                                onChange={handleDayChange}
-                              />
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={6}>
+          <Card elevation={2} sx={{ height: '100%', borderRadius: 2 }}>
+            <CardContent>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
+                <PersonIcon sx={{ color: '#72b626' }} />
+                <Typography variant="h6" component="h3" sx={{ fontWeight: 600 }}>
+                  Available Trainers
+                </Typography>
+              </Box>
+              
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                {selectedTimeInput ? (
+                  <Fade in={true}>
+                    <div>
+                      {filteredTrainers.map(({ trainer, availableDays }) => (
+                        <Card 
+                          key={trainer} 
+                          variant="outlined" 
+                          sx={{ 
+                            mb: 2,
+                            borderColor: selectedTrainer === trainer ? '#72b626' : '#e0e0e0',
+                            transition: 'all 0.2s ease-in-out',
+                            '&:hover': {
+                              borderColor: '#72b626',
+                              transform: 'translateY(-2px)',
+                              boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
                             }
-                            label={
-                              <span>
-                                {day}
-                              </span>
-                            }
-                          />
-                        );
-                      })}
-                    </FormGroup>
-                  </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
+                          }}
+                        >
+                          <CardContent>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                <PersonIcon sx={{ color: selectedTrainer === trainer ? '#72b626' : '#757575' }} />
+                                <Typography variant="h6" sx={{ fontWeight: 500 }}>
+                                  {trainer}
+                                </Typography>
+                              </Box>
+                              <Button
+                                variant={selectedTrainer === trainer ? "contained" : "outlined"}
+                                onClick={() => handleTrainerSelect(trainer)}
+                                sx={{
+                                  backgroundColor: selectedTrainer === trainer ? "#72b626" : "transparent",
+                                  borderColor: '#72b626',
+                                  color: selectedTrainer === trainer ? "#fff" : "#72b626",
+                                  '&:hover': {
+                                    backgroundColor: selectedTrainer === trainer ? "#66a322" : "rgba(114, 182, 38, 0.08)",
+                                  },
+                                }}
+                              >
+                                {selectedTrainer === trainer ? "Selected" : "Select Trainer"}
+                              </Button>
+                            </Box>
+
+                            {selectedTrainer === trainer && (
+                              <Fade in={true}>
+                                <Box>
+                                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                                    <EventAvailableIcon sx={{ color: '#72b626' }} fontSize="small" />
+                                    <Typography variant="subtitle1" color="text.secondary">
+                                      Available Days
+                                    </Typography>
+                                  </Box>
+                                  <FormGroup row sx={{ gap: 1 }}>
+                                    {availableDays.sort().map((day) => (
+                                      <Chip
+                                        key={day}
+                                        label={day}
+                                        onClick={() => handleDayChange({ target: { value: day, checked: !selectedDays.includes(day) } })}
+                                        color={selectedDays.includes(day) ? "primary" : "default"}
+                                        variant={selectedDays.includes(day) ? "filled" : "outlined"}
+                                        sx={{
+                                          borderColor: selectedDays.includes(day) ? '#72b626' : '#e0e0e0',
+                                          backgroundColor: selectedDays.includes(day) ? '#72b626' : 'transparent',
+                                          '&:hover': {
+                                            backgroundColor: selectedDays.includes(day) ? '#66a322' : 'rgba(114, 182, 38, 0.08)',
+                                          },
+                                        }}
+                                      />
+                                    ))}
+                                  </FormGroup>
+                                </Box>
+                              </Fade>
+                            )}
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </Fade>
+                ) : (
+                  <Box sx={{ textAlign: 'center', py: 4, color: 'text.secondary' }}>
+                    <AccessTimeIcon sx={{ fontSize: 48, color: '#72b626', opacity: 0.5, mb: 2 }} />
+                    <Typography>
+                      Please select a time to see available trainers
+                    </Typography>
+                  </Box>
+                )}
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        <Grid item xs={12} md={6}>
           {selectedTrainer && selectedDays.length > 0 && selectedTimeInput && (
-            <div
-              className="max-h-96 overflow-y-auto"
-              style={{ maxHeight: "350px" }}
-            >
-              <h4 className="font-bold text-gray-800">Available Cars:</h4>
-              {selectedDays.map((day) => {
-                const filteredCarsForDay = Object.entries(
-                  trainerCarTimes[selectedTrainer]?.[day] || {}
-                ).filter(([car, times]) => times.includes(selectedTimeInput));
+            <Card elevation={2} sx={{ height: '100%', borderRadius: 2 }}>
+              <CardContent>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 3 }}>
+                  <DirectionsCarIcon sx={{ color: '#72b626' }} />
+                  <Typography variant="h6" component="h3" sx={{ fontWeight: 600 }}>
+                    Available Cars
+                  </Typography>
+                </Box>
 
-                return (
-                  <div key={day} className="mt-2">
-                    <h5 className="text-md font-semibold text-gray-700">
-                      {day} ({getUpcomingDates([day])[day]})
-                    </h5>
-                    {filteredCarsForDay.length === 0 ? (
-                      <p className="text-gray-500">
-                        No cars available for the selected time.
-                      </p>
-                    ) : (
-                      <ul className="list-disc list-inside">
-                        {filteredCarsForDay.map(([car]) => (
-                          <li
-                            key={car}
-                            className="flex justify-between items-center"
-                          >
-                            <div>
-                              <span className="font-semibold">{car}:</span>{" "}
-                              Available at {selectedTimeInput}
-                            </div>
-                            <button
-                              className={`px-4 py-1 rounded mt-1 ${
-                                selectedCars[day] === car
-                                  ? "bg-customGreen text-white"
-                                  : "bg-gray-300 text-black"
-                              }`}
-                              onClick={() => handleCarSelect(car, day)}
-                            >
-                              {selectedCars[day] === car
-                                ? "Selected"
-                                : "Select"}
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                    <div className="border-t border-gray-300 mb-2 mt-1"></div>
-                  </div>
-                );
-              })}
-            </div>
+                <Box sx={{ maxHeight: 'calc(100vh - 400px)', overflow: 'auto', pr: 1 }}>
+                  {selectedDays.sort().map((day) => {
+                    const filteredCarsForDay = Object.entries(
+                      trainerCarTimes[selectedTrainer]?.[day] || {}
+                    ).filter(([car, times]) => times.includes(selectedTimeInput));
+
+                    return (
+                      <Card key={day} variant="outlined" sx={{ mb: 2, borderColor: '#e0e0e0' }}>
+                        <CardContent>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                            <EventAvailableIcon sx={{ color: '#72b626' }} fontSize="small" />
+                            <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
+                              {day} ({getUpcomingDates([day])[day]})
+                            </Typography>
+                          </Box>
+
+                          {filteredCarsForDay.length === 0 ? (
+                            <Typography color="text.secondary">
+                              No cars available for the selected time.
+                            </Typography>
+                          ) : (
+                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                              {filteredCarsForDay.map(([car]) => (
+                                <Card
+                                  key={car}
+                                  variant="outlined"
+                                  sx={{
+                                    borderColor: selectedCars[day] === car ? '#72b626' : '#e0e0e0',
+                                    transition: 'all 0.2s ease-in-out',
+                                    '&:hover': {
+                                      borderColor: '#72b626',
+                                      transform: 'translateY(-2px)',
+                                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                                    }
+                                  }}
+                                >
+                                  <CardContent sx={{ 
+                                    display: 'flex', 
+                                    justifyContent: 'space-between', 
+                                    alignItems: 'center',
+                                    '&:last-child': { pb: 2 }
+                                  }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                      <DirectionsCarIcon sx={{ color: selectedCars[day] === car ? '#72b626' : '#757575' }} />
+                                      <Box>
+                                        <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
+                                          {car}
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                          Available at {selectedTimeInput}
+                                        </Typography>
+                                      </Box>
+                                    </Box>
+                                    <Button
+                                      variant={selectedCars[day] === car ? "contained" : "outlined"}
+                                      onClick={() => handleCarSelect(car, day)}
+                                      size="small"
+                                      sx={{
+                                        backgroundColor: selectedCars[day] === car ? "#72b626" : "transparent",
+                                        borderColor: '#72b626',
+                                        color: selectedCars[day] === car ? "#fff" : "#72b626",
+                                        '&:hover': {
+                                          backgroundColor: selectedCars[day] === car ? "#66a322" : "rgba(114, 182, 38, 0.08)",
+                                        },
+                                      }}
+                                    >
+                                      {selectedCars[day] === car ? "Selected" : "Select Car"}
+                                    </Button>
+                                  </CardContent>
+                                </Card>
+                              ))}
+                            </Box>
+                          )}
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </Box>
+              </CardContent>
+            </Card>
           )}
-        </div>
-      )}
-    </div>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }

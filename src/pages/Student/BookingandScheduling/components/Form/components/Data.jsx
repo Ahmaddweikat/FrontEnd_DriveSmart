@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { Tabs, Tab, Box } from "@mui/material";
+import { Tabs, Tab, Box, Paper } from "@mui/material";
 import Button from "@mui/material/Button";
 import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { useBookingState } from "../../../hooks/useBookingState";
 import { TrainerCarSelection } from "../components/DataComponents/components/TrainerCarSelection";
 import { DateSelection } from "../components/DataComponents/components/DateSelection";
 import { TimeSelection } from "../components/DataComponents/components/TimeSelection";
-import { trainers, cars } from "../../../constants/trainerCarTimes";
+import { trainers, cars, trainerCarTimes } from "../../../constants/trainerCarTimes";
 import { bookingSchema } from "../schemas/bookingSchema";
 import {GoogleColoredIcon} from '../components/DataComponents/components/GoogleColoredIcon';
-
+import dayjs from "dayjs";
 const Data = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const handleGoogleAuth = () => {
@@ -26,7 +28,6 @@ const Data = () => {
         selectedCar,
         selectedDates,
         setSelectedDates,
-        selectedTime,
         setSelectedBookingTab,
         setSelectedCar,
         handleCarSelect,
@@ -37,41 +38,81 @@ const Data = () => {
       } = useBookingState();
 
       const handleBooking = () => {
-        const transformedSelectedCars = Object.entries(selectedCars).reduce((acc, [day, car]) => {
-          acc[day] = [car];
-          return acc;
-        }, {});
-    
+        if (!selectedTrainer) {
+          alert("Please select a trainer");
+          return;
+        }
+
+        if (selectedBookingTab === 0) {
+          // Date tab validation
+          if (Object.keys(selectedDates).length === 0) {
+            alert("Please select at least one date");
+            return;
+          }
+          
+          const hasAllCarAndTime = Object.values(selectedDates).every(
+            dateData => dateData.time !== null && dateData.car
+          );
+          
+          if (!hasAllCarAndTime) {
+            alert("Please select both car and time for all selected dates");
+            return;
+          }
+        } else {
+          if (!selectedTimeInput) {
+            alert("Please select a time");
+            return;
+          }
+          if (selectedDays.length === 0) {
+            alert("Please select at least one day");
+            return;
+          }
+          const hasAllCars = selectedDays.every(day => selectedCars[day]);
+          if (!hasAllCars) {
+            alert("Please select a car for each selected day");
+            return;
+          }
+        }
 
         const bookingData = selectedBookingTab === 0
         ? {
-            trainer: selectedTrainer || '',
-            car: selectedCar || '',
-            selectedDates: selectedDates || {},
-            selectedDays: [],
-            selectedCars: {}
-          }
-        : {
-            trainer: selectedTrainer || '',
-            car: selectedCar || '',
-            selectedDates: {},
-            selectedDays: Array.isArray(selectedDays) ? selectedDays : [],
-            selectedCars: transformedSelectedCars
-          };
+          trainer: selectedTrainer,
+          car: selectedCar,
+          selectedDates,
+          selectedDays: Object.keys(selectedDates).map(date => dayjs(date).format('dddd')), // Get day names like 'Monday'
+          selectedCars: Object.entries(selectedDates).reduce((acc, [date, data]) => {
+            acc[dayjs(date).format('dddd')] = data.car;
+            return acc;
+          }, {})
+        }
+      : {
+              trainer: selectedTrainer,
+              car: selectedCar,
+              selectedDates: selectedDays.reduce((acc, day) => {
+                if (selectedCars[day]) {
+                  acc[day] = {
+                    time: selectedTimeInput,
+                    car: selectedCars[day]
+                  };
+                }
+                return acc;
+              }, {}),
+              selectedDays,
+              selectedCars
+            };
 
-    try {
-      const validatedData = bookingSchema.parse(bookingData);
-      console.log("Validated booking data:", validatedData);
-
-      alert("Booking successfully made!");
-    } catch (error) {
-      console.error("Validation error:", error.errors);
-      const errorMessages = error.errors.map(err => 
-        `${err.path.join('.')}: ${err.message}`
-      ).join('\n');
-      alert(`Please fix the following errors:\n${errorMessages}`);
-    }
-  };
+        try {
+          const validatedData = bookingSchema.parse(bookingData);
+          console.log("Validated booking data:", validatedData);
+          alert("Booking successfully made!");
+        } catch (error) {
+          console.error("Validation error:", error.errors);
+          const errorMessages = error.errors.map(err => 
+            `${err.path.join('.')}: ${err.message}`
+          ).join('\n');
+          alert(`Please fix the following errors:\n${errorMessages}`);
+        }
+      };
   return (
     <div className="max-w-full mx-auto mt-2 relative min-h-full bg-white flex flex-col flex-grow">
       {!isAuthenticated && (
@@ -138,29 +179,103 @@ const Data = () => {
           setSelectedCar={setSelectedCar}
           trainers={trainers}
           cars={cars}
-          disabled={!isAuthenticated}
+          disabled={!isAuthenticated || selectedBookingTab === 1}
         />
       </div>
 
-      <Tabs
-        value={selectedBookingTab}
-        onChange={(event, newValue) => setSelectedBookingTab(newValue)}
-        aria-label="Booking Tabs"
-        className={!isAuthenticated ? 'filter blur-sm' : ''}
-        disabled={!isAuthenticated}
+      <Paper 
+        elevation={2} 
+        sx={{ 
+          borderRadius: '12px',
+          overflow: 'hidden',
+          mb: 3,
+          backgroundColor: '#f8f9fa'
+        }}
       >
-        <Tab label="Date" disabled={!isAuthenticated} />
-        <Tab label="Time" disabled={!isAuthenticated} />
-      </Tabs>
+        <Tabs
+          value={selectedBookingTab}
+          onChange={(event, newValue) => setSelectedBookingTab(newValue)}
+          aria-label="Booking Tabs"
+          className={!isAuthenticated ? 'filter blur-sm' : ''}
+          disabled={!isAuthenticated}
+          variant="fullWidth"
+          TabIndicatorProps={{
+            sx: {
+              height: 3,
+              borderRadius: '3px',
+              backgroundColor: '#72b626'
+            }
+          }}
+          sx={{
+            '& .MuiTab-root': {
+              minHeight: '64px',
+              fontSize: '1rem',
+              textTransform: 'none',
+              fontWeight: 500,
+              color: '#666',
+              '&:hover': {
+                color: '#72b626',
+                opacity: 1,
+              },
+              '&.Mui-selected': {
+                color: '#72b626',
+                fontWeight: 600,
+              },
+              transition: 'all 0.2s ease-in-out',
+            },
+            '& .MuiTabs-flexContainer': {
+              gap: 2,
+            },
+            backgroundColor: '#fff',
+            borderBottom: '1px solid #e0e0e0',
+          }}
+        >
+          <Tab 
+            icon={<CalendarMonthIcon />} 
+            iconPosition="start"
+            label="Book by Date" 
+            disabled={!isAuthenticated}
+            sx={{
+              '& .MuiSvgIcon-root': {
+                fontSize: '1.3rem',
+                mr: 1,
+              },
+            }}
+          />
+          <Tab 
+            icon={<AccessTimeIcon />} 
+            iconPosition="start"
+            label="Book by Time" 
+            disabled={!isAuthenticated}
+            sx={{
+              '& .MuiSvgIcon-root': {
+                fontSize: '1.3rem',
+                mr: 1,
+              },
+            }}
+          />
+        </Tabs>
+      </Paper>
 
-      <Box sx={{ padding: 2 }} className={!isAuthenticated ? 'filter blur-sm' : ''}>
-         {selectedBookingTab === 0 && (
+      <Box 
+        sx={{ 
+          padding: 3,
+          backgroundColor: '#fff',
+          borderRadius: '12px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+        }} 
+        className={!isAuthenticated ? 'filter blur-sm' : ''}
+      >
+        {selectedBookingTab === 0 && (
           <DateSelection
             selectedDates={selectedDates}
             setSelectedDates={setSelectedDates}
             availableTimes={availableTimes}
             handleTimeSelect={handleTimeSelect}
             selectedTimes={selectedDates}
+            selectedTrainer={selectedTrainer}
+            selectedCar={selectedCar}
+            trainerCarTimes={trainerCarTimes}
             disabled={!isAuthenticated}
           />
         )}

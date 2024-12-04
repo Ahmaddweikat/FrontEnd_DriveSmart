@@ -1,4 +1,4 @@
-export const trainers = ["Trainer A", "Trainer B", "Trainer C"];
+export const trainers = ["Trainer A", "Trainer B", "Trainer C", "Trainer D", "Trainer E"];
 export const cars = ["Car 1", "Car 2", "Car 3"];
 
 export const trainerCarTimes = {
@@ -45,6 +45,16 @@ export const trainerCarTimes = {
     },
   },
   "Trainer C": {
+    Monday: {
+      "Car 1": ["08:00", "08:40", "09:20", "10:00", "10:40"],
+      "Car 3": ["09:00", "09:40", "10:20", "11:00", "11:40"],
+    },
+    Wednesday: {
+      "Car 1": ["08:00", "08:40", "09:20", "10:00", "10:40"],
+      "Car 3": ["09:00", "09:40", "10:20", "11:00", "11:40"],
+    },
+  },
+  "Trainer D": {
     Thursday: {
       "Car 2": ["08:00", "08:20", "09:20", "10:00", "10:40"],
       "Car 3": ["09:00", "09:40", "10:20", "11:00", "11:40"],
@@ -53,6 +63,15 @@ export const trainerCarTimes = {
       "Car 2": ["08:00", "08:20", "09:20", "10:00", "10:40"],
       "Car 3": ["09:00", "09:40", "10:20", "11:00", "11:40"],
     },
-    // Additional days can be added similarly
+  },
+  "Trainer E": {
+    Thursday: {
+      "Car 2": ["08:00", "08:20", "09:20", "10:00", "10:40"],
+      "Car 3": ["09:00", "09:40", "10:20", "11:00", "11:40"],
+    },
+    Friday: {
+      "Car 2": ["08:00", "08:20", "09:20", "10:00", "10:40"],
+      "Car 3": ["09:00", "09:40", "10:20", "11:00", "11:40"],
+    },
   },
 };
