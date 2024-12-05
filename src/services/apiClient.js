@@ -23,6 +23,24 @@ class APIClient {
     return axiosInstance.post(this.endpoint, data).then((res) => res.data);
   };
 
+  postFile = (file, additionalData = {}) => {
+    const formData = new FormData();
+    formData.append("files", file);
+
+    // // Add any additional data if provided
+    // Object.entries(additionalData).forEach(([key, value]) => {
+    //   formData.append(key, value);
+    // });
+
+    return axiosInstance
+      .post(this.endpoint, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => res.data);
+  };
+
   put = (data) => {
     return axiosInstance.put(this.endpoint, data).then((res) => res.data);
   };
