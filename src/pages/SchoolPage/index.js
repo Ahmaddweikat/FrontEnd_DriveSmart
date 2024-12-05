@@ -4,13 +4,14 @@ import {
   Box,
   Button,
   Card,
+  CardContent,
   CardMedia,
+  Container,
   Grid,
   ImageList,
   ImageListItem,
   List,
   ListItem,
-  ListItemAvatar,
   ListItemText,
   Paper,
   Rating,
@@ -21,190 +22,6 @@ import {
 import React from "react";
 import { Link } from "react-router-dom";
 
-const SchoolPage = () => {
-  const [tabValue, setTabValue] = React.useState(0);
-
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
-  };
-
-  return (
-    <div className="p-5 bg-gray-100">
-      {/* School Header Section */}
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
-          <Card>
-            <CardMedia
-              component="img"
-              height="300"
-              image="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf"
-              alt="School Building"
-            />
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Typography variant="h3" gutterBottom>
-            Smart Drive School
-          </Typography>
-          <Rating value={4.5} readOnly precision={0.5} />
-
-          <List>
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar>
-                  <Email />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText
-                primary="Email"
-                secondary="contact@smartdrive.com"
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar>
-                  <Phone />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary="Phone" secondary="+1 234 567 890" />
-            </ListItem>
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar>
-                  <LocationOn />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText
-                primary="Address"
-                secondary="123 Drive St, Smart City"
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar>
-                  <Language />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary="Website" secondary="www.smartdrive.com" />
-            </ListItem>
-          </List>
-        </Grid>
-      </Grid>
-
-      {/* Tabs Section */}
-      <Box sx={{ width: "100%", mt: 4 }}>
-        <Tabs value={tabValue} onChange={handleTabChange} centered>
-          <Tab label="About" />
-          <Tab label="Trainers" />
-          <Tab label="Cars" />
-          <Tab label="Gallery" />
-        </Tabs>
-
-        {/* About Tab */}
-        <TabPanel value={tabValue} index={0}>
-          <Typography variant="body1" paragraph>
-            Detailed description of the driving school, its history, values, and
-            achievements...
-          </Typography>
-
-          <Typography variant="h6" gutterBottom>
-            School Manager
-          </Typography>
-          <Card sx={{ maxWidth: 345, mb: 4 }}>
-            <CardMedia
-              component="img"
-              height="200"
-              image="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
-              alt="School Manager"
-            />
-            <Typography variant="h6" align="center" sx={{ p: 2 }}>
-              John Smith
-            </Typography>
-          </Card>
-        </TabPanel>
-
-        {/* Trainers Tab */}
-        <TabPanel value={tabValue} index={1}>
-          <Grid container spacing={3}>
-            {/* Trainer Cards */}
-            {trainers.map((trainer) => (
-              <Grid item xs={12} sm={6} md={4} key={trainer.id}>
-                <TrainerCard trainer={trainer} />
-              </Grid>
-            ))}
-          </Grid>
-        </TabPanel>
-
-        {/* Cars Tab */}
-        <TabPanel value={tabValue} index={2}>
-          <Grid container spacing={3}>
-            {/* Car Cards */}
-            {cars.map((car) => (
-              <Grid item xs={12} sm={6} md={4} key={car.id}>
-                <CarCard car={car} />
-              </Grid>
-            ))}
-          </Grid>
-        </TabPanel>
-
-        {/* Gallery Tab */}
-        <TabPanel value={tabValue} index={3}>
-          <ImageList cols={3} gap={8}>
-            {/* Gallery Images */}
-            {galleryImages.map((item) => (
-              <ImageListItem key={item.id}>
-                <img src={item.img} alt={item.title} loading="lazy" />
-              </ImageListItem>
-            ))}
-          </ImageList>
-        </TabPanel>
-      </Box>
-
-      <Box sx={{ mt: 6 }}>
-        <Typography variant="h4" gutterBottom align="center">
-          Available Driving Licenses
-        </Typography>
-        <Grid container spacing={3} sx={{ mt: 2 }}>
-          {drivingLicenses.map((license) => (
-            <Grid item xs={12} md={6} key={license.id}>
-              <Paper elevation={3} sx={{ p: 3 }}>
-                <Typography variant="h5" gutterBottom>
-                  {license.type}
-                </Typography>
-                <Typography variant="h6" color="primary">
-                  {license.price}
-                </Typography>
-                <Typography variant="subtitle1">
-                  Duration: {license.duration}
-                </Typography>
-                <List>
-                  {license.features.map((feature, index) => (
-                    <ListItem key={index}>
-                      <ListItemText primary={feature} />
-                    </ListItem>
-                  ))}
-                </List>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  component={Link}
-                  to={{
-                    pathname: "/signup/student",
-                  }}
-                >
-                  Register Now
-                </Button>
-              </Paper>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-    </div>
-  );
-};
-
-// Helper Components
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
   return (
@@ -214,32 +31,307 @@ const TabPanel = (props) => {
   );
 };
 
-const TrainerCard = ({ trainer }) => (
-  <Card>
-    <CardMedia
-      component="img"
-      height="200"
-      image={trainer.image}
-      alt={trainer.name}
-    />
-    <Typography variant="h6" align="center" sx={{ p: 2 }}>
-      {trainer.name}
-    </Typography>
-  </Card>
-);
+const SchoolPage = () => {
+  const [tabValue, setTabValue] = React.useState(0);
 
-const CarCard = ({ car }) => (
-  <Card>
-    <CardMedia component="img" height="200" image={car.image} alt={car.model} />
-    <Typography variant="h6" align="center" sx={{ p: 2 }}>
-      {car.model}
-    </Typography>
-  </Card>
-);
+  return (
+    <Box
+      sx={{
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #f6f9fc 0%, #ffffff 100%)",
+        overflowX: "hidden",
+      }}
+    >
+      {/* Hero Section */}
+      <Box
+        sx={{
+          position: "relative",
+          height: "90vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "hidden",
+        }}
+      >
+        <CardMedia
+          component="img"
+          image="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf"
+          alt="School Building"
+          sx={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            filter: "brightness(0.65) saturate(1.2)",
+            transform: "scale(1.1)",
+            transition: "transform 0.5s ease-in-out",
+          }}
+        />
+
+        <Box
+          sx={{
+            position: "relative",
+            textAlign: "center",
+            color: "white",
+            zIndex: 1,
+            p: 4,
+          }}
+        >
+          <Typography
+            variant="h1"
+            sx={{
+              fontSize: { xs: "3rem", md: "5rem" },
+              fontWeight: 800,
+              mb: 2,
+
+              textShadow: "2px 2px 4px rgba(0,0,0,0.3)",
+            }}
+          >
+            Smart Drive School
+          </Typography>
+
+          <Rating value={4.5} readOnly size="large" sx={{ mb: 3 }} />
+          <Typography
+            variant="h5"
+            sx={{
+              maxWidth: "800px",
+              mx: "auto",
+              opacity: 0.95,
+            }}
+          >
+            Your Journey to Driving Excellence Starts Here
+          </Typography>
+        </Box>
+      </Box>
+
+      <Container maxWidth="lg" sx={{ py: 8 }}>
+        {/* Info Cards */}
+        <Grid container spacing={4}>
+          {[
+            {
+              icon: <Email />,
+              title: "Email Us",
+              content: "contact@smartdrive.com",
+            },
+            { icon: <Phone />, title: "Call Us", content: "+1 234 567 890" },
+            {
+              icon: <LocationOn />,
+              title: "Visit Us",
+              content: "123 Drive St, Smart City",
+            },
+            {
+              icon: <Language />,
+              title: "Online",
+              content: "www.smartdrive.com",
+            },
+          ].map((item, index) => (
+            <Grid item xs={12} sm={6} md={3} key={index}>
+              <Paper
+                elevation={0}
+                sx={{
+                  p: 4,
+                  height: "100%",
+                  textAlign: "center",
+                  borderRadius: "20px",
+                  background: "rgba(255,255,255,0.9)",
+                  backdropFilter: "blur(20px)",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    transform: "translateY(-8px)",
+                    boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
+                  },
+                }}
+              >
+                <Avatar
+                  sx={{
+                    width: 60,
+                    height: 60,
+                    mx: "auto",
+                    mb: 2,
+                    bgcolor: "primary.main",
+                  }}
+                >
+                  {item.icon}
+                </Avatar>
+
+                <Typography variant="h6" gutterBottom>
+                  {item.title}
+                </Typography>
+                <Typography color="text.secondary">{item.content}</Typography>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
+
+        {/* Tabs Section */}
+        <Box sx={{ mt: 8 }}>
+          <Tabs
+            value={tabValue}
+            onChange={(e, val) => setTabValue(val)}
+            centered
+          >
+            <Tab label="Trainers" />
+            <Tab label="Cars" />
+            <Tab label="Gallery" />
+          </Tabs>
+
+          <TabPanel value={tabValue} index={0}>
+            <Grid container spacing={4}>
+              {trainers.map((trainer) => (
+                <Grid item xs={12} sm={6} md={4} key={trainer.id}>
+                  <Card sx={{ borderRadius: "20px", overflow: "hidden" }}>
+                    <CardMedia
+                      component="img"
+                      height="300"
+                      image={trainer.image}
+                      alt={trainer.name}
+                    />
+                    <CardContent sx={{ textAlign: "center" }}>
+                      <Typography variant="h6" gutterBottom>
+                        {trainer.name}
+                      </Typography>
+                      <Typography color="text.secondary" gutterBottom>
+                        {trainer.specialization}
+                      </Typography>
+                      <Rating value={trainer.rating} readOnly />
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </TabPanel>
+
+          <TabPanel value={tabValue} index={1}>
+            <Grid container spacing={4}>
+              {cars.map((car) => (
+                <Grid item xs={12} sm={6} md={4} key={car.id}>
+                  <Card sx={{ borderRadius: "20px", overflow: "hidden" }}>
+                    <CardMedia
+                      component="img"
+                      height="250"
+                      image={car.image}
+                      alt={car.model}
+                    />
+                    <CardContent sx={{ textAlign: "center" }}>
+                      <Typography variant="h6" gutterBottom>
+                        {car.model}
+                      </Typography>
+                      <Typography color="text.secondary">
+                        {car.type} • {car.year}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </TabPanel>
+
+          <TabPanel value={tabValue} index={2}>
+            <ImageList cols={3} gap={16}>
+              {galleryImages.map((item) => (
+                <ImageListItem key={item.id}>
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    loading="lazy"
+                    style={{ borderRadius: "12px" }}
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          </TabPanel>
+        </Box>
+
+        <Box sx={{ mt: 12 }}>
+          <Typography
+            variant="h3"
+            align="center"
+            sx={{
+              mb: 6,
+              fontWeight: 700,
+
+              background: "linear-gradient(45deg, #1a237e, #0d47a1)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            License Packages
+          </Typography>
+
+          <Grid container spacing={4}>
+            {drivingLicenses.map((license) => (
+              <Grid item xs={12} md={6} key={license.id}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 4,
+                    borderRadius: "20px",
+                    background:
+                      "linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)",
+                    border: "1px solid rgba(0,0,0,0.08)",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      transform: "translateY(-8px)",
+                      boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
+                    },
+                  }}
+                >
+                  <Typography
+                    variant="h4"
+                    gutterBottom
+                    color="primary"
+                    sx={{ fontWeight: 600 }}
+                  >
+                    {license.type}
+                  </Typography>
+
+                  <Typography
+                    variant="h3"
+                    sx={{ color: "primary.main", fontWeight: 700, my: 2 }}
+                  >
+                    {license.price}
+                  </Typography>
+
+                  <List dense>
+                    {license.features.map((feature, index) => (
+                      <ListItem key={index} sx={{ py: 1 }}>
+                        <ListItemText primary={feature} />
+                      </ListItem>
+                    ))}
+                  </List>
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    component={Link}
+                    to="/signup/student"
+                    sx={{
+                      mt: 3,
+                      py: 2,
+                      borderRadius: "10px",
+                      fontSize: "1.1rem",
+                      fontWeight: 600,
+
+                      background: "linear-gradient(45deg, #1a237e, #0d47a1)",
+                      "&:hover": {
+                        transform: "translateY(-4px)",
+                        boxShadow: "0 8px 16px rgba(26,35,126,0.3)",
+                      },
+                    }}
+                  >
+                    Get Started
+                  </Button>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </Container>
+    </Box>
+  );
+};
 
 export default SchoolPage;
 
-// Add this template data at the top of the file
 const trainers = [
   {
     id: 1,
@@ -247,7 +339,7 @@ const trainers = [
     image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
     specialization: "Manual Transmission",
     experience: "10 years",
-    rating: 4.8,
+    rating: 3,
   },
   {
     id: 2,
@@ -324,23 +416,6 @@ const galleryImages = [
   },
 ];
 
-const schoolData = {
-  name: "Smart Drive School",
-  email: "contact@smartdrive.com",
-  phone: "+1 234 567 890",
-  address: "123 Drive St, Smart City",
-  website: "www.smartdrive.com",
-  rating: 4.5,
-  description:
-    "Smart Drive School has been a leading driving education institution since 2005. We specialize in comprehensive driver training with state-of-the-art facilities and experienced instructors. Our mission is to create confident and responsible drivers through personalized instruction and practical training.",
-  manager: {
-    name: "Robert Brown",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d",
-    experience: "15 years",
-    qualification: "Master Instructor",
-  },
-};
-
 const drivingLicenses = [
   {
     id: 1,
@@ -366,7 +441,30 @@ const drivingLicenses = [
       "Test preparation",
     ],
   },
+  {
+    id: 3,
+    type: "Class A - Motorcycle License",
+    duration: "3 months",
+    price: "$600",
+    features: [
+      "20 hours theory",
+      "15 hours practical",
+      "Safety training",
+      "Test preparation",
+    ],
+  },
+  {
+    id: 4,
+    type: "Class A - Motorcycle License",
+    duration: "3 months",
+    price: "$600",
+    features: [
+      "20 hours theory",
+      "15 hours practical",
+      "Safety training",
+      "Test preparation",
+    ],
+  },
 ];
 
-// Add these exports at the bottom of the file
-export { cars, galleryImages, schoolData, trainers };
+export { cars, galleryImages, trainers };
