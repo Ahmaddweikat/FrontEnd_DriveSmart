@@ -26,6 +26,7 @@ const FilterPanel = ({
   setRatingValue,
   setSearchQuery,
   applyFilters,
+  licenseTypeOptions,
 }) => {
   const { selectedCity, handleCityChange, handleClearCity } = useCity();
   const { searchQuery, handleSearchChange, handleClearSearch } = useSearch();
@@ -177,16 +178,16 @@ const FilterPanel = ({
               Clear
             </button>
           </div>
-          {["Car", "Motorcycle", "Bus", "Tractor", "Taxi"].map((type) => (
+          {licenseTypeOptions.map((type) => (
             <FormControlLabel
-              key={type}
+              key={type.id}
               control={
                 <Checkbox
-                  checked={selectedFilters[type]}
-                  onChange={(e) => handleLicenseChange(e, type)}
+                  checked={selectedFilters[type.id]}
+                  onChange={(e) => handleLicenseChange(e, type.id)}
                 />
               }
-              label={type.charAt(0).toUpperCase() + type.slice(1)}
+              label={type.name}
             />
           ))}
         </div>
