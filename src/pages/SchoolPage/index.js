@@ -257,7 +257,6 @@ const SchoolPage = () => {
           >
             License Packages
           </Typography>
-
           <Grid container spacing={4}>
             {drivingLicenses.map((license) => (
               <Grid item xs={12} md={6} key={license.id}>
@@ -265,6 +264,7 @@ const SchoolPage = () => {
                   elevation={0}
                   sx={{
                     p: 4,
+
                     borderRadius: "20px",
                     background:
                       "linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)",
@@ -291,7 +291,6 @@ const SchoolPage = () => {
                   >
                     {license.price}
                   </Typography>
-
                   <List dense>
                     {license.features.map((feature, index) => (
                       <ListItem key={index} sx={{ py: 1 }}>
@@ -307,6 +306,7 @@ const SchoolPage = () => {
                     sx={{
                       mt: 3,
                       py: 2,
+
                       borderRadius: "10px",
                       fontSize: "1.1rem",
                       fontWeight: 600,
