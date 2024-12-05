@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SearchBar from "../../pages/ChatApp/components/SearchBar";
-import ChatItem from "../../pages/ChatApp/components/ChatItem";
+import ChatItem from "../ChatApp/components/ChatItem";
 import MessageBubble from "../../pages/ChatApp/components/MessageBubble";
 import EmojiPicker from "emoji-picker-react";
 import smileyIcon from "../../assets/ChatApp/Svg/smiley.svg";
@@ -10,7 +10,7 @@ import { useChat } from "./hooks/useChat";
 import { useMessageHandlers } from "./hooks/useMessageHandlers";
 import { useDateFormatter } from "./hooks/useDateFormatter";
 
-const ChatApp = ({ isTopBarChat = false }) => {
+const ChatApp = ({ isTopBarChat = false, onUnreadCountChange }) => {
   const {
     currentChat,
     newMessage,
@@ -24,6 +24,8 @@ const ChatApp = ({ isTopBarChat = false }) => {
     filteredConversations,
     chatWindowRef,
     addMessageToConversation,
+    getUnreadCount,
+    getTotalUnreadCount
   } = useChat();
 
   const { handleSendMessage, handleEmojiClick, handleInputClick } =
@@ -33,7 +35,14 @@ const ChatApp = ({ isTopBarChat = false }) => {
       selectedChatId,
       setEmojiPickerVisible
     );
-
+    
+    
+    useEffect(() => {
+      if (onUnreadCountChange) {
+        onUnreadCountChange(getTotalUnreadCount());
+      }
+    }, [getTotalUnreadCount, onUnreadCountChange, filteredConversations]);
+  
   const { formatDate } = useDateFormatter();
 
   if (isTopBarChat) {
@@ -58,6 +67,7 @@ const ChatApp = ({ isTopBarChat = false }) => {
                     chat={chat}
                     selectedChatId={selectedChatId}
                     setSelectedChatId={setSelectedChatId}
+                    unreadCount={getUnreadCount(chat.id)}
                   />
                 ))}
               </div>
@@ -174,7 +184,7 @@ const ChatApp = ({ isTopBarChat = false }) => {
     <div className="flex h-full w-full bg-white overflow-hidden">
       <div className="flex w-full h-full">
         {/* Left Side - Conversations List */}
-        <div className="w-1/3 bg-white border-r border-gray-200 flex flex-col">
+        <div className="w-1/4 bg-white border-r border-gray-200 flex flex-col">
           <div className="sticky top-0 bg-white z-30">
             <div className="px-4 py-3">
               <SearchBar
@@ -184,16 +194,17 @@ const ChatApp = ({ isTopBarChat = false }) => {
               />
             </div>
           </div>
-          <div className="flex-1 overflow-y-auto">
-            {filteredConversations.map((chat) => (
-              <ChatItem
-                key={chat.id}
-                chat={chat}
-                selectedChatId={selectedChatId}
-                setSelectedChatId={setSelectedChatId}
-              />
-            ))}
-          </div>
+          <div className="flex-1 overflow-y-auto divide-y divide-gray-100">
+                {filteredConversations.map((chat) => (
+                  <ChatItem
+                    key={chat.id}
+                    chat={chat}
+                    selectedChatId={selectedChatId}
+                    setSelectedChatId={setSelectedChatId}
+                    unreadCount={getUnreadCount(chat.id)}
+                  />
+                ))}
+              </div>
         </div>
 
         {/* Right Side - Chat Messages */}

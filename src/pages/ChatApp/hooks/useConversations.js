@@ -22,6 +22,7 @@ export const useConversations = () => {
                 hour: "2-digit",
                 minute: "2-digit",
               }),
+              read: true,
             },
           ],
         };
@@ -30,9 +31,38 @@ export const useConversations = () => {
     });
     setConversations(updatedConversations);
   };
+  const markMessagesAsRead = (chatId) => {
+    setConversations(prevConversations =>
+      prevConversations.map(chat => {
+        if (chat.id === chatId) {
+          return {
+            ...chat,
+            unreadCount: 0,
+            messages: chat.messages.map(msg => ({
+              ...msg,
+              read: true
+            }))
+          };
+        }
+        return chat;
+      })
+    );
+  };
+  const getUnreadCount = (chatId) => {
+    const chat = conversations.find(c => c.id === chatId);
+    return chat ? chat.messages.filter(msg => !msg.read && msg.sender !== "You").length : 0;
+  };
+  const getTotalUnreadCount = () => {
+    return conversations.reduce((total, chat) => 
+      total + chat.messages.filter(msg => !msg.read && msg.sender !== "You").length, 0
+    );
+  };
 
   return {
     conversations,
     addMessageToConversation,
+    markMessagesAsRead,
+    getUnreadCount,
+    getTotalUnreadCount,
   };
-};
+};  

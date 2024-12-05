@@ -1,12 +1,18 @@
 import { useState, useRef, useEffect } from "react";
 import { useConversations } from "./useConversations";
 
-export const useChat = () => {
+export const useChat = ({ onUnreadCountChange } = {}) => {
   const [selectedChatId, setSelectedChatId] = useState(0);
   const [newMessage, setNewMessage] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
-  const { conversations, addMessageToConversation } = useConversations();
+  const { 
+    conversations, 
+    addMessageToConversation, 
+    markMessagesAsRead, 
+    getUnreadCount,
+    getTotalUnreadCount 
+  } = useConversations();
   const chatWindowRef = useRef(null);
 
   const currentChat = conversations.find((chat) => chat.id === selectedChatId);
@@ -21,9 +27,31 @@ export const useChat = () => {
     }
   }, [currentChat?.messages]);
 
+  useEffect(() => {
+    if (selectedChatId) {
+      markMessagesAsRead(selectedChatId);
+      // Force an update of the total unread count
+      const newTotalUnread = getTotalUnreadCount();
+      if (onUnreadCountChange) {
+        onUnreadCountChange(newTotalUnread);
+      }
+    }
+  }, [selectedChatId, markMessagesAsRead, getTotalUnreadCount, onUnreadCountChange]);
+
+  const handleSelectChat = (chatId) => {
+    setSelectedChatId(chatId);
+    if (chatId) {
+      markMessagesAsRead(chatId);
+      // Force an update of the total unread count
+      const newTotalUnread = getTotalUnreadCount();
+      if (onUnreadCountChange) {
+        onUnreadCountChange(newTotalUnread);
+      }
+    }
+  };
   return {
     selectedChatId,
-    setSelectedChatId,
+    setSelectedChatId: handleSelectChat,
     newMessage,
     setNewMessage,
     searchQuery,
@@ -34,5 +62,7 @@ export const useChat = () => {
     filteredConversations,
     chatWindowRef,
     addMessageToConversation,
+    getUnreadCount,
+    getTotalUnreadCount,
   };
 };
