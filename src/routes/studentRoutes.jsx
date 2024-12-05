@@ -7,7 +7,7 @@ import Settings from "./../pages/Student/ProfilePage/SettingsPage/Settings";
 import TestPage from "./../pages/Student/ProfilePage/TestPage/TestPage";
 import QuestionsForm from "./../pages/Student/QuestionsForm/QuestionsForm";
 import WelcomePage from "./../pages/Student/WelcomePage/index";
-
+import School from "../pages/SchoolPage";
 const studentRoutes = [
   { index: true, element: <WelcomePage /> },
   { path: "courses", element: <CoursesPage /> },
@@ -18,6 +18,7 @@ const studentRoutes = [
   { path: "test", element: <TestPage /> },
   { path: "new-booking", element: <Form /> },
   { path: "messages", element: <ChatApp /> },
+  { path: "school", element: <School /> },
 ];
 
 export default studentRoutes;
