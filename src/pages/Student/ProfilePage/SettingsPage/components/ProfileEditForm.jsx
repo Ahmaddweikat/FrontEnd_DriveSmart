@@ -56,7 +56,7 @@ const ProfileEditForm = ({
               {/* User Information Form */}
               <form>
                 <div className="grid grid-cols-1 gap-4">
-                  {/* Name Fields */}
+                  {/* Name Fields - Non-editable */}
                   <div className="flex space-x-4">
                     <div className="flex-1">
                       <label className="block text-sm font-medium text-gray-700">
@@ -64,8 +64,9 @@ const ProfileEditForm = ({
                       </label>
                       <input
                         type="text"
-                        className="mt-1 block w-full px-3 py-2 border rounded-md"
+                        className="mt-1 block w-full px-3 py-2 border rounded-md bg-gray-100"
                         placeholder="Ahmad"
+                        disabled
                       />
                     </div>
                     <div className="flex-1">
@@ -74,11 +75,70 @@ const ProfileEditForm = ({
                       </label>
                       <input
                         type="text"
-                        className="mt-1 block w-full px-3 py-2 border rounded-md"
+                        className="mt-1 block w-full px-3 py-2 border rounded-md bg-gray-100"
                         placeholder="Dweikat"
+                        disabled
                       />
                     </div>
                   </div>
+
+                  {/* ID Number - Non-editable */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      ID Number
+                    </label>
+                    <input
+                      type="text"
+                      className="mt-1 block w-full px-3 py-2 border rounded-md bg-gray-100"
+                      placeholder="123456789"
+                      disabled
+                    />
+                  </div>
+
+                  {/* Blood Group */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Blood Group
+                    </label>
+                    <select className="mt-1 block w-full px-3 py-2 border rounded-md">
+                      <option value="">Select Blood Group</option>
+                      <option value="A+">A+</option>
+                      <option value="A-">A-</option>
+                      <option value="B+">B+</option>
+                      <option value="B-">B-</option>
+                      <option value="O+">O+</option>
+                      <option value="O-">O-</option>
+                      <option value="AB+">AB+</option>
+                      <option value="AB-">AB-</option>
+                    </select>
+                  </div>
+
+                  {/* Country - Non-editable */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Country
+                    </label>
+                    <input
+                      type="text"
+                      className="mt-1 block w-full px-3 py-2 border rounded-md bg-gray-100"
+                      placeholder="Palestine"
+                      disabled
+                    />
+                  </div>
+
+                  {/* Update the Gender field to be non-editable */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Gender
+                    </label>
+                    <input
+                      type="text"
+                      className="mt-1 block w-full px-3 py-2 border rounded-md bg-gray-100"
+                      placeholder="Male"
+                      disabled
+                    />
+                  </div>
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
                       Password
@@ -114,16 +174,6 @@ const ProfileEditForm = ({
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Country
-                    </label>
-                    <input
-                      type="text"
-                      className="mt-1 block w-full px-3 py-2 border rounded-md"
-                      placeholder="Palestine"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
                       City
                     </label>
                     <input
@@ -145,7 +195,6 @@ const ProfileEditForm = ({
                 </div>
               </form>
             </div>
-
             {/* Right Column */}
             <div className="flex flex-col">
               <div className="flex justify-end mb-4">
