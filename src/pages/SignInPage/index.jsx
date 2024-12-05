@@ -80,7 +80,8 @@ function SignInPage() {
           <SignInButton isLoading={isLoading} />
           {error && (
             <p className="text-red-500 text-sm">
-              The password or email you entered is incorrect.
+              {error.response?.data?.message ||
+                "Password or email is incorrect"}
             </p>
           )}
         </form>

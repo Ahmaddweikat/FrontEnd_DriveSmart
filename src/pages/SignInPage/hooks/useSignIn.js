@@ -20,6 +20,9 @@ const useSignIn = () => {
       const user = useAuthStore.getState().user;
       navigate(`/${user.role}`);
     },
+    onError: (error) => {
+      console.error("Sign-in failed:", error);
+    }
   });
 
   return {
