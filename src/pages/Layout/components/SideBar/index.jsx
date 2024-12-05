@@ -15,7 +15,7 @@ const sidebarRoutes = [
   {
     icon: faSchool,
     label: "School",
-    path: "new-booking",
+    path: "school",
   },
   {
     icon: faBook,
