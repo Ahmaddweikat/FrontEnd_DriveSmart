@@ -40,6 +40,7 @@ module.exports = {
         "slide-exit": "slide-exit 0.5s ease forwards",
         "fade-in": "fadeIn 1s ease-in forwards",
         "fade-in2": "fadeIn2 2s ease-in forwards",
+        "modal-enter": "fadeIn 0.3s ease-out",
       },
       keyframes: {
         underlineShrink: {
