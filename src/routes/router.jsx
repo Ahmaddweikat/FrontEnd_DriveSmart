@@ -9,6 +9,7 @@ import SchoolOwnerSignUp from "../pages/schoolManager/SignUpPage";
 import EmailPage from "../pages/ForgetPasswordPage/EmailPage/EmailPage";
 import Layout from "../pages/Layout";
 import SchoolPage from "../pages/SchoolPage";
+import GetALicense from "../pages/Student/GetALicense/GetALicense";
 import Code from "./../pages/ForgetPasswordPage/CodePage/Code";
 import NewPassword from "./../pages/ForgetPasswordPage/NewPasswordPage/NewPassword";
 import HomePage from "./../pages/HomePage/HomePage";
@@ -27,12 +28,19 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
   },
   {
+    path: "/licenses",
+    element: <GetALicense />,
+    errorElement: <NotFoundPage />,
+  },
+  {
     path: "/schools",
     element: <SchoolsPage />,
+    errorElement: <NotFoundPage />,
   },
   {
     path: "/school/:id",
     element: <SchoolPage />,
+    errorElement: <NotFoundPage />,
   },
   {
     path: "/signup/student",
@@ -66,6 +74,7 @@ const router = createBrowserRouter([
   {
     path: `/${Roles.STUDENT}/*`,
     element: <PrivateRoutes roles={[Roles.STUDENT]} />,
+    errorElement: <NotFoundPage />,
     children: [
       {
         element: <Layout />,

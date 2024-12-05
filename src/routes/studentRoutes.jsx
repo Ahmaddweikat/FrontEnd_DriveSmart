@@ -1,3 +1,4 @@
+import ChatApp from "./../components/ChatApp/ChatApp";
 import Form from "./../pages/Student/BookingandScheduling/components/Form/Form";
 import CoursesPage from "./../pages/Student/ProfilePage/CoursesPage/CoursesPage";
 import LessonsPage from "./../pages/Student/ProfilePage/LessonsPage/LessonsPage";
@@ -16,6 +17,8 @@ const studentRoutes = [
   { path: "settings", element: <Settings /> },
   { path: "test", element: <TestPage /> },
   { path: "new-booking", element: <Form /> },
+  { path: "messages", element: <ChatApp /> },
+  
 ];
 
 export default studentRoutes;
