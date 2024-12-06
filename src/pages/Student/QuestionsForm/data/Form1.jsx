@@ -15,7 +15,7 @@ export const questions = [
       "No right turn.",
       "Junction on the right.",
     ],
-    correctAnswer: 3, // Index of the correct answer (0-based)
+    correctAnswer: 3,
   },
   {
     id: 2,
@@ -26,22 +26,22 @@ export const questions = [
       <img
         src={optionAImage}
         alt="Option A"
-        style={{ width: "120px", height: "50px" }}
+        // style={{ width: "120px", height: "50px" }}
       />,
       <img
         src={optionBImage}
         alt="Option B"
-        style={{ width: "120px", height: "50px" }}
+        // style={{ width: "120px", height: "50px" }}
       />,
       <img
         src={optionCImage}
         alt="Option C"
-        style={{ width: "120px", height: "50px" }}
+        // style={{ width: "120px", height: "50px" }}
       />,
       <img
         src={optionDImage}
         alt="Option D"
-        style={{ width: "120px", height: "50px" }}
+        // style={{ width: "120px", height: "50px" }}
       />,
     ],
     correctAnswer: 2, // Index of the correct answer (0-based)
@@ -83,7 +83,7 @@ export const questions = [
         <img
           src={optionD7Image}
           alt="Option D"
-          style={{ width: "80px", height: "60px", marginLeft: "8px" }} // Add margin for spacing
+          // style={{ width: "120px", height: "50px" }}
         />
       </div>,
     ],

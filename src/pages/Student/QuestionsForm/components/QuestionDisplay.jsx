@@ -10,10 +10,10 @@ export const QuestionDisplay = ({
 }) => {
   return (
     <div className="w-full max-w-6xl mx-auto p-6">
-      <div className="flex flex-col mt-0 border border-gray-100 bg-white rounded-xl shadow-sm relative">
-        <div className="flex items-center p-6">
-          <div className="flex-1 text-center mr-2 text-lg">
-            <span className="font-bold text-green-600">
+      <div className="flex flex-col mt-0 border border-gray-100 bg-white rounded-xl shadow-sm relative h-[120px]">
+      <div className="flex items-center p-6 h-full">
+      <div className="flex-1 text-center mr-2 text-lg h-full flex items-center justify-center">
+      <span className="font-bold text-green-600">
               {question.id}.{" "}
             </span>
             {question.question}
@@ -42,8 +42,8 @@ export const QuestionDisplay = ({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-3 my-6">
-        {question.options.map((option, index) => {
+      <div className="grid grid-cols-1 gap-3 my-6 h-[320px]">
+      {question.options.map((option, index) => {
           let icon = null;
 
           if (currentQuestionState.isAnswerChecked) {
@@ -86,8 +86,8 @@ export const QuestionDisplay = ({
               <span className="font-bold text-lg text-green-600 mr-3">
                 {String.fromCharCode(65 + index)}
               </span>
-              <div className="border-l h-8 mx-3 border-gray-300"></div>
-              <span className="flex-1 flex items-center text-gray-700">
+              <div className="border-l h-6 mx-3 border-gray-300"></div>
+              <span className="flex-1 flex items-center text-gray-700 h-[40px]">
                 {isImageOption ? (
                   <img
                     src={option}
@@ -96,7 +96,9 @@ export const QuestionDisplay = ({
                     style={{ width: "50px", height: "50px" }}
                   />
                 ) : (
-                  option
+                  <div className="h-full flex items-center">
+                    {option}
+                  </div>
                 )}
                 {icon}
               </span>
