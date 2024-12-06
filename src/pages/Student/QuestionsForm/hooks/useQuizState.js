@@ -33,6 +33,7 @@ export const useQuizState = (questions) => {
     setIsQuizCompleted(true);
     const finalScore = calculateFinalScore();
     setScore(finalScore);
+    console.log("Final score:", finalScore);
     
     // Mark all answers as checked and update their correctness
     setAnswersState((prevState) =>
