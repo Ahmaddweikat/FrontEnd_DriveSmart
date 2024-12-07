@@ -3,7 +3,11 @@ import { useQuizState } from "../hooks/useQuizState";
 import { useTimer } from "../hooks/useTimer";
 import { QuestionDisplay } from "./QuestionDisplay";
 import { NavigationButtons } from "./NavigationButtons";
+import  QuizHistory  from "./QuizHistory";
 import { questions as quizQuestions } from "../data/Form1";
+// import { questions as quizQuestions } from "../data/Form2";
+
+const FORM_NAME = "Form1";
 
 const QuizApp = () => {
   const {
@@ -27,6 +31,20 @@ const QuizApp = () => {
     handleFinishQuiz,
   } = useQuizState(quizQuestions);
   const [isQuizStarted, setIsQuizStarted] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
+  const [startTime, setStartTime] = useState(null);
+
+  const hasAttempts = () => {
+    const history = JSON.parse(localStorage.getItem('quizHistory') || '{}');
+    return (history[FORM_NAME] || []).length > 0;
+  };
+
+  const getLastAttempt = () => {
+    const history = JSON.parse(localStorage.getItem('quizHistory') || '{}');
+    const attempts = history[FORM_NAME] || [];
+    return attempts[0] || null;
+  };
+
   const Time = 30;
   const { timeRemaining, isTimeUp, resetTimer, stopTimer } = useTimer(
     Time,
@@ -43,12 +61,52 @@ const QuizApp = () => {
         }))
       );
     },
-    !isQuizStarted  // Add this parameter to pause timer until quiz starts
+    !isQuizStarted
   );
   const handleFinishWithTimer = useCallback(() => {
     stopTimer();
     handleFinishQuiz();
-  }, [stopTimer, handleFinishQuiz]);
+    
+    // Save quiz attempt to history
+    const endTime = new Date();
+    const timeSpent = startTime ? Math.floor((endTime - startTime) / 1000) : 0;
+    const formattedTime = formatTime(timeSpent);
+    
+    const quizHistory = JSON.parse(localStorage.getItem('quizHistory') || '{}');
+    
+    // Calculate correct answers and score
+    const correctAnswers = answersState.filter(
+      (q, idx) => q.selectedOption === questions[idx].correctAnswer
+    ).length;
+    const calculatedScore = (correctAnswers / questions.length) * 100;
+    const isPassed = calculatedScore >= 84;
+    
+    const newAttempt = {
+      formName: FORM_NAME,
+      date: new Date().toISOString(),
+      score: calculatedScore,
+      correctAnswers: correctAnswers,
+      totalQuestions: questions.length,
+      timeSpent: formattedTime,
+      passed: isPassed
+    };
+
+    quizHistory[FORM_NAME] = [
+      ...(quizHistory[FORM_NAME] || []),
+      newAttempt
+    ].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    localStorage.setItem('quizHistory', JSON.stringify(quizHistory));
+
+    // Log results to console
+    console.log('Quiz Results:');
+    console.log('Form:', FORM_NAME);
+    console.log('Status:', isPassed ? 'PASSED' : 'FAILED');
+    console.log('Score:', Math.round(calculatedScore) + '%');
+    console.log('Correct Answers:', correctAnswers, 'out of', questions.length);
+    console.log('Time Spent:', formattedTime);
+    
+  }, [stopTimer, handleFinishQuiz, answersState, questions, startTime]);
 
   const handleRestartWithTimer = useCallback(() => {
     resetTimer();
@@ -79,20 +137,51 @@ const QuizApp = () => {
                 <span className="text-4xl">📝</span>
               </div>
               <h2 className="font-bold text-3xl text-green-600 mb-2">Ready to Start?</h2>
+              <h3 className="text-xl text-gray-700 mb-4">{FORM_NAME}</h3>
+              {hasAttempts() && (
+                <div className="mb-4 p-3 bg-blue-50 rounded-lg">
+                  <p className="text-blue-600 font-medium">
+                    {(() => {
+                      const lastAttempt = getLastAttempt();
+                      if (lastAttempt) {
+                        return `Last attempt: ${lastAttempt.passed ? 'Passed' : 'Failed'} with ${Math.round(lastAttempt.score)}%`;
+                      }
+                      return '';
+                    })()}
+                  </p>
+                </div>
+              )}
               <p className="text-gray-600 mb-6">You have 40 minutes to complete all questions. Good luck!</p>
-              <button
-                onClick={() => {
-                  setIsQuizStarted(true);
-                  resetTimer();
-                }}
-                className="bg-green-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-green-700 transition-colors duration-300"
-              >
-                Start Quiz
-              </button>
+              <div className="space-y-4">
+                <button
+                  onClick={() => {
+                    setIsQuizStarted(true);
+                    resetTimer();
+                    setStartTime(new Date());
+                  }}
+                  className="bg-green-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-green-700 transition-colors duration-300 w-full"
+                >
+                  Start Quiz
+                </button>
+                <button
+                  onClick={() => setShowHistory(true)}
+                  className="bg-gray-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-700 transition-colors duration-300 w-full"
+                >
+                  View History
+                </button>
+              </div>
             </div>
           </div>
         </div>
       )}
+
+      {showHistory && (
+        <QuizHistory
+          formName={FORM_NAME}
+          onClose={() => setShowHistory(false)}
+        />
+      )}
+
       {/* Calendar Section */}
       <div className="flex justify-center py-6 bg-gradient-to-r from-green-50 to-green-100 shadow-sm mt-1.5 rounded-lg mx-4">
         {questions.map((_, index) => (
@@ -156,7 +245,7 @@ const QuizApp = () => {
                       className={`font-bold text-3xl ${score >= 84 ? "text-green-600" : "text-red-600"
                         } mb-2`}
                     >
-                      {score >= 84 ? "Pass!" : "Fail"}
+                      {FORM_NAME} - {score >= 84 ? "Pass!" : "Fail"}
                     </h2>
                     <p className="text-gray-600 mb-4">
                       {score >= 84
