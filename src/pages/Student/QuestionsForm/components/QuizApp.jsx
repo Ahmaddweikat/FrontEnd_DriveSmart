@@ -182,21 +182,38 @@ const QuizApp = () => {
         />
       )}
 
-      {/* Calendar Section */}
-      <div className="flex justify-center py-6 bg-gradient-to-r from-green-50 to-green-100 shadow-sm mt-1.5 rounded-lg mx-4">
-        {questions.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => handleCalendarClick(index)}
-            className={`w-8 h-12 rounded-lg mx-1 transition-all duration-300 ease-in-out transform hover:scale-110 ${index === currentQuestionIndex
-              ? "bg-green-600 text-white shadow-lg"
-              : "bg-white text-gray-700 border hover:border-green-400 hover:text-green-600"
-              } flex justify-center items-center font-medium`}
-          >
-            {index + 1}
-          </button>
-        ))}
+      {/* Question Navigation */}
+      <div className="w-full bg-white/90 backdrop-blur-sm border-b border-gray-200">
+        <div className="max-w-full mx-auto px-2 py-1">
+          <div className="overflow-x-auto hide-scrollbar">
+            <div className="flex justify-between w-full">
+              {questions.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleCalendarClick(index)}
+                  className={`flex-1 h-10 rounded-lg transition-all duration-300 ease-in-out 
+                    ${index === currentQuestionIndex
+                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md ring-1 ring-blue-300 scale-105"
+                      : "bg-white text-gray-600 border border-blue-100 hover:border-blue-300 hover:text-blue-600 hover:shadow-sm hover:scale-105"
+                    } flex justify-center items-center font-medium`}
+                >
+                  <span className="text-sm">{index + 1}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
+
+      <style jsx>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
 
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex justify-center items-center py-6">
         <div className="bg-white p-6 shadow-xl rounded-2xl w-full max-w-6xl flex mb-18 mx-4">

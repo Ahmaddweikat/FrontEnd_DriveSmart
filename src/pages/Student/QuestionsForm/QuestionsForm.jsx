@@ -9,8 +9,8 @@ const QuestionsForm = () => {
       <div className="flex-1 flex flex-col h-screen overflow-y-scroll">
         {/* Banner */}
         <section
-          className="relative min-h-[35vh] bg-cover bg-center"
-          // style={{ backgroundImage: `url(${backgroundImage})` }}
+          className="relative bg-cover bg-center"
+          
         >
           <div className="absolute inset-0 bg-black opacity-40"></div>
           <div className="relative z-10 flex justify-center items-center h-full">
