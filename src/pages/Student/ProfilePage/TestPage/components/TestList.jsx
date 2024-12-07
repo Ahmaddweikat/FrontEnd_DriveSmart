@@ -1,7 +1,6 @@
 import React from "react";
 
 const TestList = ({ filteredTests }) => {
-  // Check if there are no tests to display
   if (filteredTests.length === 0) {
     return (
       <div className="p-6 bg-white rounded-lg shadow-lg text-center text-gray-500">
@@ -17,7 +16,7 @@ const TestList = ({ filteredTests }) => {
           <div className="flex justify-between items-center">
             <h3 className="text-xl font-semibold">{test.title}</h3>
 
-            {/* Passed or Failed Indicator with Filled Circle and Animation */}
+            
             {parseInt(test.score) > 24 ? (
               <div className="flex items-center space-x-2">
                 <div className="flex items-center justify-center border-2 border-green-500 bg-green-500 text-white rounded-full w-20 h-15">
