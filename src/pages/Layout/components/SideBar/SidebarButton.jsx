@@ -1,8 +1,17 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function SidebarButton({ icon, label, isExpanded, active, pageName }) {
+  const location = useLocation();
+  const fullPath = location.pathname;
+
+  // Check if the current route is part of this section
+  const isActive = () => {
+    const baseRoute = pageName.split('/')[1]; // Gets 'test' from 'student/test'
+    return fullPath.includes(baseRoute);
+  };
+
   return (
     <Link
       to={`/${pageName}`}
@@ -10,13 +19,13 @@ function SidebarButton({ icon, label, isExpanded, active, pageName }) {
     >
       <button
         className={`relative flex items-center justify-start w-full px-5 py-3 rounded-lg ${
-          active ? "text-customGreen" : "hover:bg-gray-100"
+          isActive() ? "text-customGreen" : "hover:bg-gray-100"
         } transition-colors duration-300`}
       >
         <FontAwesomeIcon
           icon={icon}
           className={`text-2xl transition-colors duration-300 ${
-            active ? "text-customGreen" : "text-gray-400"
+            isActive() ? "text-customGreen" : "text-gray-400"
           }`}
           style={{ minWidth: "24px", textAlign: "center" }}
         />
@@ -25,7 +34,7 @@ function SidebarButton({ icon, label, isExpanded, active, pageName }) {
             {label}
           </span>
         )}
-        {active && (
+        {isActive() && (
           <span className="absolute right-0 top-1/2 transform -translate-y-1/2 h-12 w-1 bg-customGreen transition-all duration-300" />
         )}
       </button>
@@ -34,7 +43,7 @@ function SidebarButton({ icon, label, isExpanded, active, pageName }) {
           {label}
         </span>
       )}
-    </Link>
+    </Link> 
   );
 }
 

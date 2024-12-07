@@ -51,7 +51,8 @@ const sidebarRoutes = [
 
 const SideBar = ({ isExpanded, activePage, setActivePage }) => {
   const location = useLocation();
-  const currentPath = location.pathname.split("/")[1];
+  const pathSegments = location.pathname.split('/');
+  const currentPath = pathSegments.length > 2 ? pathSegments[2] : pathSegments[1];
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -73,6 +74,7 @@ const SideBar = ({ isExpanded, activePage, setActivePage }) => {
               isExpanded={isExpanded}
               active={currentPath === route.path}
               pageName={"student/" + route.path}
+              fullPath={location.pathname}
             />
           ))}
         </nav>
