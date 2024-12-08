@@ -43,6 +43,24 @@ const quizzes = [
     completedAt: "2024-12-06 09:30",
     totalQuestions: 18,
     correctAnswers: "17 out of 18"
+  },
+  {
+    title: "Form 1 Quiz",
+    score: 95,
+    status: "PASSED",
+    timeSpent: "28 minutes",
+    completedAt: "2024-12-06 09:30",
+    totalQuestions: 18,
+    correctAnswers: "17 out of 18"
+  },
+  {
+    title: "Form 1 Quiz",
+    score: 95,
+    status: "PASSED",
+    timeSpent: "28 minutes",
+    completedAt: "2024-12-06 09:30",
+    totalQuestions: 18,
+    correctAnswers: "17 out of 18"
   }
 ];
 
