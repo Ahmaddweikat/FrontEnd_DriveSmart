@@ -1,6 +1,6 @@
 import ChatApp from "../pages/ChatApp/ChatApp";
 import Form from "./../pages/Student/BookingandScheduling/components/Form/Form";
-import CoursesPage from "./../pages/Student/ProfilePage/CoursesPage/CoursesPage";
+import Quizzes from "./../pages/Student/ProfilePage/QuizPage";
 import LessonsPage from "./../pages/Student/ProfilePage/LessonsPage/LessonsPage";
 import ProfileInfoPage from "./../pages/Student/ProfilePage/ProfileInfoPage/ProfileInfoPage";
 import Settings from "./../pages/Student/ProfilePage/SettingsPage/Settings";
@@ -12,7 +12,7 @@ import Matrial from "../pages/StudyMaterialPage";
 import Theory from "../pages/TheoryPage";
 const studentRoutes = [
   { index: true, element: <WelcomePage /> },
-  { path: "courses", element: <CoursesPage /> },
+  { path: "quizzes", element: <Quizzes /> },
   { path: "lessons", element: <LessonsPage /> },
   { path: "profile", element: <ProfileInfoPage /> },
   { path: "questions", element: <QuestionsForm /> },
