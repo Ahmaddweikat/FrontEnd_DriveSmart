@@ -12,6 +12,8 @@ import { notifications } from "../../../../constants/Notifications/notifications
 import useMessages from "../../../../hooks/useMessages";
 import useNotifications from "../../../../hooks/useNotificationsState";
 import useAuthStore from "../../../../store/auth.store";
+import useGetStudentProfile from "./../../../Student/ProfilePage/ProfileInfoPage/hooks/useGetStudentProfile";
+import { Skeleton } from "@mui/material";
 
 function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
   const { notificationList, unreadCount, markAsRead } =
@@ -38,6 +40,7 @@ function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
   };
 
   const { user, logout } = useAuthStore();
+  const { data, isLoading, error } = useGetStudentProfile();
 
   return (
     <div className="bg-white shadow p-4 flex justify-between items-center relative h-20 z-10">
@@ -206,12 +209,22 @@ function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
             className="flex items-center space-x-2"
             aria-expanded={showProfileDropdown}
           >
-            <Avatar
-              alt="User Avatar"
-              src="/static/images/avatar/1.jpg"
-              sx={{ width: 40, height: 40 }}
-            />
-            <span className="font-medium text-gray-600">Remy Sharp</span>
+            {isLoading ? (
+              <Skeleton variant="circular" width={40} height={40} />
+            ) : (
+              <Avatar
+                alt="User Picture"
+                src={!error && data?.profilePicture}
+                sx={{ width: 40, height: 40 }}
+              />
+            )}
+            <span className="font-medium text-gray-600">
+              {isLoading ? (
+                <Skeleton variant="text" width={100} />
+              ) : (
+                data?.name || user.name
+              )}
+            </span>
             <ExpandMoreOutlinedIcon sx={{ width: 20, height: 20 }} />
           </button>
           {showProfileDropdown && (
