@@ -6,18 +6,13 @@ import {
   Card, 
   Grid,
   Button,
-  IconButton,
   useTheme,
-  Paper,
-  CircularProgress,
   Chip
 } from '@mui/material';
 import { 
   QuestionMark,
   PlayArrow,
   Timer,
-  School,
-  CheckCircleOutline
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { personalLicenseForms } from './data/personalLicense/index';
