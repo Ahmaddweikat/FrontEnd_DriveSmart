@@ -1,4 +1,4 @@
-import { Email, Language, LocationOn, Phone, MenuBook, DirectionsCar, Timeline, Assessment, PlayArrow } from "@mui/icons-material";
+import { Email, Language, LocationOn, Phone, DirectionsCar, Timeline, Assessment } from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -84,7 +84,6 @@ const SchoolPage = () => {
               fontSize: { xs: "3rem", md: "5rem" },
               fontWeight: 800,
               mb: 2,
-
               textShadow: "2px 2px 4px rgba(0,0,0,0.3)",
             }}
           >
@@ -164,268 +163,6 @@ const SchoolPage = () => {
           ))}
         </Grid>
 
-        {/* Learning Sections */}
-        <Container maxWidth="lg" sx={{ py: 8 }}>
-          {/* Section Header */}
-          <Box sx={{ textAlign: 'center', mb: 6 }}>
-            <Typography
-              variant="h3"
-              component="h2"
-              sx={{
-                fontWeight: 700,
-                background: 'linear-gradient(45deg, #2196F3, #1976D2)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                mb: 2
-              }}
-            >
-              Start Your Learning Journey
-            </Typography>
-            <Typography
-              variant="h6"
-              color="text.secondary"
-              sx={{ maxWidth: '600px', mx: 'auto', mb: 4 }}
-            >
-              Master the rules of the road with our comprehensive theory lessons and interactive learning materials
-            </Typography>
-          </Box>
-
-          <Grid container justifyContent="center">
-            {/* Theory Section */}
-            <Grid item xs={12} md={10}>
-              <Card
-                sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: { xs: 'column', md: 'row' },
-                  transition: 'all 0.3s ease-in-out',
-                  cursor: 'pointer',
-                  '&:hover': {
-                    transform: 'translateY(-8px)',
-                    boxShadow: '0 16px 70px -12px rgba(0,0,0,0.3)',
-                  },
-                  borderRadius: 4,
-                  overflow: 'hidden',
-                  position: 'relative',
-                  background: 'linear-gradient(135deg, #2196F3 0%, #1976D2 100%)',
-                }}
-                onClick={() => navigate('/theory')}
-              >
-                {/* Left Section with Image */}
-                <Box
-                  sx={{
-                    width: { md: '40%' },
-                    position: 'relative',
-                    overflow: 'hidden',
-                    display: { xs: 'none', md: 'block' },
-                    borderRadius: '8px',
-                  }}
-                >
-                  <Box
-                    component="img"
-                    src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d"
-                    alt="Driving School Instruction"
-                    sx={{
-                      width: '100%',
-                      height: '100%',
-                      minHeight: '500px',
-                      objectFit: 'cover',
-                      borderRadius: '8px',
-                      mb: 3,
-                      opacity: 0.9,
-                    }}
-                  />
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      background: 'linear-gradient(to right, rgba(255,255,255,0.1) 0%, transparent 60%)',
-                    }}
-                  />
-                </Box>
-
-                {/* Right Section with Content */}
-                <Box
-                  sx={{
-                    flex: 1,
-                    p: 5,
-                    position: 'relative',
-                    zIndex: 1,
-                  }}
-                >
-                  <Box sx={{ position: 'relative' }}>
-                    <MenuBook 
-                      sx={{ 
-                        fontSize: 80,
-                        color: 'rgba(255,255,255,0.1)',
-                        position: 'absolute',
-                        right: -20,
-                        top: -30,
-                        transform: 'rotate(15deg)',
-                      }}
-                    />
-                    
-                    <Typography 
-                      variant="h3" 
-                      component="h2" 
-                      sx={{ 
-                        color: 'white',
-                        mb: 3,
-                        fontWeight: 700,
-                        textShadow: '0 2px 4px rgba(0,0,0,0.2)',
-                      }}
-                    >
-                      Theory Learning
-                    </Typography>
-                    
-                    <Typography 
-                      variant="h6"
-                      sx={{ 
-                        color: 'rgba(255,255,255,0.9)',
-                        mb: 4,
-                        lineHeight: 1.6,
-                        maxWidth: '600px',
-                      }}
-                    >
-                      Begin your journey to becoming a skilled driver with our comprehensive theory lessons
-                    </Typography>
-
-                    {/* Main Buttons Grid */}
-                    <Grid container spacing={3} sx={{ mb: 4 }}>
-                      {[
-                        {
-                          icon: <Timeline sx={{ fontSize: 40 }} />,
-                          text: 'Progress Tracking',
-                          description: 'Monitor your learning journey',
-                          path: '/progress',
-                          color: '#2196F3'
-                        },
-                        {
-                          icon: <MenuBook sx={{ fontSize: 40 }} />,
-                          text: 'Study Materials',
-                          description: 'Access comprehensive resources',
-                          path: '/study-materials',
-                          color: '#1976D2'
-                        },
-                      ].map((feature, index) => (
-                        <Grid item xs={12} sm={6} key={index}>
-                          <Card
-                            onClick={() => navigate(feature.path)}
-                            sx={{
-                              p: 3,
-                              height: '100%',
-                              cursor: 'pointer',
-                              background: `linear-gradient(135deg, ${feature.color} 0%, ${feature.color}dd 100%)`,
-                              color: 'white',
-                              transition: 'all 0.3s ease-in-out',
-                              '&:hover': {
-                                transform: 'translateY(-8px) scale(1.02)',
-                                boxShadow: `0 12px 30px ${feature.color}40`,
-                              },
-                              display: 'flex',
-                              flexDirection: 'column',
-                              alignItems: 'center',
-                              textAlign: 'center',
-                              borderRadius: 4,
-                              position: 'relative',
-                              overflow: 'hidden',
-                            }}
-                          >
-                            <Box
-                              sx={{
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                                right: 0,
-                                bottom: 0,
-                                background: 'radial-gradient(circle at top right, rgba(255,255,255,0.1) 0%, transparent 60%)',
-                              }}
-                            />
-                            <Box
-                              sx={{
-                                backgroundColor: 'rgba(255,255,255,0.1)',
-                                borderRadius: '50%',
-                                p: 2,
-                                mb: 2,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                position: 'relative',
-                                zIndex: 1,
-                              }}
-                            >
-                              {feature.icon}
-                            </Box>
-                            <Typography
-                              variant="h5"
-                              component="h3"
-                              sx={{
-                                fontWeight: 600,
-                                mb: 1,
-                                position: 'relative',
-                                zIndex: 1,
-                              }}
-                            >
-                              {feature.text}
-                            </Typography>
-                            <Typography
-                              variant="body1"
-                              sx={{
-                                opacity: 0.9,
-                                position: 'relative',
-                                zIndex: 1,
-                              }}
-                            >
-                              {feature.description}
-                            </Typography>
-                          </Card>
-                        </Grid>
-                      ))}
-                    </Grid>
-
-                    {/* Practice Button */}
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        mt: 4,
-                      }}
-                    >
-                      <Button
-                        variant="contained"
-                        size="large"
-                        onClick={() => navigate('/quizzes')}
-                        startIcon={<Assessment sx={{ fontSize: 24 }} />}
-                        sx={{
-                          py: 2,
-                          px: 6,
-                          fontSize: '1.2rem',
-                          fontWeight: 600,
-                          borderRadius: 3,
-                          background: 'linear-gradient(45deg, #FF6B6B 30%, #FF8E53 90%)',
-                          boxShadow: '0 8px 20px rgba(255, 107, 107, 0.3)',
-                          transition: 'all 0.3s ease-in-out',
-                          '&:hover': {
-                            transform: 'translateY(-4px)',
-                            boxShadow: '0 12px 25px rgba(255, 107, 107, 0.4)',
-                            background: 'linear-gradient(45deg, #FF5252 30%, #FF7043 90%)',
-                          },
-                        }}
-                      >
-                        Start Practice
-                      </Button>
-                    </Box>
-                  </Box>
-                </Box>
-              </Card>
-            </Grid>
-          </Grid>
-        </Container>
-
         {/* Tabs Section */}
         <Box sx={{ mt: 8 }}>
           <Tabs
@@ -433,12 +170,13 @@ const SchoolPage = () => {
             onChange={(e, val) => setTabValue(val)}
             centered
           >
+            <Tab label="About" />
             <Tab label="Trainers" />
             <Tab label="Cars" />
             <Tab label="Gallery" />
           </Tabs>
 
-          <TabPanel value={tabValue} index={0}>
+          <TabPanel value={tabValue} index={1}>
             <Grid container spacing={4}>
               {[
                 {
@@ -489,7 +227,7 @@ const SchoolPage = () => {
             </Grid>
           </TabPanel>
 
-          <TabPanel value={tabValue} index={1}>
+          <TabPanel value={tabValue} index={2}>
             <Grid container spacing={4}>
               {[
                 {
@@ -509,7 +247,7 @@ const SchoolPage = () => {
                 {
                   id: 3,
                   model: "Hyundai i30",
-                  image: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341",
+                  image: "https://images.unsplash.com/photo-1549399542-7b2b1d1c1c1c",
                   type: "Manual",
                   year: "2022",
                 },
@@ -536,7 +274,7 @@ const SchoolPage = () => {
             </Grid>
           </TabPanel>
 
-          <TabPanel value={tabValue} index={2}>
+          <TabPanel value={tabValue} index={3}>
             <ImageList cols={3} gap={16}>
               {[
                 {
@@ -581,8 +319,94 @@ const SchoolPage = () => {
               ))}
             </ImageList>
           </TabPanel>
+
+          <TabPanel value={tabValue} index={0}>
+            <Grid container spacing={4}>
+              {[
+                {
+                  id: 1,
+                  name: "David Thompson",
+                  image: "https://images.unsplash.com/photo-1507679799987-c6a33cd113b2",
+                  role: "Founder & CEO",
+                  experience: "20+ years in Driver Education",
+                },
+                {
+                  id: 2,
+                  name: "Emily Rodriguez",
+                  image: "https://images.unsplash.com/photo-1573496359394-025c4b977150",
+                  role: "Chief Instructor",
+                  experience: "15 years of Teaching Experience",
+                },
+                {
+                  id: 3,
+                  name: "Michael Chen",
+                  image: "https://images.unsplash.com/photo-1568602471122-7b2b1d1c1c1c",
+                  role: "Head of Safety Training",
+                  experience: "18 years in Road Safety",
+                },
+              ].map((leader) => (
+                <Grid item xs={12} sm={6} md={4} key={leader.id}>
+                  <Card sx={{ borderRadius: "20px", overflow: "hidden", height: "100%" }}>
+                    <CardMedia
+                      component="img"
+                      height="350"
+                      image={leader.image}
+                      alt={leader.name}
+                      sx={{ 
+                        objectFit: 'cover',
+                        width: '100%',
+                        height: '350px'
+                      }}
+                    />
+                    <CardContent sx={{ textAlign: "center" }}>
+                      <Typography variant="h6" gutterBottom>
+                        {leader.name}
+                      </Typography>
+                      <Typography color="text.secondary" gutterBottom>
+                        {leader.role}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {leader.experience}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+
+            {/* School Mission and Vision Section */}
+            <Box sx={{ mt: 8, textAlign: "center", px: 4 }}>
+              <Typography
+                variant="h4"
+                gutterBottom
+                sx={{
+                  fontWeight: "bold",
+                  background: "linear-gradient(45deg, #2196F3, #1976D2)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                Our Mission
+              </Typography>
+              <Typography
+                variant="h6"
+                color="text.secondary"
+                paragraph
+                sx={{
+                  maxWidth: "800px",
+                  mx: "auto",
+                  lineHeight: 1.6,
+                }}
+              >
+                To empower individuals with comprehensive driving skills, foster road
+                safety, and create confident, responsible drivers who contribute to
+                community well-being.
+              </Typography>
+            </Box>
+          </TabPanel>
         </Box>
 
+        {/* License Packages Section */}
         <Box sx={{ mt: 12 }}>
           <Typography
             variant="h3"
@@ -590,7 +414,6 @@ const SchoolPage = () => {
             sx={{
               mb: 6,
               fontWeight: 700,
-
               background: "linear-gradient(45deg, #1a237e, #0d47a1)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
@@ -654,7 +477,6 @@ const SchoolPage = () => {
                   elevation={0}
                   sx={{
                     p: 4,
-
                     borderRadius: "20px",
                     background:
                       "linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)",
@@ -696,11 +518,9 @@ const SchoolPage = () => {
                     sx={{
                       mt: 3,
                       py: 2,
-
                       borderRadius: "10px",
                       fontSize: "1.1rem",
                       fontWeight: 600,
-
                       background: "linear-gradient(45deg, #1a237e, #0d47a1)",
                       "&:hover": {
                         transform: "translateY(-4px)",
