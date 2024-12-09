@@ -22,12 +22,18 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { personalLicenseForms } from './data/personalLicense/index';
 
+const customGreen = {
+  main: '#4CAF50',
+  light: '#81C784',
+  dark: '#388E3C',
+  contrastText: '#ffffff'
+};
+
 const questionSets = personalLicenseForms.map(form => ({
   id: form.id,
   title: form.title,
   questionsCount: form.questions.length,
   timeLimit: form.timeLimit || "45 minutes",
-  category: form.category || "General",
   formType: form.formType
 }));
 
@@ -48,7 +54,7 @@ const TheoryPage = () => {
         <Typography variant="h3" component="h1" gutterBottom
           sx={{
             fontWeight: 'bold',
-            background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+            background: `linear-gradient(45deg, ${customGreen.main} 30%, ${customGreen.light} 90%)`,
             backgroundClip: 'text',
             textFillColor: 'transparent',
             WebkitBackgroundClip: 'text',
@@ -64,7 +70,7 @@ const TheoryPage = () => {
       {/* Question Sets Grid */}
       <Grid container spacing={4}>
         {questionSets.map((set) => (
-          <Grid item xs={12} md={6} key={set.id}>
+          <Grid item xs={12} md={4} key={set.id}>
             <Card
               sx={{
                 height: '100%',
@@ -80,37 +86,6 @@ const TheoryPage = () => {
                 borderRadius: 2,
               }}
             >
-              {/* Progress Indicator */}
-              {/* <Box
-                sx={{
-                  position: 'absolute',
-                  top: -10,
-                  right: -10,
-                  backgroundColor: '#fff',
-                  borderRadius: '50%',
-                  padding: '2px',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                }}
-              >
-                <CircularProgress variant="determinate" value={parseInt(set.progress)} size={44} />
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    left: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Typography variant="caption" component="div" color="text.secondary">
-                    {set.progress}
-                  </Typography>
-                </Box>
-              </Box> */}
-
               <Box sx={{ p: 3, flexGrow: 1 }}>
                 <Typography variant="h5" gutterBottom component="div" sx={{ fontWeight: 'bold' }}>
                   {set.title}
@@ -123,12 +98,6 @@ const TheoryPage = () => {
                     size="small"
                     sx={{ borderRadius: 1 }}
                   />
-                  {/* <Chip
-                    icon={<School sx={{ fontSize: 16 }} />}
-                    label={set.difficulty}
-                    size="small"
-                    sx={{ borderRadius: 1 }}
-                  /> */}
                   <Chip
                     icon={<QuestionMark sx={{ fontSize: 16 }} />}
                     label={`${set.questionsCount} Questions`}
@@ -144,12 +113,12 @@ const TheoryPage = () => {
                   fullWidth
                   sx={{
                     mt: 2,
-                    background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                    background: `linear-gradient(45deg, ${customGreen.main} 30%, ${customGreen.light} 90%)`,
                     color: 'white',
                     textTransform: 'none',
                     fontWeight: 'bold',
                     '&:hover': {
-                      background: 'linear-gradient(45deg, #1976D2 30%, #1CB5E0 90%)',
+                      background: `linear-gradient(45deg, ${customGreen.dark} 30%, ${customGreen.main} 90%)`,
                     }
                   }}
                 >
@@ -160,50 +129,6 @@ const TheoryPage = () => {
           </Grid>
         ))}
       </Grid>
-
-      {/* Quick Stats Section */}
-      <Box sx={{ mt: 6 }}>
-        <Typography variant="h5" gutterBottom sx={{ mb: 3 }}>
-          Your Progress
-        </Typography>
-        <Grid container spacing={3}>
-          {[
-            { title: 'Tests Completed', value: '12', icon: CheckCircleOutline },
-            { title: 'Average Score', value: '85%', icon: School },
-            { title: 'Time Spent', value: '6.5 hrs', icon: Timer },
-          ].map((stat, index) => (
-            <Grid item xs={12} md={4} key={index}>
-              <Paper
-                elevation={0}
-                sx={{
-                  p: 3,
-                  textAlign: 'center',
-                  backgroundColor: 'rgba(33, 150, 243, 0.04)',
-                  borderRadius: 2,
-                }}
-              >
-                <IconButton
-                  sx={{
-                    backgroundColor: 'rgba(33, 150, 243, 0.1)',
-                    mb: 2,
-                    '&:hover': {
-                      backgroundColor: 'rgba(33, 150, 243, 0.2)',
-                    }
-                  }}
-                >
-                  <stat.icon color="primary" />
-                </IconButton>
-                <Typography variant="h4" gutterBottom>
-                  {stat.value}
-                </Typography>
-                <Typography color="text.secondary">
-                  {stat.title}
-                </Typography>
-              </Paper>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
     </Container>
     </div>
   );
