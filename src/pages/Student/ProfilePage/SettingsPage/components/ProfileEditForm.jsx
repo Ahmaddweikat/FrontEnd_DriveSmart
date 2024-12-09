@@ -1,16 +1,44 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Avatar } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import React, { useState } from "react";
+import Spinner from "./../../../../../components/Spinner";
+import useGetStudentProfile from "./../../ProfileInfoPage/hooks/useGetStudentProfile";
+import useChangeProfilePicture from "../hooks/useChangeProfilePicture";
 
-const ProfileEditForm = ({
-  handleSave,
-  selectedImage,
-  profilePicture,
-  handleImageChange,
-}) => {
+const ProfileEditForm = ({ handleSave, selectedImage, handleImageChange }) => {
+  const { data: user, isLoading, error } = useGetStudentProfile();
+  const { mutate: changeProfilePicture } = useChangeProfilePicture();
+  const [newProfilePicture, setNewProfilePicture] = useState(null);
+
+  const handleProfilePictureChange = async (event) => {
+    const file = event.target.files[0];
+    // console.log("🚀 ~ handleProfilePictureChange ~ file:", file);
+    if (file) {
+      console.log("🚀 ~ handleProfilePictureChange ~ file:", file);
+
+      setNewProfilePicture(file);
+      // handleImageChange(event);
+      await handleSaveProfilePicture();
+    }
+  };
+
+  const handleSaveProfilePicture = async () => {
+    if (newProfilePicture) {
+      console.log(
+        "🚀 ~ handleSaveProfilePicture ~ newProfilePicture:",
+        newProfilePicture
+      );
+      await changeProfilePicture(newProfilePicture);
+    }
+  };
+
+  if (isLoading) return <Spinner />;
+  if (error) return <div>Error loading profile information</div>;
+
   return (
     <>
       <div className="flex-1 p-8 overflow-y-auto">
@@ -18,7 +46,10 @@ const ProfileEditForm = ({
           <header className="flex items-center justify-between border-b pb-4">
             <h2 className="text-2xl font-semibold">My Profile</h2>
             <button
-              onClick={handleSave}
+              onClick={() => {
+                handleSave();
+                handleSaveProfilePicture();
+              }}
               className="bg-green-500 text-white px-6 py-2 rounded-2xl font-semibold hover:bg-green-600 transition-all duration-300 relative group flex items-center justify-between w-40"
             >
               Save
@@ -33,10 +64,10 @@ const ProfileEditForm = ({
             <div className="flex flex-col">
               <div className="flex flex-col items-center mb-6">
                 <div className="w-32 h-32 bg-gray-200 rounded-full overflow-hidden">
-                  <img
-                    src={selectedImage || profilePicture}
-                    alt="Profile"
-                    className="w-full h-full object-cover"
+                  <Avatar
+                    alt={user.name}
+                    src={selectedImage || user.profilePicture}
+                    sx={{ width: 128, height: 128 }}
                   />
                 </div>
                 <button
@@ -50,7 +81,7 @@ const ProfileEditForm = ({
                   id="fileInput"
                   accept="image/*"
                   className="hidden"
-                  onChange={handleImageChange}
+                  onChange={handleProfilePictureChange}
                 />
               </div>
               {/* User Information Form */}
@@ -106,91 +137,11 @@ const ProfileEditForm = ({
                       <option value="A-">A-</option>
                       <option value="B+">B+</option>
                       <option value="B-">B-</option>
-                      <option value="O+">O+</option>
-                      <option value="O-">O-</option>
                       <option value="AB+">AB+</option>
                       <option value="AB-">AB-</option>
+                      <option value="O+">O+</option>
+                      <option value="O-">O-</option>
                     </select>
-                  </div>
-
-                  {/* Country - Non-editable */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Country
-                    </label>
-                    <input
-                      type="text"
-                      className="mt-1 block w-full px-3 py-2 border rounded-md bg-gray-100"
-                      placeholder="Palestine"
-                      disabled
-                    />
-                  </div>
-
-                  {/* Update the Gender field to be non-editable */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Gender
-                    </label>
-                    <input
-                      type="text"
-                      className="mt-1 block w-full px-3 py-2 border rounded-md bg-gray-100"
-                      placeholder="Male"
-                      disabled
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className="mt-1 block w-full px-3 py-2 border rounded-md"
-                      placeholder="********"
-                    />
-                    <button className="mt-2 text-green-500">
-                      Change Password
-                    </button>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      className="mt-1 block w-full px-3 py-2 border rounded-md"
-                      placeholder="test@example.com"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Phone
-                    </label>
-                    <input
-                      type="tel"
-                      className="mt-1 block w-full px-3 py-2 border rounded-md"
-                      placeholder="0599123456"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      City
-                    </label>
-                    <input
-                      type="text"
-                      className="mt-1 block w-full px-3 py-2 border rounded-md"
-                      placeholder="Nablus"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Street
-                    </label>
-                    <input
-                      type="text"
-                      className="mt-1 block w-full px-3 py-2 border rounded-md"
-                      placeholder="Amman Street"
-                    />
                   </div>
                 </div>
               </form>
@@ -229,13 +180,23 @@ const ProfileEditForm = ({
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Payment Method
+                      City
                     </label>
-                    <select className="mt-1 block w-full px-3 py-2 border rounded-md">
-                      <option>Credit Card</option>
-                      <option>PayPal</option>
-                      <option>Bank Transfer</option>
-                    </select>
+                    <input
+                      type="text"
+                      className="mt-1 block w-full px-3 py-2 border rounded-md"
+                      placeholder="Nablus"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Street
+                    </label>
+                    <input
+                      type="text"
+                      className="mt-1 block w-full px-3 py-2 border rounded-md"
+                      placeholder="Amman Street"
+                    />
                   </div>
                 </div>
               </form>

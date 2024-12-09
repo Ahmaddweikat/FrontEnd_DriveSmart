@@ -7,7 +7,7 @@ const useFileUploadMutation = () => {
     mutationFn: async ({ file, ownerId }) => {
       const apiClient = new APIClient(`/files/${Roles.STUDENT}/${ownerId}`);
 
-      return apiClient.postFile(file);
+      return apiClient.postFile(file, "files");
     },
     onSuccess: (data) => {
       console.log("File uploaded successfully:", data);
