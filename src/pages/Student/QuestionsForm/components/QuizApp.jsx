@@ -7,9 +7,10 @@ import  QuizHistory  from "./QuizHistory";
 import { questions as quizQuestions } from "../data/Form1";
 // import { questions as quizQuestions } from "../data/Form2";
 
-const FORM_NAME = "Form1";
+const QuizApp = ({ questions = quizQuestions, title = "Form1", timeLimit = "40 minutes" }) => {
+  // Parse time limit from string (e.g., "40 minutes")
+  const parsedTimeLimit = parseInt(timeLimit.split(' ')[0], 10);
 
-const QuizApp = () => {
   const {
     currentQuestionIndex,
     isQuizCompleted,
@@ -22,30 +23,29 @@ const QuizApp = () => {
     handleNextQuestion,
     handlePrevQuestion,
     handleRestartQuiz,
-    questions,
     setScore,
     setIsQuizCompleted,
     setAnswersState,
     handleCalendarClick,
     calculateFinalScore,
     handleFinishQuiz,
-  } = useQuizState(quizQuestions);
+  } = useQuizState(questions);
   const [isQuizStarted, setIsQuizStarted] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [startTime, setStartTime] = useState(null);
 
   const hasAttempts = () => {
     const history = JSON.parse(localStorage.getItem('quizHistory') || '{}');
-    return (history[FORM_NAME] || []).length > 0;
+    return (history[title] || []).length > 0;
   };
 
   const getLastAttempt = () => {
     const history = JSON.parse(localStorage.getItem('quizHistory') || '{}');
-    const attempts = history[FORM_NAME] || [];
+    const attempts = history[title] || [];
     return attempts[0] || null;
   };
 
-  const Time = 30;
+  const Time = parsedTimeLimit; // Use parsed time
   const { timeRemaining, isTimeUp, resetTimer, stopTimer } = useTimer(
     Time,
     () => {
@@ -82,7 +82,7 @@ const QuizApp = () => {
     const isPassed = calculatedScore >= 84;
     
     const newAttempt = {
-      formName: FORM_NAME,
+      formName: title,
       date: new Date().toISOString(),
       score: calculatedScore,
       correctAnswers: correctAnswers,
@@ -91,8 +91,8 @@ const QuizApp = () => {
       passed: isPassed
     };
 
-    quizHistory[FORM_NAME] = [
-      ...(quizHistory[FORM_NAME] || []),
+    quizHistory[title] = [
+      ...(quizHistory[title] || []),
       newAttempt
     ].sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -100,7 +100,7 @@ const QuizApp = () => {
 
     // Log results to console
     console.log('Quiz Results:');
-    console.log('Form:', FORM_NAME);
+    console.log('Form:', title);
     console.log('Status:', isPassed ? 'PASSED' : 'FAILED');
     console.log('Score:', Math.round(calculatedScore) + '%');
     console.log('Correct Answers:', correctAnswers, 'out of', questions.length);
@@ -137,7 +137,7 @@ const QuizApp = () => {
                 <span className="text-4xl">📝</span>
               </div>
               <h2 className="font-bold text-3xl text-green-600 mb-2">Ready to Start?</h2>
-              <h3 className="text-xl text-gray-700 mb-4">{FORM_NAME}</h3>
+              <h3 className="text-xl text-gray-700 mb-4">{title}</h3>
               {hasAttempts() && (
                 <div className="mb-4 p-3 bg-blue-50 rounded-lg">
                   <p className="text-blue-600 font-medium">
@@ -151,7 +151,7 @@ const QuizApp = () => {
                   </p>
                 </div>
               )}
-              <p className="text-gray-600 mb-6">You have 40 minutes to complete all questions. Good luck!</p>
+              <p className="text-gray-600 mb-6">You have {parsedTimeLimit} minutes to complete all questions. Good luck!</p>
               <div className="space-y-4">
                 <button
                   onClick={() => {
@@ -177,7 +177,7 @@ const QuizApp = () => {
 
       {showHistory && (
         <QuizHistory
-          formName={FORM_NAME}
+          formName={title}
           onClose={() => setShowHistory(false)}
         />
       )}
@@ -262,7 +262,7 @@ const QuizApp = () => {
                       className={`font-bold text-3xl ${score >= 84 ? "text-green-600" : "text-red-600"
                         } mb-2`}
                     >
-                      {FORM_NAME} - {score >= 84 ? "Pass!" : "Fail"}
+                      {title} - {score >= 84 ? "Pass!" : "Fail"}
                     </h2>
                     <p className="text-gray-600 mb-4">
                       {score >= 84
@@ -358,7 +358,7 @@ const QuizApp = () => {
 
             {/* Sidebar Calendar */}
             <div className="grid grid-cols-5 gap-2">
-              {quizQuestions.map((_, index) => (
+              {questions.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => handleCalendarClick(index)}

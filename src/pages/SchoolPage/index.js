@@ -7,7 +7,6 @@ import {
   CardContent,
   CardMedia,
   Container,
-  Container,
   Grid,
   ImageList,
   ImageListItem,

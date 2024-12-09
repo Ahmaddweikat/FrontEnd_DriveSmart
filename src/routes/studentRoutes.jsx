@@ -10,6 +10,7 @@ import WelcomePage from "./../pages/Student/WelcomePage/index";
 import School from "../pages/SchoolPage";
 import Matrial from "../pages/StudyMaterialPage";
 import Theory from "../pages/TheoryPage";
+
 const studentRoutes = [
   { index: true, element: <WelcomePage /> },
   { path: "quizzes", element: <Quizzes /> },
@@ -23,7 +24,6 @@ const studentRoutes = [
   { path: "school", element: <School /> },
   {path:"material",element:<Matrial/>},
   {path:"theory",element:<Theory/>}
-
 ];
 
 export default studentRoutes;

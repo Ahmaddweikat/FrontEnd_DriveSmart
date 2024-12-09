@@ -20,57 +20,29 @@ import {
   CheckCircleOutline
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { personalLicenseForms } from './data/personalLicense/index';
 
-const questionSets = [
-  {
-    id: 1,
-    title: "Traffic Rules Basics",
-    questionsCount: 30,
-    timeLimit: "45 minutes",
-    difficulty: "Beginner",
-    progress: "80%",
-    category: "Rules"
-  },
-  {
-    id: 2,
-    title: "Road Signs Master",
-    questionsCount: 25,
-    timeLimit: "30 minutes",
-    difficulty: "Intermediate",
-    progress: "65%",
-    category: "Signs"
-  },
-  {
-    id: 3,
-    title: "Driving Scenarios",
-    questionsCount: 35,
-    timeLimit: "50 minutes",
-    difficulty: "Advanced",
-    progress: "45%",
-    category: "Scenarios"
-  },
-  {
-    id: 4,
-    title: "Emergency Procedures",
-    questionsCount: 20,
-    timeLimit: "25 minutes",
-    difficulty: "Intermediate",
-    progress: "90%",
-    category: "Emergency"
-  }
-];
+const questionSets = personalLicenseForms.map(form => ({
+  id: form.id,
+  title: form.title,
+  questionsCount: form.questions.length,
+  timeLimit: form.timeLimit || "45 minutes",
+  category: form.category || "General",
+  formType: form.formType
+}));
 
 const TheoryPage = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const handleStartQuiz = (quizId) => {
+  const handleStartQuiz = (quizId, formType) => {
     // Navigate to the specific quiz
-    navigate(`/theory/quiz/${quizId}`);
+    navigate(`/student/theory/quiz/${formType}`);
   };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <div className='overflow-y-auto'>
+    <Container maxWidth="lg" sx={{ py: 4}}>
       {/* Header Section */}
       <Box sx={{ mb: 6, textAlign: 'center' }}>
         <Typography variant="h3" component="h1" gutterBottom
@@ -109,7 +81,7 @@ const TheoryPage = () => {
               }}
             >
               {/* Progress Indicator */}
-              <Box
+              {/* <Box
                 sx={{
                   position: 'absolute',
                   top: -10,
@@ -137,7 +109,7 @@ const TheoryPage = () => {
                     {set.progress}
                   </Typography>
                 </Box>
-              </Box>
+              </Box> */}
 
               <Box sx={{ p: 3, flexGrow: 1 }}>
                 <Typography variant="h5" gutterBottom component="div" sx={{ fontWeight: 'bold' }}>
@@ -151,12 +123,12 @@ const TheoryPage = () => {
                     size="small"
                     sx={{ borderRadius: 1 }}
                   />
-                  <Chip
+                  {/* <Chip
                     icon={<School sx={{ fontSize: 16 }} />}
                     label={set.difficulty}
                     size="small"
                     sx={{ borderRadius: 1 }}
-                  />
+                  /> */}
                   <Chip
                     icon={<QuestionMark sx={{ fontSize: 16 }} />}
                     label={`${set.questionsCount} Questions`}
@@ -168,7 +140,7 @@ const TheoryPage = () => {
                 <Button
                   variant="contained"
                   startIcon={<PlayArrow />}
-                  onClick={() => handleStartQuiz(set.id)}
+                  onClick={() => handleStartQuiz(set.id, set.formType)}
                   fullWidth
                   sx={{
                     mt: 2,
@@ -233,6 +205,7 @@ const TheoryPage = () => {
         </Grid>
       </Box>
     </Container>
+    </div>
   );
 };
 
