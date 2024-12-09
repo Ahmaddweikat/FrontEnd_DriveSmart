@@ -11,7 +11,12 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import PendingIcon from '@mui/icons-material/Pending';
 
-const QuizList = ({ quizzes, filter = 'all' }) => {
+const QuizList = ({ 
+  quizzes, 
+  filter = 'all', 
+  studentId = 'STD001', // Default student ID if not provided
+  studentName = 'John Doe' // Default student name if not provided
+}) => {
   // State for current page
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -55,6 +60,13 @@ const QuizList = ({ quizzes, filter = 'all' }) => {
   };
 
   const handleConfirmExamRequest = () => {
+    // Log student details and pass rate to console
+    console.log('Exam Request Details:', {
+      studentId: studentId,
+      studentName: studentName,
+      passRate: averagePassRate.toFixed(2) + '%'
+    });
+
     // Set exam request status to pending
     setExamRequestStatus('PENDING');
     
