@@ -9,6 +9,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import PendingIcon from '@mui/icons-material/Pending';
 
 const QuizList = ({ quizzes, filter = 'all' }) => {
   // State for current page
@@ -16,6 +17,9 @@ const QuizList = ({ quizzes, filter = 'all' }) => {
 
   // State for exam request dialog
   const [openDialog, setOpenDialog] = useState(false);
+
+  // State for exam request status
+  const [examRequestStatus, setExamRequestStatus] = useState(null);
 
   // Number of quizzes per page
   const QUIZZES_PER_PAGE = 5;
@@ -51,7 +55,13 @@ const QuizList = ({ quizzes, filter = 'all' }) => {
   };
 
   const handleConfirmExamRequest = () => {
+    // Set exam request status to pending
+    setExamRequestStatus('PENDING');
+    
+    // Simulate sending exam request (you might want to replace this with actual API call)
     console.log('Exam request submitted');
+    
+    // Close the dialog
     handleCloseDialog();
   };
 
@@ -83,17 +93,30 @@ const QuizList = ({ quizzes, filter = 'all' }) => {
           Current Pass Rate: {averagePassRate.toFixed(2)}%
         </p>
       </div>
-      <Button 
-        variant="contained" 
-        color="primary" 
-        size="medium"
-        onClick={handleOpenExamRequest}
-        startIcon={<CheckCircleOutlineIcon />}
-        disabled={processedQuizzes.length === 0}
-        className="px-6 py-2"
-      >
-        Request Official Exam
-      </Button>
+      {examRequestStatus === 'PENDING' ? (
+        <Button 
+          variant="contained" 
+          color="secondary" 
+          size="medium"
+          startIcon={<PendingIcon />}
+          disabled
+          className="px-6 py-2"
+        >
+          Exam Request Pending
+        </Button>
+      ) : (
+        <Button 
+          variant="contained" 
+          color="primary" 
+          size="medium"
+          onClick={handleOpenExamRequest}
+          startIcon={<CheckCircleOutlineIcon />}
+          disabled={processedQuizzes.length === 0}
+          className="px-6 py-2"
+        >
+          Request Official Exam
+        </Button>
+      )}
     </div>
       {/* Quiz List */}
       <div className="space-y-4">
