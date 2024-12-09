@@ -365,7 +365,7 @@ const WelcomePage = () => {
                   </Box>
                 </Card>
               </Grid>
-            </Grid>
+            </Grid> 
           </Card>
         </Box>
       </Container>
