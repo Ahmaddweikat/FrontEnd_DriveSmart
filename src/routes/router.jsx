@@ -65,7 +65,7 @@ const router = createBrowserRouter([
   // ---------- Role based routes --------------------------------
   {
     path: `/${Roles.STUDENT}/*`,
-    element: <PrivateRoutes roles={[Roles.STUDENT]} />,
+    // element: <PrivateRoutes roles={[Roles.STUDENT]} />,
     children: [
       {
         element: <Layout />,
@@ -75,7 +75,7 @@ const router = createBrowserRouter([
   },
   {
     path: `/${Roles.TRAINER}/*`,
-    element: <PrivateRoutes roles={[Roles.TRAINER]} />,
+    // element: <PrivateRoutes roles={[Roles.TRAINER]} />,
     children: [
       {
         // element: <Layout />,
