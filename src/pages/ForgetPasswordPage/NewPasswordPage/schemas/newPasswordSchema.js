@@ -2,6 +2,10 @@ import { z } from "zod";
 
 export const newPasswordSchema = z
   .object({
+    code: z
+      .string()
+      .length(4, "Code must be exactly 4 digits")
+      .regex(/^\d+$/, "Code must contain only numbers"),
     password: z
       .string()
       .min(8, "Password must be at least 8 characters")

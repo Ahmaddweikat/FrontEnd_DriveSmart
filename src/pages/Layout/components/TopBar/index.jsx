@@ -9,6 +9,13 @@ import Badge from "@mui/material/Badge";
 import { Link } from "react-router-dom";
 import { notifications as initialNotifications } from "../../../../constants/Notifications/notifications";
 import useAuthStore from "../../../../store/auth.store";
+import useGetStudentProfile from "./../../../Student/ProfilePage/ProfileInfoPage/hooks/useGetStudentProfile";
+import { Skeleton } from "@mui/material";
+
+function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
+  const { notificationList, unreadCount, markAsRead } =
+    useNotifications(notifications);
+  const { messagesList, unreadMessageCount, openChat } = useMessages(messages);
 import ChatApp from "../../../ChatApp/ChatApp";
 import {useChat} from "../../../ChatApp/hooks/useChat";
 
@@ -46,6 +53,8 @@ function TopBar({ toggleSidebar }) {
   };
 
   const { user, logout } = useAuthStore();
+  const { data, isLoading, error } = useGetStudentProfile();
+
   const markAsRead = (id) => {
     setNotifications(prev => 
       prev.map(notification => 
@@ -255,12 +264,22 @@ function TopBar({ toggleSidebar }) {
             className="flex items-center space-x-2"
             aria-expanded={showProfileDropdown}
           >
-            <Avatar
-              alt="User Avatar"
-              src="/static/images/avatar/1.jpg"
-              sx={{ width: 40, height: 40 }}
-            />
-            <span className="font-medium text-gray-600">Remy Sharp</span>
+            {isLoading ? (
+              <Skeleton variant="circular" width={40} height={40} />
+            ) : (
+              <Avatar
+                alt="User Picture"
+                src={!error && data?.profilePicture}
+                sx={{ width: 40, height: 40 }}
+              />
+            )}
+            <span className="font-medium text-gray-600">
+              {isLoading ? (
+                <Skeleton variant="text" width={100} />
+              ) : (
+                data?.name || user.name
+              )}
+            </span>
             <ExpandMoreOutlinedIcon sx={{ width: 20, height: 20 }} />
           </button>
           {showProfileDropdown && (

@@ -9,6 +9,10 @@ class APIClient {
   endpoint;
   constructor(endpoint) {
     this.endpoint = endpoint;
+    const auth = JSON.parse(localStorage.getItem("auth-storage"));
+    axiosInstance.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${auth.state.token}`;
   }
 
   static setAuthorizationHeader = (token) => {
@@ -21,6 +25,24 @@ class APIClient {
 
   post = (data) => {
     return axiosInstance.post(this.endpoint, data).then((res) => res.data);
+  };
+
+  postFile = (file, name, additionalData = {}) => {
+    const formData = new FormData();
+    formData.append(name, file);
+
+    // // Add any additional data if provided
+    // Object.entries(additionalData).forEach(([key, value]) => {
+    //   formData.append(key, value);
+    // });
+
+    return axiosInstance
+      .post(this.endpoint, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => res.data);
   };
 
   put = (data) => {

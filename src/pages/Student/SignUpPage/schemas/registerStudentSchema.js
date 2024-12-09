@@ -36,7 +36,7 @@ export const step1Schema = z
 
 // Step 2 Schema
 export const step2Schema = z.object({
-  bloodType: z.enum(["A", "A-", "B", "B-", "O", "O-", "AB", "AB-"], {
+  bloodType: z.enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"], {
     required_error: "Blood type is required",
   }),
   studentId: z.string().regex(/^\d{9}$/, "Student ID must be exactly 9 digits"),

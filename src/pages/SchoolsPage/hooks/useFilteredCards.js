@@ -1,25 +1,41 @@
 import { useMemo } from "react";
+import LicenseTypes from "../../../constants/licenseTypes";
 
-const useFilteredCards = (
-  cardsData,
-  { selectedCity, selectedLicenseTypes, ratingValue, searchQuery }
-) => {
-  const filteredCardsData = useMemo(() => {
-    return cardsData.filter((card) => {
-      const isCityMatch = !selectedCity || card.city === selectedCity;
-      const isLicenseMatch =
-        selectedLicenseTypes.length === 0 ||
-        selectedLicenseTypes.some((type) => card.licenseTypes.includes(type));
-      const isRatingMatch = card.rating >= ratingValue;
-      const isSearchMatch =
+const useFilteredCards = (schools = [], filters) => {
+  const { selectedCity, selectedLicenseTypes, ratingValue, searchQuery } =
+    filters;
+
+  return useMemo(() => {
+    const schoolsList = Array.isArray(schools) ? schools : [];
+
+    if (
+      !selectedCity &&
+      !selectedLicenseTypes.length &&
+      !ratingValue &&
+      !searchQuery
+    ) {
+      return schoolsList;
+    }
+
+    return schoolsList.filter((school) => {
+      const cityMatch = !selectedCity || school.city === selectedCity;
+
+      const licenseMatch =
+        !selectedLicenseTypes.length ||
+        school.licenseTypes?.some((schoolType) =>
+          selectedLicenseTypes.some(
+            (selectedType) => LicenseTypes[selectedType] === schoolType
+          )
+        );
+
+      const ratingMatch = !ratingValue || school.rating >= ratingValue;
+      const searchMatch =
         !searchQuery ||
-        card.title.toLowerCase().includes(searchQuery.toLowerCase());
+        school.name.toLowerCase().includes(searchQuery.toLowerCase());
 
-      return isCityMatch && isLicenseMatch && isRatingMatch && isSearchMatch;
+      return cityMatch && licenseMatch && ratingMatch && searchMatch;
     });
-  }, [cardsData, selectedCity, selectedLicenseTypes, ratingValue, searchQuery]);
-
-  return filteredCardsData;
+  }, [schools, selectedCity, selectedLicenseTypes, ratingValue, searchQuery]);
 };
 
 export default useFilteredCards;

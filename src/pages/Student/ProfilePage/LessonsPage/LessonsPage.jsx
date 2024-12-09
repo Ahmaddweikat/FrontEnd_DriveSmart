@@ -13,7 +13,10 @@ const LessonsPage = () => {
     setFilter({ ...filter, rating }); // Apply filter on rating
   };
 
-  const { setSearchTerm, filteredLessons } = useSearchState(lessons); // Use search hook
+  const { setSearchTerm, filteredLessons } = useSearchState(
+    Array.isArray(lessons) ? lessons : []
+  );
+
   const {
     hoveredRating,
     selectedRating,
