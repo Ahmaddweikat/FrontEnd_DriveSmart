@@ -11,19 +11,13 @@ import { notifications as initialNotifications } from "../../../../constants/Not
 import useAuthStore from "../../../../store/auth.store";
 import useGetStudentProfile from "./../../../Student/ProfilePage/ProfileInfoPage/hooks/useGetStudentProfile";
 import { Skeleton } from "@mui/material";
-
-function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
-  const { notificationList, unreadCount, markAsRead } =
-    useNotifications(notifications);
-  const { messagesList, unreadMessageCount, openChat } = useMessages(messages);
 import ChatApp from "../../../ChatApp/ChatApp";
-import {useChat} from "../../../ChatApp/hooks/useChat";
+import { useChat } from "../../../ChatApp/hooks/useChat";
 
 function TopBar({ toggleSidebar }) {
-  
   const [notifications, setNotifications] = useState(initialNotifications);
   const [unreadCount, setUnreadCount] = useState(
-    initialNotifications.filter(n => !n.read).length
+    initialNotifications.filter((n) => !n.read).length
   );
   const [unreadMessageCount, setUnreadMessageCount] = useState(0);
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
@@ -56,31 +50,29 @@ function TopBar({ toggleSidebar }) {
   const { data, isLoading, error } = useGetStudentProfile();
 
   const markAsRead = (id) => {
-    setNotifications(prev => 
-      prev.map(notification => 
-        notification.id === id 
-          ? { ...notification, read: true }
-          : notification
+    setNotifications((prev) =>
+      prev.map((notification) =>
+        notification.id === id ? { ...notification, read: true } : notification
       )
     );
-    setUnreadCount(prev => Math.max(0, prev - 1));
+    setUnreadCount((prev) => Math.max(0, prev - 1));
   };
   const markAllAsRead = () => {
-    setNotifications(prev =>
-      prev.map(notification => ({ ...notification, read: true }))
+    setNotifications((prev) =>
+      prev.map((notification) => ({ ...notification, read: true }))
     );
     setUnreadCount(0);
   };
   const getNotificationStyle = (type) => {
     switch (type) {
-      case 'booking':
-        return 'bg-blue-100 text-blue-600';
-      case 'review':
-        return 'bg-yellow-100 text-yellow-600';
-      case 'student':
-        return 'bg-green-100 text-green-600';
+      case "booking":
+        return "bg-blue-100 text-blue-600";
+      case "review":
+        return "bg-yellow-100 text-yellow-600";
+      case "student":
+        return "bg-green-100 text-green-600";
       default:
-        return 'bg-gray-100 text-gray-600';
+        return "bg-gray-100 text-gray-600";
     }
   };
   return (
@@ -140,10 +132,10 @@ function TopBar({ toggleSidebar }) {
                   <CloseIcon style={{ width: "20px", height: "20px" }} />
                 </button>
               </div>
-              
+
               <div className="flex items-center justify-between px-4 py-2 bg-gray-50">
                 <span className="text-sm text-gray-500">
-                  {notifications.filter(n => !n.read).length} new
+                  {notifications.filter((n) => !n.read).length} new
                 </span>
                 <button
                   onClick={markAllAsRead}
@@ -161,20 +153,30 @@ function TopBar({ toggleSidebar }) {
                         key={notification.id}
                         onClick={() => markAsRead(notification.id)}
                         className={`p-4 flex items-start space-x-3 cursor-pointer transition-all duration-200 
-                          ${notification.read 
-                            ? 'bg-white hover:bg-gray-50' 
-                            : 'bg-blue-50 hover:bg-blue-100'
+                          ${
+                            notification.read
+                              ? "bg-white hover:bg-gray-50"
+                              : "bg-blue-50 hover:bg-blue-100"
                           }`}
                       >
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center
-                          ${notification.read 
-                            ? 'bg-gray-100 text-gray-600' 
-                            : getNotificationStyle(notification.type)
-                          }`}>
+                        <div
+                          className={`w-10 h-10 rounded-full flex items-center justify-center
+                          ${
+                            notification.read
+                              ? "bg-gray-100 text-gray-600"
+                              : getNotificationStyle(notification.type)
+                          }`}
+                        >
                           {notification.icon}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className={`text-sm ${notification.read ? 'text-gray-600' : 'text-gray-900 font-medium'}`}>
+                          <p
+                            className={`text-sm ${
+                              notification.read
+                                ? "text-gray-600"
+                                : "text-gray-900 font-medium"
+                            }`}
+                          >
                             {notification.message}
                           </p>
                           <span className="text-xs text-gray-400 mt-1 block">
@@ -182,7 +184,7 @@ function TopBar({ toggleSidebar }) {
                           </span>
                         </div>
                         {!notification.read && (
-                          <div className="w-2 h-2 rounded-full bg-blue-500 mt-2"/>
+                          <div className="w-2 h-2 rounded-full bg-blue-500 mt-2" />
                         )}
                       </div>
                     ))}
@@ -190,7 +192,10 @@ function TopBar({ toggleSidebar }) {
                 ) : (
                   <div className="p-8 text-center">
                     <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto flex items-center justify-center mb-4">
-                      <NotificationsNoneOutlinedIcon className="text-gray-400" style={{ width: "24px", height: "24px" }} />
+                      <NotificationsNoneOutlinedIcon
+                        className="text-gray-400"
+                        style={{ width: "24px", height: "24px" }}
+                      />
                     </div>
                     <p className="text-gray-500">No notifications yet</p>
                   </div>
@@ -220,7 +225,7 @@ function TopBar({ toggleSidebar }) {
         </button>
         {/* Chat Panel */}
         {showChatPanel && (
-        <div className="fixed top-20 right-0 w-96 bg-white shadow-xl z-50 h-[calc(100vh-5rem)]">
+          <div className="fixed top-20 right-0 w-96 bg-white shadow-xl z-50 h-[calc(100vh-5rem)]">
             <div className="flex flex-col h-full">
               {/* Sticky Header */}
               <div className="sticky top-0 bg-white z-10">
@@ -237,8 +242,8 @@ function TopBar({ toggleSidebar }) {
 
               {/* Chat Content */}
               <div className="flex-1 overflow-hidden">
-                <ChatApp 
-                  isTopBarChat={true} 
+                <ChatApp
+                  isTopBarChat={true}
                   onUnreadCountChange={setUnreadMessageCount}
                 />
               </div>
@@ -307,4 +312,5 @@ function TopBar({ toggleSidebar }) {
     </div>
   );
 }
+
 export default TopBar;

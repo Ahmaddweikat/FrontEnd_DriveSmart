@@ -1,4 +1,14 @@
-import { Email, Language, LocationOn, Phone, MenuBook, DirectionsCar, Timeline, Assessment, PlayArrow } from "@mui/icons-material";
+import {
+  Email,
+  Language,
+  LocationOn,
+  Phone,
+  MenuBook,
+  DirectionsCar,
+  Timeline,
+  Assessment,
+  PlayArrow,
+} from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -167,17 +177,17 @@ const SchoolPage = () => {
         {/* Learning Sections */}
         <Container maxWidth="lg" sx={{ py: 8 }}>
           {/* Section Header */}
-          <Box sx={{ textAlign: 'center', mb: 6 }}>
+          <Box sx={{ textAlign: "center", mb: 6 }}>
             <Typography
               variant="h3"
               component="h2"
               sx={{
                 fontWeight: 700,
-                background: 'linear-gradient(45deg, #2196F3, #1976D2)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                mb: 2
+                background: "linear-gradient(45deg, #2196F3, #1976D2)",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                mb: 2,
               }}
             >
               Start Your Learning Journey
@@ -185,9 +195,10 @@ const SchoolPage = () => {
             <Typography
               variant="h6"
               color="text.secondary"
-              sx={{ maxWidth: '600px', mx: 'auto', mb: 4 }}
+              sx={{ maxWidth: "600px", mx: "auto", mb: 4 }}
             >
-              Master the rules of the road with our comprehensive theory lessons and interactive learning materials
+              Master the rules of the road with our comprehensive theory lessons
+              and interactive learning materials
             </Typography>
           </Box>
 
@@ -196,30 +207,31 @@ const SchoolPage = () => {
             <Grid item xs={12} md={10}>
               <Card
                 sx={{
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: { xs: 'column', md: 'row' },
-                  transition: 'all 0.3s ease-in-out',
-                  cursor: 'pointer',
-                  '&:hover': {
-                    transform: 'translateY(-8px)',
-                    boxShadow: '0 16px 70px -12px rgba(0,0,0,0.3)',
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: { xs: "column", md: "row" },
+                  transition: "all 0.3s ease-in-out",
+                  cursor: "pointer",
+                  "&:hover": {
+                    transform: "translateY(-8px)",
+                    boxShadow: "0 16px 70px -12px rgba(0,0,0,0.3)",
                   },
                   borderRadius: 4,
-                  overflow: 'hidden',
-                  position: 'relative',
-                  background: 'linear-gradient(135deg, #2196F3 0%, #1976D2 100%)',
+                  overflow: "hidden",
+                  position: "relative",
+                  background:
+                    "linear-gradient(135deg, #2196F3 0%, #1976D2 100%)",
                 }}
-                onClick={() => navigate('/theory')}
+                onClick={() => navigate("/theory")}
               >
                 {/* Left Section with Image */}
                 <Box
                   sx={{
-                    width: { md: '40%' },
-                    position: 'relative',
-                    overflow: 'hidden',
-                    display: { xs: 'none', md: 'block' },
-                    borderRadius: '8px',
+                    width: { md: "40%" },
+                    position: "relative",
+                    overflow: "hidden",
+                    display: { xs: "none", md: "block" },
+                    borderRadius: "8px",
                   }}
                 >
                   <Box
@@ -227,23 +239,24 @@ const SchoolPage = () => {
                     src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d"
                     alt="Driving School Instruction"
                     sx={{
-                      width: '100%',
-                      height: '100%',
-                      minHeight: '500px',
-                      objectFit: 'cover',
-                      borderRadius: '8px',
+                      width: "100%",
+                      height: "100%",
+                      minHeight: "500px",
+                      objectFit: "cover",
+                      borderRadius: "8px",
                       mb: 3,
                       opacity: 0.9,
                     }}
                   />
                   <Box
                     sx={{
-                      position: 'absolute',
+                      position: "absolute",
                       top: 0,
                       left: 0,
                       right: 0,
                       bottom: 0,
-                      background: 'linear-gradient(to right, rgba(255,255,255,0.1) 0%, transparent 60%)',
+                      background:
+                        "linear-gradient(to right, rgba(255,255,255,0.1) 0%, transparent 60%)",
                     }}
                   />
                 </Box>
@@ -253,45 +266,46 @@ const SchoolPage = () => {
                   sx={{
                     flex: 1,
                     p: 5,
-                    position: 'relative',
+                    position: "relative",
                     zIndex: 1,
                   }}
                 >
-                  <Box sx={{ position: 'relative' }}>
-                    <MenuBook 
-                      sx={{ 
+                  <Box sx={{ position: "relative" }}>
+                    <MenuBook
+                      sx={{
                         fontSize: 80,
-                        color: 'rgba(255,255,255,0.1)',
-                        position: 'absolute',
+                        color: "rgba(255,255,255,0.1)",
+                        position: "absolute",
                         right: -20,
                         top: -30,
-                        transform: 'rotate(15deg)',
+                        transform: "rotate(15deg)",
                       }}
                     />
-                    
-                    <Typography 
-                      variant="h3" 
-                      component="h2" 
-                      sx={{ 
-                        color: 'white',
+
+                    <Typography
+                      variant="h3"
+                      component="h2"
+                      sx={{
+                        color: "white",
                         mb: 3,
                         fontWeight: 700,
-                        textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                        textShadow: "0 2px 4px rgba(0,0,0,0.2)",
                       }}
                     >
                       Theory Learning
                     </Typography>
-                    
-                    <Typography 
+
+                    <Typography
                       variant="h6"
-                      sx={{ 
-                        color: 'rgba(255,255,255,0.9)',
+                      sx={{
+                        color: "rgba(255,255,255,0.9)",
                         mb: 4,
                         lineHeight: 1.6,
-                        maxWidth: '600px',
+                        maxWidth: "600px",
                       }}
                     >
-                      Begin your journey to becoming a skilled driver with our comprehensive theory lessons
+                      Begin your journey to becoming a skilled driver with our
+                      comprehensive theory lessons
                     </Typography>
 
                     {/* Main Buttons Grid */}
@@ -299,17 +313,17 @@ const SchoolPage = () => {
                       {[
                         {
                           icon: <Timeline sx={{ fontSize: 40 }} />,
-                          text: 'Progress Tracking',
-                          description: 'Monitor your learning journey',
-                          path: '/progress',
-                          color: '#2196F3'
+                          text: "Progress Tracking",
+                          description: "Monitor your learning journey",
+                          path: "/progress",
+                          color: "#2196F3",
                         },
                         {
                           icon: <MenuBook sx={{ fontSize: 40 }} />,
-                          text: 'Study Materials',
-                          description: 'Access comprehensive resources',
-                          path: '/study-materials',
-                          color: '#1976D2'
+                          text: "Study Materials",
+                          description: "Access comprehensive resources",
+                          path: "/study-materials",
+                          color: "#1976D2",
                         },
                       ].map((feature, index) => (
                         <Grid item xs={12} sm={6} key={index}>
@@ -317,44 +331,45 @@ const SchoolPage = () => {
                             onClick={() => navigate(feature.path)}
                             sx={{
                               p: 3,
-                              height: '100%',
-                              cursor: 'pointer',
+                              height: "100%",
+                              cursor: "pointer",
                               background: `linear-gradient(135deg, ${feature.color} 0%, ${feature.color}dd 100%)`,
-                              color: 'white',
-                              transition: 'all 0.3s ease-in-out',
-                              '&:hover': {
-                                transform: 'translateY(-8px) scale(1.02)',
+                              color: "white",
+                              transition: "all 0.3s ease-in-out",
+                              "&:hover": {
+                                transform: "translateY(-8px) scale(1.02)",
                                 boxShadow: `0 12px 30px ${feature.color}40`,
                               },
-                              display: 'flex',
-                              flexDirection: 'column',
-                              alignItems: 'center',
-                              textAlign: 'center',
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              textAlign: "center",
                               borderRadius: 4,
-                              position: 'relative',
-                              overflow: 'hidden',
+                              position: "relative",
+                              overflow: "hidden",
                             }}
                           >
                             <Box
                               sx={{
-                                position: 'absolute',
+                                position: "absolute",
                                 top: 0,
                                 left: 0,
                                 right: 0,
                                 bottom: 0,
-                                background: 'radial-gradient(circle at top right, rgba(255,255,255,0.1) 0%, transparent 60%)',
+                                background:
+                                  "radial-gradient(circle at top right, rgba(255,255,255,0.1) 0%, transparent 60%)",
                               }}
                             />
                             <Box
                               sx={{
-                                backgroundColor: 'rgba(255,255,255,0.1)',
-                                borderRadius: '50%',
+                                backgroundColor: "rgba(255,255,255,0.1)",
+                                borderRadius: "50%",
                                 p: 2,
                                 mb: 2,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                position: 'relative',
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                position: "relative",
                                 zIndex: 1,
                               }}
                             >
@@ -366,7 +381,7 @@ const SchoolPage = () => {
                               sx={{
                                 fontWeight: 600,
                                 mb: 1,
-                                position: 'relative',
+                                position: "relative",
                                 zIndex: 1,
                               }}
                             >
@@ -376,7 +391,7 @@ const SchoolPage = () => {
                               variant="body1"
                               sx={{
                                 opacity: 0.9,
-                                position: 'relative',
+                                position: "relative",
                                 zIndex: 1,
                               }}
                             >
@@ -390,29 +405,31 @@ const SchoolPage = () => {
                     {/* Practice Button */}
                     <Box
                       sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
+                        display: "flex",
+                        justifyContent: "center",
                         mt: 4,
                       }}
                     >
                       <Button
                         variant="contained"
                         size="large"
-                        onClick={() => navigate('/quizzes')}
+                        onClick={() => navigate("/quizzes")}
                         startIcon={<Assessment sx={{ fontSize: 24 }} />}
                         sx={{
                           py: 2,
                           px: 6,
-                          fontSize: '1.2rem',
+                          fontSize: "1.2rem",
                           fontWeight: 600,
                           borderRadius: 3,
-                          background: 'linear-gradient(45deg, #FF6B6B 30%, #FF8E53 90%)',
-                          boxShadow: '0 8px 20px rgba(255, 107, 107, 0.3)',
-                          transition: 'all 0.3s ease-in-out',
-                          '&:hover': {
-                            transform: 'translateY(-4px)',
-                            boxShadow: '0 12px 25px rgba(255, 107, 107, 0.4)',
-                            background: 'linear-gradient(45deg, #FF5252 30%, #FF7043 90%)',
+                          background:
+                            "linear-gradient(45deg, #FF6B6B 30%, #FF8E53 90%)",
+                          boxShadow: "0 8px 20px rgba(255, 107, 107, 0.3)",
+                          transition: "all 0.3s ease-in-out",
+                          "&:hover": {
+                            transform: "translateY(-4px)",
+                            boxShadow: "0 12px 25px rgba(255, 107, 107, 0.4)",
+                            background:
+                              "linear-gradient(45deg, #FF5252 30%, #FF7043 90%)",
                           },
                         }}
                       >
@@ -444,7 +461,8 @@ const SchoolPage = () => {
                 {
                   id: 1,
                   name: "John Smith",
-                  image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
+                  image:
+                    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
                   specialization: "Manual Transmission",
                   experience: "10 years",
                   rating: 3,
@@ -452,7 +470,8 @@ const SchoolPage = () => {
                 {
                   id: 2,
                   name: "Sarah Johnson",
-                  image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e",
+                  image:
+                    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e",
                   specialization: "Automatic Transmission",
                   experience: "8 years",
                   rating: 4.9,
@@ -460,7 +479,8 @@ const SchoolPage = () => {
                 {
                   id: 3,
                   name: "Mike Wilson",
-                  image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e",
+                  image:
+                    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e",
                   specialization: "Both Transmissions",
                   experience: "12 years",
                   rating: 4.7,
@@ -495,21 +515,24 @@ const SchoolPage = () => {
                 {
                   id: 1,
                   model: "Toyota Corolla",
-                  image: "https://images.unsplash.com/photo-1590362891991-f776e747a588",
+                  image:
+                    "https://images.unsplash.com/photo-1590362891991-f776e747a588",
                   type: "Manual",
                   year: "2022",
                 },
                 {
                   id: 2,
                   model: "Honda Civic",
-                  image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf",
+                  image:
+                    "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf",
                   type: "Automatic",
                   year: "2023",
                 },
                 {
                   id: 3,
                   model: "Hyundai i30",
-                  image: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341",
+                  image:
+                    "https://images.unsplash.com/photo-1549399542-7e3f8b79c341",
                   type: "Manual",
                   year: "2022",
                 },
