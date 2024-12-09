@@ -1,23 +1,25 @@
 import React from "react";
-import { motion } from 'framer-motion';
-import { FaUserTie, FaEnvelope, FaIdCard, FaClock, FaCar } from 'react-icons/fa';
-import { useSignUpForm } from './hooks/useSignUpForm';
-import { PasswordFields } from './components/PasswordFields';
+import { motion } from "framer-motion";
+import {
+  FaUserTie,
+  FaEnvelope,
+  FaIdCard,
+  FaClock,
+  FaCar,
+} from "react-icons/fa";
+import { useSignUpForm } from "./hooks/useSignUpForm";
+import { PasswordFields } from "./components/PasswordFields";
 
 const SignUpPage = () => {
-  const { 
-    formData, 
-    handleChange, 
-    handleSubmit 
-  } = useSignUpForm();
+  const { formData, handleChange, handleSubmit } = useSignUpForm();
 
   const licenseTypeOptions = [
-    { id: 'MOTORCYCLE', label: 'Motorcycle' },
-    { id: 'TRACTOR', label: 'Tractor' },
-    { id: 'PRIVATE', label: 'Personal Vehicle' },
-    { id: 'COMMERCIAL', label: 'Commercial Vehicle' },
-    { id: 'PUBLIC', label: 'Public Transport' },
-    { id: 'HEAVY', label: 'Heavy Vehicle' }
+    { id: "MOTORCYCLE", label: "Motorcycle" },
+    { id: "TRACTOR", label: "Tractor" },
+    { id: "PRIVATE", label: "Personal Vehicle" },
+    { id: "COMMERCIAL", label: "Commercial Vehicle" },
+    { id: "PUBLIC", label: "Public Transport" },
+    { id: "HEAVY", label: "Heavy Vehicle" },
   ];
 
   return (
@@ -39,7 +41,8 @@ const SignUpPage = () => {
               Drive Your Career Forward
             </h1>
             <p className="text-xl mb-6 font-light">
-              Join our community of professional driving instructors and make a lasting impact
+              Join our community of professional driving instructors and make a
+              lasting impact
             </p>
 
             <div className="space-y-4 mt-8">
@@ -136,7 +139,7 @@ const SignUpPage = () => {
             </div>
 
             {/* Password Fields */}
-            <PasswordFields 
+            <PasswordFields
               passwordValue={formData.password}
               confirmPasswordValue={formData.confirmPassword}
               onChange={handleChange}
