@@ -8,7 +8,6 @@ import TestPage from "./../pages/Student/ProfilePage/TestPage/TestPage";
 import QuestionsForm from "./../pages/Student/QuestionsForm/QuestionsForm";
 import WelcomePage from "./../pages/Student/WelcomePage/index";
 import School from "../pages/SchoolPage";
-import Matrial from "../pages/StudyMaterialPage";
 import Theory from "../pages/TheoryPage";
 
 const studentRoutes = [
@@ -22,7 +21,6 @@ const studentRoutes = [
   { path: "new-booking", element: <Form /> },
   { path: "messages", element: <ChatApp /> },
   { path: "school", element: <School /> },
-  {path:"material",element:<Matrial/>},
   {path:"theory",element:<Theory/>}
 ];
 
