@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TopBar from "../../../components/HomeTopBar/TopBar";
+// import TopBar from "../../../components/HomeTopBar/TopBar";
 import licenseInfo from "./constant/licenseInfo";
 import Footer from "../../../components/Footer";
 import HeaderSection from "./components/HeaderSection";
@@ -16,7 +16,7 @@ const GetALicense = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 relative">
-      <TopBar />
+      {/* <TopBar /> */}
       <HeaderSection />
       {licenseInfo.map((license, index) => (
         <LicenseCard key={index} license={license} />
