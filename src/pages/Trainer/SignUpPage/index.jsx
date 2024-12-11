@@ -8,29 +8,31 @@ import {
   FaCar,
   FaLock,
 } from "react-icons/fa";
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { trainerSignUpSchema } from './schemas/signUpValidationSchema';
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { trainerSignUpSchema } from "./schemas/signUpValidationSchema";
 
 const SignUpPage = () => {
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(trainerSignUpSchema),
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      licenseNumber: '',
-      experience: '',
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      licenseNumber: "",
+      experience: "",
       licenseTypes: [],
     },
   });
-  
 
   const onSubmit = async (data) => {
-    console.log('Submitted Data:', data);
-    
+    console.log("Submitted Data:", data);
   };
 
   const licenseTypeOptions = [
@@ -104,7 +106,9 @@ const SignUpPage = () => {
             {/* Name Fields */}
             <div className="grid grid-cols-2 gap-4">
               <div className="relative">
-                <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  First Name
+                </label>
                 <div className="flex items-center">
                   <FaUserTie className="absolute left-3 text-gray-400" />
                   <Controller
@@ -120,10 +124,16 @@ const SignUpPage = () => {
                     )}
                   />
                 </div>
-                {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName.message}</p>}
+                {errors.firstName && (
+                  <p className="text-red-500 text-sm">
+                    {errors.firstName.message}
+                  </p>
+                )}
               </div>
               <div className="relative">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Last Name
+                </label>
                 <div className="flex items-center">
                   <FaUserTie className="absolute left-3 text-gray-400" />
                   <Controller
@@ -139,13 +149,19 @@ const SignUpPage = () => {
                     )}
                   />
                 </div>
-                {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName.message}</p>}
+                {errors.lastName && (
+                  <p className="text-red-500 text-sm">
+                    {errors.lastName.message}
+                  </p>
+                )}
               </div>
             </div>
 
             {/* Email Field */}
             <div className="relative">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
               <div className="flex items-center">
                 <FaEnvelope className="absolute left-3 text-gray-400" />
                 <Controller
@@ -161,13 +177,17 @@ const SignUpPage = () => {
                   )}
                 />
               </div>
-              {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email.message}</p>
+              )}
             </div>
 
             {/* Password Fields */}
             <div className="grid grid-cols-2 gap-4">
               <div className="relative">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Password
+                </label>
                 <div className="flex items-center">
                   <FaLock className="absolute left-3 text-gray-400" />
                   <Controller
@@ -183,11 +203,17 @@ const SignUpPage = () => {
                     )}
                   />
                 </div>
-                {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+                {errors.password && (
+                  <p className="text-red-500 text-sm">
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
 
               <div className="relative">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Confirm Password
+                </label>
                 <div className="flex items-center">
                   <FaLock className="absolute left-3 text-gray-400" />
                   <Controller
@@ -203,7 +229,11 @@ const SignUpPage = () => {
                     )}
                   />
                 </div>
-                {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
+                {errors.confirmPassword && (
+                  <p className="text-red-500 text-sm">
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -228,7 +258,11 @@ const SignUpPage = () => {
                     )}
                   />
                 </div>
-                {errors.licenseNumber && <p className="text-red-500 text-sm">{errors.licenseNumber.message}</p>}
+                {errors.licenseNumber && (
+                  <p className="text-red-500 text-sm">
+                    {errors.licenseNumber.message}
+                  </p>
+                )}
               </div>
               <div className="relative">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -250,7 +284,11 @@ const SignUpPage = () => {
                     )}
                   />
                 </div>
-                {errors.experience && <p className="text-red-500 text-sm">{errors.experience.message}</p>}
+                {errors.experience && (
+                  <p className="text-red-500 text-sm">
+                    {errors.experience.message}
+                  </p>
+                )}
               </div>
             </div>
 
