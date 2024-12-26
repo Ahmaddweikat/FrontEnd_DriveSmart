@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import APIClient from "../../../services/apiClient";
 import useAuthStore from "../../../store/auth.store";
-
+import { getFCMToken } from "../../../services/firebase/Notifications";
 const apiClient = new APIClient("/auth/sign-in");
 
 const useSignIn = () => {
@@ -10,19 +10,22 @@ const useSignIn = () => {
   const { login } = useAuthStore();
 
   const signInMutation = useMutation({
-    mutationFn: (credentials) => apiClient.post(credentials),
+    mutationFn: async (credentials) => {
+      const fcmToken = await getFCMToken();
+      console.log("🚀 ~ mutationFn: ~ fcmToken:", fcmToken);
+      return apiClient.post({ ...credentials, fcmToken });
+    },
+
     onSuccess: (data) => {
       login(data.token);
-      // TODO: This line may be need to be moved to the PrivateRoute component
       APIClient.setAuthorizationHeader(data.token);
-
       // Navigate based on user role
       const user = useAuthStore.getState().user;
       navigate(`/${user.role}`);
     },
     onError: (error) => {
       console.error("Sign-in failed:", error);
-    }
+    },
   });
 
   return {
