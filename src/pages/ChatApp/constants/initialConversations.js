@@ -13,14 +13,14 @@ const initialConversations = [
         text: "Hello , how are?",
         date: "27 July",
         time: "22:37",
-        read: true
+        read: true,
       },
       {
         sender: "You",
         text: "Hi , I'm good",
         date: "27 July",
         time: "22:40",
-        read: true
+        read: true,
       },
     ],
   },
@@ -36,7 +36,7 @@ const initialConversations = [
         text: "Your Lesson is at 10 AM",
         date: "7 September",
         time: "13:04",
-        read: false
+        read: false,
       },
     ],
   },
@@ -52,14 +52,14 @@ const initialConversations = [
         text: "Hello , how are?",
         date: "27 July",
         time: "22:37",
-        read: true
+        read: true,
       },
       {
         sender: "You",
         text: "Hi , I'm good",
         date: "27 July",
         time: "22:40",
-        read: true
+        read: true,
       },
     ],
   },
@@ -75,94 +75,14 @@ const initialConversations = [
         text: "Hello , how are?",
         date: "27 July",
         time: "22:37",
-        read: true
+        read: true,
       },
       {
         sender: "You",
         text: "Hi , I'm good",
         date: "27 July",
         time: "22:40",
-        read: true
-      },
-    ],
-  },
-  {
-    id: 5,
-    name: "Trainer D",
-    avatar: img,
-    status: "Online",
-    messages: [
-      {
-        sender: "Trainer A",
-        text: "Hello , how are?",
-        date: "27 July",
-        time: "22:37",
-      },
-      {
-        sender: "You",
-        text: "Hi , I'm good",
-        date: "27 July",
-        time: "22:40",
-      },
-    ],
-  },
-  {
-    id: 6,
-    name: "Trainer D",
-    avatar: img,
-    status: "Online",
-    messages: [
-      {
-        sender: "Trainer A",
-        text: "Hello , how are?",
-        date: "27 July",
-        time: "22:37",
-      },
-      {
-        sender: "You",
-        text: "Hi , I'm good",
-        date: "27 July",
-        time: "22:40",
-      },
-    ],
-  },
-  {
-    id: 7,
-    name: "Trainer D",
-    avatar: img,
-    status: "Online",
-    messages: [
-      {
-        sender: "Trainer A",
-        text: "Hello , how are?",
-        date: "27 July",
-        time: "22:37",
-      },
-      {
-        sender: "You",
-        text: "Hi , I'm good",
-        date: "27 July",
-        time: "22:40",
-      },
-    ],
-  },
-  {
-    id: 8,
-    name: "Trainer D",
-    avatar: img,
-    status: "Online",
-    messages: [
-      {
-        sender: "Trainer A",
-        text: "Hello , how are?",
-        date: "27 July",
-        time: "22:37",
-      },
-      {
-        sender: "You",
-        text: "Hi , I'm good",
-        date: "27 July",
-        time: "22:40",
+        read: true,
       },
     ],
   },

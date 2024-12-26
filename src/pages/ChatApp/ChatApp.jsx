@@ -25,7 +25,9 @@ const ChatApp = ({ isTopBarChat = false, onUnreadCountChange }) => {
     chatWindowRef,
     addMessageToConversation,
     getUnreadCount,
-    getTotalUnreadCount
+    getTotalUnreadCount,
+    handleUserSelect,
+    filteredUsers,
   } = useChat();
 
   const { handleSendMessage, handleEmojiClick, handleInputClick } =
@@ -35,14 +37,13 @@ const ChatApp = ({ isTopBarChat = false, onUnreadCountChange }) => {
       selectedChatId,
       setEmojiPickerVisible
     );
-    
-    
-    useEffect(() => {
-      if (onUnreadCountChange) {
-        onUnreadCountChange(getTotalUnreadCount());
-      }
-    }, [getTotalUnreadCount, onUnreadCountChange, filteredConversations]);
-  
+
+  useEffect(() => {
+    if (onUnreadCountChange) {
+      onUnreadCountChange(getTotalUnreadCount());
+    }
+  }, [getTotalUnreadCount, onUnreadCountChange, filteredConversations]);
+
   const { formatDate } = useDateFormatter();
 
   if (isTopBarChat) {
@@ -195,7 +196,9 @@ const ChatApp = ({ isTopBarChat = false, onUnreadCountChange }) => {
             </div>
           </div>
           <div className="flex-1 overflow-y-auto divide-y divide-gray-100">
-                {filteredConversations.map((chat) => (
+            {filteredConversations.length > 0
+              ? // Show existing conversations
+                filteredConversations.map((chat) => (
                   <ChatItem
                     key={chat.id}
                     chat={chat}
@@ -203,8 +206,33 @@ const ChatApp = ({ isTopBarChat = false, onUnreadCountChange }) => {
                     setSelectedChatId={setSelectedChatId}
                     unreadCount={getUnreadCount(chat.id)}
                   />
+                ))
+              : // Show filtered users when searching
+                filteredUsers.map((user) => (
+                  <div
+                    key={user.id}
+                    onClick={() => handleUserSelect(user)}
+                    className="flex items-center p-4 hover:bg-gray-50 cursor-pointer"
+                  >
+                    <div className="relative">
+                      <img
+                        src={user.avatar}
+                        alt={`${user.name}'s avatar`}
+                        className="w-12 h-12 rounded-full border-2 border-gray-200"
+                      />
+                      {user.status === "Online" && (
+                        <div className="absolute bottom-0.5 right-0.5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white"></div>
+                      )}
+                    </div>
+                    <div className="ml-4">
+                      <div className="font-semibold text-gray-800">
+                        {user.name}
+                      </div>
+                      <div className="text-sm text-gray-500">{user.status}</div>
+                    </div>
+                  </div>
                 ))}
-              </div>
+          </div>
         </div>
 
         {/* Right Side - Chat Messages */}
@@ -298,8 +326,9 @@ const ChatApp = ({ isTopBarChat = false, onUnreadCountChange }) => {
               </div>
             </>
           ) : (
-            <div className="flex-1 flex items-center justify-center text-gray-500">
-              Select a conversation to start messaging
+            <div className="flex-1 flex flex-col items-center justify-center text-gray-500">
+              <p className="mb-2">No conversations yet</p>
+              <p className="text-sm">Search for users to start chatting</p>
             </div>
           )}
         </div>
