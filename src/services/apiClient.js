@@ -10,9 +10,10 @@ class APIClient {
   constructor(endpoint) {
     this.endpoint = endpoint;
     const auth = JSON.parse(localStorage.getItem("auth-storage"));
-    axiosInstance.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${auth.state.token}`;
+    if (auth)
+      axiosInstance.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${auth.state.token}`;
   }
 
   static setAuthorizationHeader = (token) => {

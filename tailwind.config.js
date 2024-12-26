@@ -51,7 +51,7 @@ module.exports = {
           "100%": { width: "0" },
         },
         "slide-enter": {
-          "0%": { opacity: "0", transform: "translateX(100%)" },
+          "0%": { opacity: "0", transform: "translateX(-100%)" },
           "100%": { opacity: "1", transform: "translateX(0)" },
         },
         "slide-exit": {

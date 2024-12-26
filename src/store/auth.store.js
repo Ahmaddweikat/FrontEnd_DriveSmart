@@ -30,6 +30,12 @@ const useAuthStore = create(
           user: { ...state.user, ...userData },
         }));
       },
+
+      updateProfilePicture: (profilePicture) => {
+        set((state) => ({
+          user: { ...state.user, profilePicture },
+        }));
+      },
     }),
     {
       name: "auth-storage",
