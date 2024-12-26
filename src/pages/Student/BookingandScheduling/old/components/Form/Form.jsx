@@ -10,6 +10,7 @@ import TabPanel from "./components/DataComponents/components/TabPanel";
 import Home from "../../BookingandScheduling";
 import LessonType from "../TypePage/Type";
 import Finish from "../Finish/Finish";
+
 const Form = () => {
   const [value, setValue] = useState(0);
   const [selectedLessonType, setSelectedLessonType] = useState("");

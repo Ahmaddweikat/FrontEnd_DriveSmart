@@ -1,7 +1,7 @@
 import React from "react";
 import { trainerCarTimes } from "../../../../../constants/trainerCarTimes";
 import { Avatar, Card, CardContent, Typography, Box } from "@mui/material";
-import PersonIcon from '@mui/icons-material/Person';
+import PersonIcon from "@mui/icons-material/Person";
 
 export function TrainerCarSelection({
   selectedTrainer,
@@ -10,18 +10,18 @@ export function TrainerCarSelection({
   setSelectedCar,
   trainers,
   cars,
-  disabled 
+  disabled,
 }) {
   // Get available cars for selected trainer
   const getAvailableCars = (trainer) => {
     if (!trainer) return [];
-    
+
     const trainerSchedule = trainerCarTimes[trainer];
     if (!trainerSchedule) return [];
 
     const availableCars = new Set();
-    Object.values(trainerSchedule).forEach(daySchedule => {
-      Object.keys(daySchedule).forEach(car => {
+    Object.values(trainerSchedule).forEach((daySchedule) => {
+      Object.keys(daySchedule).forEach((car) => {
         availableCars.add(car);
       });
     });
@@ -44,21 +44,25 @@ export function TrainerCarSelection({
               key={index}
               onClick={() => !disabled && handleTrainerSelect(trainer)}
               sx={{
-                cursor: disabled ? 'not-allowed' : 'pointer',
-                border: trainer === selectedTrainer ? '2px solid #72b626' : '1px solid #e0e0e0',
-                transition: 'all 0.2s ease',
+                cursor: disabled ? "not-allowed" : "pointer",
+                border:
+                  trainer === selectedTrainer
+                    ? "2px solid #72b626"
+                    : "1px solid #e0e0e0",
+                transition: "all 0.2s ease",
                 opacity: disabled ? 0.7 : 1,
-                '&:hover': {
-                  boxShadow: disabled ? 'none' : '0 4px 12px rgba(0,0,0,0.1)',
-                  transform: disabled ? 'none' : 'translateY(-2px)',
-                }
+                "&:hover": {
+                  boxShadow: disabled ? "none" : "0 4px 12px rgba(0,0,0,0.1)",
+                  transform: disabled ? "none" : "translateY(-2px)",
+                },
               }}
             >
               <CardContent className="flex items-center space-x-4">
                 <Avatar
                   sx={{
-                    bgcolor: trainer === selectedTrainer ? '#72b626' : '#f5f5f5',
-                    color: trainer === selectedTrainer ? 'white' : '#666'
+                    bgcolor:
+                      trainer === selectedTrainer ? "#72b626" : "#f5f5f5",
+                    color: trainer === selectedTrainer ? "white" : "#666",
                   }}
                 >
                   <PersonIcon />
