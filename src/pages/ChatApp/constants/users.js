@@ -5,14 +5,20 @@ const users = [
   {
     id: 1,
     name: "Trainer A",
-    avatar: img,
+    profilePicture: img,
     status: "Online",
   },
   {
     id: 2,
     name: "Trainer B",
-    avatar: img1,
+    profilePicture: img1,
     status: "Offline",
+  },
+  {
+    id: 3,
+    name: "Ahmad Qadi",
+    profilePicture: img1,
+    status: "Online",
   },
 ];
 

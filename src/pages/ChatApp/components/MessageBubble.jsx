@@ -1,16 +1,24 @@
 import React from "react";
-import av from "../../../assets/ChatApp/Images/sideImage2.jpg"; // Your avatar
+import useAuthStore from "../../../store/auth.store";
+import useGetStudentProfile from "../../Student/ProfilePage/ProfileInfoPage/hooks/useGetStudentProfile";
+import getOtherParticipantInfo from "../utils/getOtherParticipantInfo";
 
 const MessageBubble = ({ msg, currentChat }) => {
-  const isSender = msg.sender === "You"; // Check if the message is from the current user
+  const { user } = useAuthStore();
+  const isSender = msg.senderId === user.id; // Check if the message is from the current user
+  const { data } = useGetStudentProfile();
+  const otherUser = getOtherParticipantInfo(
+    currentChat.participantsInfo,
+    user.id
+  );
 
   return (
     <div className={`mb-4 flex ${isSender ? "justify-end" : ""}`}>
       {!isSender && (
         <img
-          src={currentChat.avatar}
+          src={otherUser.profilePicture}
           alt="Receiver Avatar"
-          className="w-8 h-8 rounded-full mr-2 border-2 border-gray-200 shadow-sm"
+          className="w-8 h-8 rounded-full mr-2 border-2 border-gray-200 shadow-sm object-cover"
         />
       )}
 
@@ -43,9 +51,9 @@ const MessageBubble = ({ msg, currentChat }) => {
 
       {isSender && (
         <img
-          src={av}
+          src={data.profilePicture}
           alt="Your Avatar"
-          className="w-8 h-8 rounded-full ml-2 border-2 border-gray-200 shadow-sm"
+          className="w-8 h-8 rounded-full ml-2 border-2 border-gray-200 shadow-sm object-cover"
         />
       )}
     </div>

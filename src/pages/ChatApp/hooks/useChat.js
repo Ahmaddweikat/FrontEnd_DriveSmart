@@ -1,9 +1,20 @@
 import { useState, useRef, useEffect } from "react";
 import { useConversations } from "./useConversations";
-import users from "../constants/users";
+// import users from "../constants/users";
+import {
+  query,
+  collection,
+  where,
+  orderBy,
+  onSnapshot,
+} from "firebase/firestore";
+import { db } from "../../../services/firebase/firebaseConfig";
+import { useUsers } from "./useUsers";
+import useAuthStore from "../../../store/auth.store";
 
 export const useChat = ({ onUnreadCountChange } = {}) => {
   const [selectedChatId, setSelectedChatId] = useState(0);
+  const [messages, setMessages] = useState({});
   const [newMessage, setNewMessage] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
@@ -14,54 +25,64 @@ export const useChat = ({ onUnreadCountChange } = {}) => {
     markMessagesAsRead,
     getUnreadCount,
     getTotalUnreadCount,
+    unreadMessageCounts,
   } = useConversations();
   const chatWindowRef = useRef(null);
+  const { user: currentUser } = useAuthStore();
+
+  const { data: users = [] } = useUsers(searchQuery);
 
   const currentChat = conversations.find((chat) => chat.id === selectedChatId);
 
-  const filteredUsers = searchQuery
-    ? users.filter((user) =>
-        user.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
-      )
-    : [];
+  const filteredUsers = searchQuery ? users : [];
 
-  const filteredConversations = conversations.filter((chat) =>
-    chat.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
-  );
+  const filteredConversations =
+    conversations &&
+    conversations.filter((chat) =>
+      chat.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
+    );
 
-  const handleUserSelect = (user) => {
-    const chatId = startNewConversation(user);
+  const handleUserSelect = async (user) => {
+    const chatId = await startNewConversation(user);
+    console.log("🚀 ~ handleUserSelect ~ chatId:", chatId);
     setSelectedChatId(chatId);
+    setSearchQuery("");
   };
 
   useEffect(() => {
-    if (chatWindowRef.current) {
+    if (chatWindowRef.current && messages[selectedChatId]?.length > 0) {
       chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
     }
-  }, [currentChat?.messages]);
+  }, [selectedChatId, messages]);
 
   useEffect(() => {
     if (selectedChatId) {
-      markMessagesAsRead(selectedChatId);
-      // Force an update of the total unread count
-      const newTotalUnread = getTotalUnreadCount();
-      if (onUnreadCountChange) {
-        onUnreadCountChange(newTotalUnread);
-      }
-    }
-  }, [
-    selectedChatId,
-    markMessagesAsRead,
-    getTotalUnreadCount,
-    onUnreadCountChange,
-  ]);
+      const q = query(
+        collection(db, "messages"),
+        where("conversationId", "==", selectedChatId),
+        orderBy("timestamp", "asc")
+      );
 
-  const handleSelectChat = (chatId) => {
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const messagesList = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setMessages((prev) => ({
+          ...prev,
+          [selectedChatId]: messagesList,
+        }));
+      });
+
+      return () => unsubscribe();
+    }
+  }, [selectedChatId]);
+
+  const handleSelectChat = async (chatId) => {
     setSelectedChatId(chatId);
     if (chatId) {
-      markMessagesAsRead(chatId);
-      // Force an update of the total unread count
-      const newTotalUnread = getTotalUnreadCount();
+      await markMessagesAsRead(chatId, currentUser.id);
+      const newTotalUnread = await getTotalUnreadCount();
       if (onUnreadCountChange) {
         onUnreadCountChange(newTotalUnread);
       }
@@ -85,5 +106,7 @@ export const useChat = ({ onUnreadCountChange } = {}) => {
     addMessageToConversation,
     getUnreadCount,
     getTotalUnreadCount,
+    messages,
+    unreadMessageCounts,
   };
 };
