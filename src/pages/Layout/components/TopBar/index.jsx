@@ -9,18 +9,12 @@ import Badge from "@mui/material/Badge";
 import { Link } from "react-router-dom";
 import { notifications as initialNotifications } from "../../../../constants/Notifications/notifications";
 import useAuthStore from "../../../../store/auth.store";
-import useGetStudentProfile from "./../../../Student/ProfilePage/ProfileInfoPage/hooks/useGetStudentProfile";
+// import useGetStudentProfile from "./../../../Student/ProfilePage/ProfileInfoPage/hooks/useGetStudentProfile";
 import { Skeleton } from "@mui/material";
-
-function TopBar({ toggleSidebar, initialNotifications, initialMessages }) {
-  const { notificationList, unreadCount, markAsRead } =
-    useNotifications(notifications);
-  const { messagesList, unreadMessageCount, openChat } = useMessages(messages);
 import ChatApp from "../../../ChatApp/ChatApp";
 import {useChat} from "../../../ChatApp/hooks/useChat";
 
 function TopBar({ toggleSidebar }) {
-  
   const [notifications, setNotifications] = useState(initialNotifications);
   const [unreadCount, setUnreadCount] = useState(
     initialNotifications.filter(n => !n.read).length
@@ -31,7 +25,8 @@ function TopBar({ toggleSidebar }) {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [showChatPanel, setShowChatPanel] = useState(false);
-  const [SelectedChatId, setSelectedChatId] = useState(null);
+  const [selectedChatId, setSelectedChatId] = useState(null);
+  
   const { getTotalUnreadCount } = useChat();
 
   useEffect(() => {
@@ -52,8 +47,8 @@ function TopBar({ toggleSidebar }) {
     setShowProfileDropdown((prev) => !prev);
   };
 
-  const { user, logout } = useAuthStore();
-  const { data, isLoading, error } = useGetStudentProfile();
+    // const { user, logout } = useAuthStore();
+    // const { data, isLoading, error } = useGetStudentProfile();
 
   const markAsRead = (id) => {
     setNotifications(prev => 
@@ -65,12 +60,14 @@ function TopBar({ toggleSidebar }) {
     );
     setUnreadCount(prev => Math.max(0, prev - 1));
   };
+
   const markAllAsRead = () => {
     setNotifications(prev =>
       prev.map(notification => ({ ...notification, read: true }))
     );
     setUnreadCount(0);
   };
+
   const getNotificationStyle = (type) => {
     switch (type) {
       case 'booking':
@@ -264,38 +261,40 @@ function TopBar({ toggleSidebar }) {
             className="flex items-center space-x-2"
             aria-expanded={showProfileDropdown}
           >
-            {isLoading ? (
+            {true ? (
               <Skeleton variant="circular" width={40} height={40} />
             ) : (
               <Avatar
                 alt="User Picture"
-                src={!error && data?.profilePicture}
+                src={true && true?.profilePicture}
                 sx={{ width: 40, height: 40 }}
               />
             )}
             <span className="font-medium text-gray-600">
-              {isLoading ? (
+              {true ? (
                 <Skeleton variant="text" width={100} />
               ) : (
-                data?.name || user.name
+                true?.name || true //user.name
               )}
             </span>
             <ExpandMoreOutlinedIcon sx={{ width: 20, height: 20 }} />
           </button>
           {showProfileDropdown && (
             <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-50">
-              <Link to={`/${user.role}/profile`}>
+              <Link //to={`/${user.role}/profile`}
+              >
                 <button className="w-full text-left px-4 py-2 hover:bg-gray-200">
                   Profile
                 </button>
               </Link>
-              <Link to={`/${user.role}/settings`}>
+              <Link //to={`/${user.role}/settings`}
+              >
                 <button className="w-full text-left px-4 py-2 hover:bg-gray-200">
                   Settings
                 </button>
               </Link>
               <button
-                onClick={() => logout()}
+                // onClick={() => logout()}
                 className="w-full text-left px-4 py-2 hover:bg-gray-200"
               >
                 Logout

@@ -1,11 +1,10 @@
 import {
   faBook,
-  faClipboardCheck,
+  faClock,
   faMessage,
   faSchool,
-  faPen,
   faChalkboard,
-  faUserGroup
+  faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { useLocation } from "react-router-dom";
@@ -28,7 +27,11 @@ const sidebarRoutes = [
     label: "Lessons",
     path: "lessons",
   },
-  
+  {
+    icon: faClock,
+    label:"Availability",
+    path:"availability"
+  },
   {
     icon: faChalkboard,
     label: "Quizzes",

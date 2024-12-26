@@ -8,6 +8,7 @@ import SchoolOwnerSignUp from "../pages/schoolManager/SignUpPage";
 // import HomePage from "./../pages/Student/HomePage/HomePage";
 import EmailPage from "../pages/ForgetPasswordPage/EmailPage/EmailPage";
 import Layout from "../pages/Layout";
+import TrainerLayout from "../pages/Trainer/layout";
 import SchoolPage from "../pages/SchoolPage";
 import GetALicense from "../pages/Student/GetALicense/GetALicense";
 import Code from "./../pages/ForgetPasswordPage/CodePage/Code";
@@ -19,6 +20,7 @@ import adminRoutes from "./adminRoutes";
 import schoolManagerRoutes from "./schoolManagerRoutes";
 import studentRoutes from "./studentRoutes";
 import trainerRoutes from "./trainerRoutes";
+import theoryRoutes from "./theoryRoutes";
 
 const router = createBrowserRouter([
   // ----------------------- public routes --------------------------------
@@ -73,13 +75,16 @@ const router = createBrowserRouter([
   // ---------- Role based routes --------------------------------
   {
     path: `/${Roles.STUDENT}/*`,
-    element: <PrivateRoutes roles={[Roles.STUDENT]} />,
+    // element: <PrivateRoutes roles={[Roles.STUDENT]} />,
     errorElement: <NotFoundPage />,
     children: [
       {
         element: <Layout />,
-        children: studentRoutes,
-      },
+        children: [
+          ...studentRoutes,
+          ...theoryRoutes
+        ],
+      }
     ],
   },
   {
@@ -87,7 +92,7 @@ const router = createBrowserRouter([
     // element: <PrivateRoutes roles={[Roles.TRAINER]} />,
     children: [
       {
-        // element: <Layout />,
+        element: <TrainerLayout />,
         children: trainerRoutes,
       },
     ],
