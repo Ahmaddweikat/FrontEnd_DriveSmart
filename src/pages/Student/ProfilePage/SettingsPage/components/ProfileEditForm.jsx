@@ -8,31 +8,17 @@ import React, { useState } from "react";
 import Spinner from "./../../../../../components/Spinner";
 import useGetStudentProfile from "./../../ProfileInfoPage/hooks/useGetStudentProfile";
 import useChangeProfilePicture from "../hooks/useChangeProfilePicture";
+import LoadingSpinner from "../img/LoadingSpinner.svg";
 
 const ProfileEditForm = ({ handleSave, selectedImage, handleImageChange }) => {
   const { data: user, isLoading, error } = useGetStudentProfile();
-  const { mutate: changeProfilePicture } = useChangeProfilePicture();
-  const [newProfilePicture, setNewProfilePicture] = useState(null);
+  const { mutate: changeProfilePicture, isPending } = useChangeProfilePicture();
 
-  const handleProfilePictureChange = async (event) => {
-    const file = event.target.files[0];
-    // console.log("🚀 ~ handleProfilePictureChange ~ file:", file);
-    if (file) {
-      console.log("🚀 ~ handleProfilePictureChange ~ file:", file);
-
-      setNewProfilePicture(file);
-      // handleImageChange(event);
-      await handleSaveProfilePicture();
-    }
-  };
-
-  const handleSaveProfilePicture = async () => {
-    if (newProfilePicture) {
-      console.log(
-        "🚀 ~ handleSaveProfilePicture ~ newProfilePicture:",
-        newProfilePicture
-      );
-      await changeProfilePicture(newProfilePicture);
+  const handleProfilePictureChange = (event) => {
+    console.log("Selected Image:", event?.target?.files[0]);
+    if (event?.target?.files?.[0]) {
+      const file = event.target.files[0];
+      changeProfilePicture(file);
     }
   };
 
@@ -47,8 +33,7 @@ const ProfileEditForm = ({ handleSave, selectedImage, handleImageChange }) => {
             <h2 className="text-2xl font-semibold">My Profile</h2>
             <button
               onClick={() => {
-                handleSave();
-                handleSaveProfilePicture();
+                // handleSave();
               }}
               className="bg-green-500 text-white px-6 py-2 rounded-2xl font-semibold hover:bg-green-600 transition-all duration-300 relative group flex items-center justify-between w-40"
             >
@@ -66,9 +51,11 @@ const ProfileEditForm = ({ handleSave, selectedImage, handleImageChange }) => {
                 <div className="w-32 h-32 bg-gray-200 rounded-full overflow-hidden">
                   <Avatar
                     alt={user.name}
-                    src={selectedImage || user.profilePicture}
+                    src={isPending ? LoadingSpinner : user?.profilePicture}
                     sx={{ width: 128, height: 128 }}
-                  />
+                  >
+                    {user?.name?.charAt(0)}
+                  </Avatar>
                 </div>
                 <button
                   className="mt-2 text-green-500"
@@ -77,6 +64,7 @@ const ProfileEditForm = ({ handleSave, selectedImage, handleImageChange }) => {
                   Change Photo
                 </button>
                 <input
+                  name="profilePicture"
                   type="file"
                   id="fileInput"
                   accept="image/*"
