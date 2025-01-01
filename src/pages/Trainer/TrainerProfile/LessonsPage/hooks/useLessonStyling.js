@@ -1,42 +1,63 @@
 const useLessonStyling = () => {
   const getLessonStatusStyle = (status, date) => {
-    const currentDate = new Date();
     const lessonDate = new Date(date);
+    lessonDate.setHours(0, 0, 0, 0);
+    
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
 
-    if (
-      lessonDate < currentDate &&
-      status !== "completed" &&
-      status !== "canceled"
-    ) {
-      return "border-l-4 border-red-500"; // Out of date
+    if (status === "canceled") {
+      return "border-l-4 border-red-600";
     }
 
-    switch (status) {
-      case "upcoming":
-        return "border-l-4 border-blue-500";
-      case "completed":
-        return "border-l-4 border-green-500";
-      case "canceled":
-        return "border-l-4 border-red-500";
-      default:
-        return "";
+    if (status === "completed") {
+      return "border-l-4 border-green-500";
     }
+
+    // For upcoming lessons
+    if (lessonDate >= currentDate && status === "upcoming") {
+      return "border-l-4 border-blue-500";
+    }
+
+    // For out of date lessons
+    if (lessonDate < currentDate && status === "out of date") {
+      return "border-l-4 border-red-600";
+    }
+
+    return "border-l-4 border-gray-500";
   };
 
   const getStatusTextColor = (status, date) => {
-    const isOutOfDate = new Date(date) < new Date() &&
-      status !== "completed" &&
-      status !== "canceled";
+    const lessonDate = new Date(date);
+    lessonDate.setHours(0, 0, 0, 0);
+    
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
 
-    if (isOutOfDate || status === "canceled") return "text-red-500";
-    if (status === "upcoming") return "text-blue-500";
-    if (status === "completed") return "text-green-500";
-    return "";
+    if (status === "canceled") {
+      return "text-red-600";
+    }
+
+    if (status === "completed") {
+      return "text-green-500";
+    }
+
+    // For upcoming lessons
+    if (lessonDate >= currentDate && status === "upcoming") {
+      return "text-blue-500";
+    }
+
+    // For out of date lessons
+    if (lessonDate < currentDate && status === "out of date") {
+      return "text-red-600";
+    }
+
+    return "text-gray-500";
   };
 
   return {
     getLessonStatusStyle,
-    getStatusTextColor
+    getStatusTextColor,
   };
 };
 

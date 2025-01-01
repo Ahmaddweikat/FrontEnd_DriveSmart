@@ -7,6 +7,13 @@ function Breadcrumb() {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
 
+  const formatName = (name) => {
+    if (/^[A-Z][a-z]*(?:[A-Z][a-z]*)+$/.test(name)) {
+      return name.replace(/([A-Z])/g, ' $1').trim();
+    }
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  };
+
   return (
     <nav className="flex p-4 text-gray-600 bg-gray-100">
       <ol className="flex items-center space-x-2">
@@ -30,11 +37,11 @@ function Breadcrumb() {
               <li>
                 {isLast ? (
                   <span className="font-medium text-gray-700">
-                    {name.charAt(0).toUpperCase() + name.slice(1)}
+                    {formatName(name)}
                   </span>
                 ) : (
                   <Link to={routeTo} className="hover:text-gray-800">
-                    {name.charAt(0).toUpperCase() + name.slice(1)}
+                    {formatName(name)}
                   </Link>
                 )}
               </li>
