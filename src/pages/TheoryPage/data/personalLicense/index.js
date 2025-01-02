@@ -2,7 +2,6 @@ import { questions as Form1Questions } from './Form1';
 import { questions as Form2Questions } from './Form2';
 import { questions as Form3Questions } from './Form3';
 
-
 export const personalLicenseForms = [
   {
     id: 1,
@@ -24,5 +23,6 @@ export const personalLicenseForms = [
     title: "Form number 3",
     questions: Form3Questions,
     timeLimit: "40 minutes",
-  }
+  },
+
 ];
