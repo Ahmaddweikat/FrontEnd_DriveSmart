@@ -6,9 +6,17 @@ function SidebarButton({ icon, label, isExpanded, active, pageName }) {
   const location = useLocation();
   const fullPath = location.pathname;
 
+ 
   const isActive = () => {
-    const baseRoute = pageName.split('/')[1]; 
-    return fullPath.includes(baseRoute);
+    const pathSegments = fullPath.split('/');
+    const currentPath = pathSegments.length > 2 ? pathSegments[2] : pathSegments[1];
+    const buttonPath = pageName.split('/')[1];
+    
+    if (currentPath.startsWith('admin/')) {
+      return buttonPath === 'admin';
+    }
+    
+    return currentPath === buttonPath;
   };
 
   return (
