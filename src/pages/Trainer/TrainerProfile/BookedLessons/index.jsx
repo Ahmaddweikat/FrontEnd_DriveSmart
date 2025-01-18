@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useBookedLessons } from "./hooks/useBookedLessons";
 import SearchBar from "./components/SearchBar";
 import LessonsTable from "./components/LessonsTable";
+import { Tabs, Tab, Box } from '@mui/material';
 
 const BookingLessons = () => {
+  const [activeTab, setActiveTab] = useState(0);
   const {
     pendingLessons,
     acceptedLessons,
@@ -28,6 +30,16 @@ const BookingLessons = () => {
     </div>
   );
 
+  const handleTabChange = (event, newValue) => {
+    setActiveTab(newValue);
+  };
+
+  const TabPanel = ({ children, value, index }) => (
+    <div role="tabpanel" hidden={value !== index}>
+      {value === index && children}
+    </div>
+  );
+
   return (
     <div className="p-6 overflow-y-auto">
       <div className="max-w-7xl mx-auto">
@@ -41,9 +53,22 @@ const BookingLessons = () => {
             uniqueDays={uniqueDays}
           />
           
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-gray-800">Pending Lessons</h2>
+          <Box sx={{ width: '100%' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
+              <Tabs 
+                value={activeTab} 
+                onChange={handleTabChange}
+                variant="fullWidth"
+                textColor="primary"
+                indicatorColor="primary"
+              >
+                <Tab label={`Pending (${pendingLessons.length})`} />
+                <Tab label={`Accepted (${acceptedLessons.length})`} />
+                <Tab label={`Declined (${declinedLessons.length})`} />
+              </Tabs>
+            </Box>
+
+            <TabPanel value={activeTab} index={0}>
               {pendingLessons.length > 0 ? (
                 <LessonsTable 
                   lessons={pendingLessons}
@@ -55,10 +80,9 @@ const BookingLessons = () => {
               ) : (
                 <NoLessonsMessage day={daysFilter} />
               )}
-            </div>
+            </TabPanel>
 
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-gray-800">Accepted Lessons</h2>
+            <TabPanel value={activeTab} index={1}>
               {acceptedLessons.length > 0 ? (
                 <LessonsTable 
                   lessons={acceptedLessons}
@@ -70,10 +94,9 @@ const BookingLessons = () => {
               ) : (
                 <NoLessonsMessage day={daysFilter} />
               )}
-            </div>
+            </TabPanel>
 
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold text-gray-800">Declined Lessons</h2>
+            <TabPanel value={activeTab} index={2}>
               {declinedLessons.length > 0 ? (
                 <LessonsTable 
                   lessons={declinedLessons}
@@ -85,8 +108,8 @@ const BookingLessons = () => {
               ) : (
                 <NoLessonsMessage day={daysFilter} />
               )}
-            </div>
-          </div>
+            </TabPanel>
+          </Box>
         </div>
       </div>
     </div>

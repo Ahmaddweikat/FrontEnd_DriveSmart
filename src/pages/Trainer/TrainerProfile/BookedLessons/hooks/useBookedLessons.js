@@ -3,8 +3,8 @@ import { useState } from 'react';
 export const useBookedLessons = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const lessonsPerPage = 10;
-  const [daysFilter, setDaysFilter] = useState('all');
-
+  const [daysFilter, setDaysFilter] = useState([]);
+  
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString('en-US', {
       month: 'long',
@@ -181,15 +181,20 @@ export const useBookedLessons = () => {
         lesson.days.forEach(day => allDays.add(day));
       }
     });
-    return ['all', ...Array.from(allDays)];
+    return Array.from(allDays);
   };
 
   const filterLessons = (lessons, status) => {
     return lessons.filter(lesson => {
       const matchesSearch = lesson.studentName.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesStatus = lesson.status === status;
-      const matchesDays = daysFilter === 'all' || 
-        (lesson.isRecurring && Array.isArray(lesson.days) && lesson.days.includes(daysFilter));
+      
+      // Handle days filter
+      const matchesDays = 
+        daysFilter.length === 0 || // If no days selected, show all
+        (lesson.isRecurring && Array.isArray(lesson.days) && 
+          lesson.days.some(day => daysFilter.includes(day))); // Match if any selected day is in lesson days
+      
       return matchesSearch && matchesStatus && matchesDays;
     });
   };
