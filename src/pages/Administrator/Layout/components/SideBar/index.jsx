@@ -5,7 +5,7 @@ import {
   faMessage,
   faSchool,
   faUserPlus,  
-  faBullhorn,
+  faSchoolCircleCheck,
   faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
@@ -20,29 +20,9 @@ const sidebarRoutes = [
     path: "schools",
   },
   {
-    icon: faUserPlus,
+    icon: faSchoolCircleCheck,
     label: "Registration Requests",
     path: "requests",
-  },
-  {
-    icon: faEnvelope,
-    label: "Invite Trainers",
-    path: "invitetrainers",
-  },
-  {
-    icon: faPersonChalkboard,
-    label:"Trainers",
-    path:"trainers"
-  },
-  {
-    icon: faCar,
-    label:"Cars",
-    path:"cars"
-  },
-  {
-    icon: faUserGroup,
-    label: "Students",
-    path: "students",
   },
   {
     icon: faMessage,
