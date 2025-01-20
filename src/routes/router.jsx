@@ -21,6 +21,8 @@ import schoolManagerRoutes from "./schoolManagerRoutes";
 import studentRoutes from "./studentRoutes";
 import trainerRoutes from "./trainerRoutes";
 import theoryRoutes from "./theoryRoutes";
+import SchoolOwnerLayout from "../pages/SchoolOwner/layout";
+import AdminLayout from "../pages/Administrator/layout";
 
 const router = createBrowserRouter([
   // ----------------------- public routes --------------------------------
@@ -90,6 +92,7 @@ const router = createBrowserRouter([
   {
     path: `/${Roles.TRAINER}/*`,
     // element: <PrivateRoutes roles={[Roles.TRAINER]} />,
+    
     children: [
       {
         element: <TrainerLayout />,
@@ -99,20 +102,20 @@ const router = createBrowserRouter([
   },
   {
     path: `/${Roles.SCHOOL_MANAGER}/*`,
-    element: <PrivateRoutes roles={[Roles.SCHOOL_MANAGER]} />,
+    // element: <PrivateRoutes roles={[Roles.SCHOOL_MANAGER]} />,
     children: [
       {
-        // element: <Layout />,
+        element: <SchoolOwnerLayout />,
         children: schoolManagerRoutes,
       },
     ],
   },
   {
     path: `/${Roles.ADMIN}/*`,
-    element: <PrivateRoutes roles={[Roles.ADMIN]} />,
+    // element: <PrivateRoutes roles={[Roles.ADMIN]} />,
     children: [
       {
-        // element: <Layout />,
+        element: <AdminLayout />,
         children: adminRoutes,
       },
     ],
