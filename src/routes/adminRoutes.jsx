@@ -4,12 +4,10 @@ import HomePage from "../pages/Administrator/HomePage";
 import ChatApp from "../pages/ChatApp/ChatApp";
 
 const adminRoutes = [
-    {index: true, element:<HomePage/>},
-    {path: "schools", element: <Schools/> },
-    {path: "requests", element:<Requests/> },
-    {path: "messages", element: <ChatApp /> },
-
-
+  { index: true, element: <HomePage /> },
+  { path: "schools", element: <Schools /> },
+  { path: "requests", element: <Requests /> },
+  { path: "messages", element: <ChatApp /> },
 ];
 
 export default adminRoutes;

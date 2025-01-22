@@ -22,7 +22,7 @@ import studentRoutes from "./studentRoutes";
 import trainerRoutes from "./trainerRoutes";
 import theoryRoutes from "./theoryRoutes";
 import SchoolOwnerLayout from "../pages/SchoolOwner/layout";
-import AdminLayout from "../pages/Administrator/layout";
+import AdminLayout from "../pages/Administrator/Layout";
 
 const router = createBrowserRouter([
   // ----------------------- public routes --------------------------------
@@ -82,17 +82,14 @@ const router = createBrowserRouter([
     children: [
       {
         element: <Layout />,
-        children: [
-          ...studentRoutes,
-          ...theoryRoutes
-        ],
-      }
+        children: [...studentRoutes, ...theoryRoutes],
+      },
     ],
   },
   {
     path: `/${Roles.TRAINER}/*`,
     // element: <PrivateRoutes roles={[Roles.TRAINER]} />,
-    
+
     children: [
       {
         element: <TrainerLayout />,

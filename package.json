@@ -13,7 +13,7 @@
     "@hookform/resolvers": "^2.9.11",
     "@mui/icons-material": "^6.1.6",
     "@mui/material": "^6.1.5",
-    "@mui/x-charts": "^7.23.6",
+    "@mui/x-charts": "^7.24.0",
     "@mui/x-date-pickers": "^7.23.3",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-checkbox": "^1.1.2",
