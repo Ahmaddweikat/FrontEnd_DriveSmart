@@ -8,6 +8,7 @@ import SchoolOwnerSignUp from "../pages/schoolManager/SignUpPage";
 // import HomePage from "./../pages/Student/HomePage/HomePage";
 import EmailPage from "../pages/ForgetPasswordPage/EmailPage/EmailPage";
 import Layout from "../pages/Layout";
+import TrainerLayout from "../pages/Trainer/layout";
 import SchoolPage from "../pages/SchoolPage";
 import GetALicense from "../pages/Student/GetALicense/GetALicense";
 import Code from "./../pages/ForgetPasswordPage/CodePage/Code";
@@ -19,6 +20,9 @@ import adminRoutes from "./adminRoutes";
 import schoolManagerRoutes from "./schoolManagerRoutes";
 import studentRoutes from "./studentRoutes";
 import trainerRoutes from "./trainerRoutes";
+import theoryRoutes from "./theoryRoutes";
+import SchoolOwnerLayout from "../pages/SchoolOwner/layout";
+import AdminLayout from "../pages/Administrator/Layout";
 
 const router = createBrowserRouter([
   // ----------------------- public routes --------------------------------
@@ -78,16 +82,16 @@ const router = createBrowserRouter([
     children: [
       {
         element: <Layout />,
-        children: studentRoutes,
+        children: [...studentRoutes, ...theoryRoutes],
       },
     ],
   },
   {
     path: `/${Roles.TRAINER}/*`,
-    // element: <PrivateRoutes roles={[Roles.TRAINER]} />,
+    element: <PrivateRoutes roles={[Roles.TRAINER]} />,
     children: [
       {
-        // element: <Layout />,
+        element: <TrainerLayout />,
         children: trainerRoutes,
       },
     ],
@@ -97,7 +101,7 @@ const router = createBrowserRouter([
     element: <PrivateRoutes roles={[Roles.SCHOOL_MANAGER]} />,
     children: [
       {
-        // element: <Layout />,
+        element: <SchoolOwnerLayout />,
         children: schoolManagerRoutes,
       },
     ],
@@ -107,7 +111,7 @@ const router = createBrowserRouter([
     element: <PrivateRoutes roles={[Roles.ADMIN]} />,
     children: [
       {
-        // element: <Layout />,
+        element: <AdminLayout />,
         children: adminRoutes,
       },
     ],

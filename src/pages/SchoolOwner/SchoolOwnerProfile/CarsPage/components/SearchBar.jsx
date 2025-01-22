@@ -1,0 +1,34 @@
+import React from 'react';
+
+const SearchBar = ({ searchQuery, setSearchQuery, statusFilter, setStatusFilter }) => {
+  const statuses = ['all', 'available', 'in use'];
+
+  return (
+    <div className="flex flex-col sm:flex-row gap-4 w-full max-w-7xl mx-auto">
+      <div className="flex-1">
+        <input
+          type="text"
+          placeholder="Search by car model, plate number..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-customGreen focus:border-transparent"
+        />
+      </div>
+      <div className="w-full sm:w-48">
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-customGreen focus:border-transparent"
+        >
+          {statuses.map((status) => (
+            <option key={status} value={status}>
+              {status === 'all' ? 'All Status' : status.charAt(0).toUpperCase() + status.slice(1)}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  );
+};
+
+export default SearchBar;

@@ -6,14 +6,7 @@ import img3 from "../../../../assets/BookingAndScheduling/type/images/practial.j
 import img4 from "../../../../assets/BookingAndScheduling/type/images/revision.png";
 
 export const lessons = [
-    {
-      title: "Theoretical Lesson",
-      description: "Theoretical lesson focuses on understanding driving signs and rules of the road through comprehensive classroom instruction.",
-      image: img2,
-      icon: SchoolIcon,
-      price: "75",
-      type: "theoretical"
-    },
+    
     {
       title: "Practical Lesson",
       description: "Hands-on driving experience to master vehicle control, road safety, and real-world driving scenarios.",
