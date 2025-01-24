@@ -1,463 +1,289 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { 
-  Box, 
-  Typography, 
-  Grid, 
-  Card, 
-  Button, 
+import React from "react";
+import {
+  Box,
   Container,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Dialog,
-  DialogTitle,
-  DialogContent
-} from '@mui/material';
-import { 
-  MenuBook, 
-  Assessment,
-  CheckCircleOutline,
-  LibraryBooks,
-  QuizOutlined,
-  PictureAsPdf,
-  RemoveRedEye
-} from '@mui/icons-material';
-
-import WarningSigns from '../../TrafficSigns/constants/WarningSigns';
-import GuidanceSigns from "../../TrafficSigns/constants/GuidanceSign";
-import InquirySigns from "../../TrafficSigns/constants/InquirySigns";
-import RoadSurfaceSigns from "../../TrafficSigns/constants/Signspaintedontheroadsurface";
-import TrafficLightsSigns from "../../TrafficSigns/constants/TrafficlightsandlanecontrolSigns";
-import HelpingSigns from "../../TrafficSigns/constants/HelpingSigns";
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  Button,
+  Avatar,
+  Chip,
+  LinearProgress,
+} from "@mui/material";
+import {
+  School,
+  MenuBook,
+  DateRange,
+  AccessTime,
+  DirectionsCar,
+  Chat,
+  Settings,
+  Assignment,
+  EmojiEvents,
+  ArrowForward,
+} from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const WelcomePage = () => {
   const navigate = useNavigate();
-  const [openPdfDialog, setOpenPdfDialog] = useState(false);
-  const [selectedPdf, setSelectedPdf] = useState(null);
-  const [openSignsDialog, setOpenSignsDialog] = useState(false);
-  const [selectedSignCategory, setSelectedSignCategory] = useState(null);
 
-  const studyMaterials = [
+  // Static flags (replace with actual data later)
+  const studentName = "Ahmad";
+  const theoreticalExamStatus = "Passed"; // "Not Attempted" | "Failed" | "Passed"
+  const hasBookedTrainer = true;
+  const successRate = 95;
+
+  // Mock next lesson data
+  const nextLesson = {
+    date: "2024-02-20",
+    time: "14:30",
+    car: {
+      name: "Toyota Camry",
+      avatar: "https://example.com/car-avatar.jpg",
+    },
+    trainer: "John Doe",
+  };
+
+  const platformServices = [
     {
-      icon: <LibraryBooks />,
-      title: 'Road Signs Guide',
-      description: 'Comprehensive collection of road signs and their meanings'
+      title: "Theory Tests",
+      icon: <School sx={{ color: "#2196F3" }} />,
+      path: "/student/theory",
+      description:
+        "Practice tests and quizzes to prepare for your theoretical exam",
+      requiresTheoryPass: false,
     },
     {
-      icon: <QuizOutlined />,
-      title: 'Practice Questions',
-      description: 'Extensive set of theory test practice questions'
+      title: "Study Material",
+      icon: <MenuBook sx={{ color: "#4CAF50" }} />,
+      path: "/student/material",
+      description:
+        "Access comprehensive learning resources and road safety guides",
+      requiresTheoryPass: false,
     },
     {
-      icon: <CheckCircleOutline />,
-      title: 'Exam Preparation',
-      description: 'Strategies and tips for passing your driving theory test'
-    }
+      title: "Book Lessons",
+      icon: <DateRange sx={{ color: "#FF9800" }} />,
+      path: "/student/new-booking",
+      description: "Schedule practical driving lessons with qualified trainers",
+      requiresTheoryPass: true,
+    },
+    {
+      title: "Chat with Trainer",
+      icon: <Chat sx={{ color: "#9C27B0" }} />,
+      path: "/student/messages",
+      description: "Direct communication with your driving instructor",
+      requiresTheoryPass: false,
+    },
+    {
+      title: "My Lessons",
+      icon: <Assignment sx={{ color: "#F44336" }} />,
+      path: "/student/lessons",
+      description: "Track your progress and view upcoming lesson schedule",
+      requiresTheoryPass: true,
+    },
+    {
+      title: "Settings",
+      icon: <Settings sx={{ color: "#607D8B" }} />,
+      path: "/student/settings",
+      description: "Manage your account preferences and profile information",
+      requiresTheoryPass: false,
+    },
   ];
-
-  const pdfResources = [
-    {
-      icon: <PictureAsPdf />,
-      title: 'Road Signs Handbook',
-      description: 'Comprehensive guide to road signs',
-      pdfUrl: '/pdfs/signs.pdf'
-    },
-    {
-      icon: <PictureAsPdf />,
-      title: 'Driving Theory Manual',
-      description: 'Complete theory test preparation guide',
-      pdfUrl: '/pdfs/Teoria.pdf'
-    }
-  ];
-
-  const signCategories = [
-    {
-      title: 'Warning Signs',
-      signs: WarningSigns,
-      color: 'bg-yellow-100'
-    },
-    {
-      title: 'Guidance Signs',
-      signs: GuidanceSigns,
-      color: 'bg-blue-100'
-    },
-    {
-      title: 'Inquiry Signs',
-      signs: InquirySigns,
-      color: 'bg-green-100'
-    },
-    {
-      title: 'Road Surface Signs',
-      signs: RoadSurfaceSigns,
-      color: 'bg-purple-100'
-    },
-    {
-      title: 'Traffic Lights Signs',
-      signs: TrafficLightsSigns,
-      color: 'bg-red-100'
-    },
-    {
-      title: 'Helping Signs',
-      signs: HelpingSigns,
-      color: 'bg-indigo-100'
-    }
-  ];
-
-  const handleOpenPdf = (pdf) => {
-    setSelectedPdf(pdf);
-    setOpenPdfDialog(true);
-  };
-
-  const handleClosePdfDialog = () => {
-    setOpenPdfDialog(false);
-    setSelectedPdf(null);
-  };
-
-  const handleOpenSignsDialog = (category) => {
-    setSelectedSignCategory(category);
-    setOpenSignsDialog(true);
-  };
-
-  const handleCloseSignsDialog = () => {
-    setOpenSignsDialog(false);
-    setSelectedSignCategory(null);
-  };
 
   return (
-    <div className="flex h-screen overflow-y-auto bg-gray-100">
-      <Container maxWidth="lg" className="py-12 px-4">
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={8}>
-            <Card
-              sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                p: 4,
-                borderRadius: 3,
-                boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
-                background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'
-              }}
-            >
-              <Typography 
-                variant="h5" 
-                sx={{ 
-                  mb: 3, 
-                  fontWeight: 700,
-                  color: 'primary.main',
-                  borderBottom: '2px solid',
-                  borderColor: 'primary.main',
-                  pb: 1
-                }}
-              >
-                Study Materials
-              </Typography>
+    <div className="overflow-y-auto">
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        {/* Welcome Header */}
+        <Typography
+          variant="h3"
+          gutterBottom
+          sx={{ fontWeight: "bold", mb: 4 }}
+        >
+          Welcome back, {studentName}! 👋
+        </Typography>
 
-              <List>
-                {studyMaterials.map((material, index) => (
-                  <ListItem 
-                    key={index}
-                    sx={{
-                      mb: 2,
-                      borderRadius: 2,
-                      transition: 'all 0.3s ease',
-                      '&:hover': {
-                        transform: 'translateX(10px)',
-                        backgroundColor: 'rgba(0,0,0,0.05)'
-                      }
-                    }}
+        {/* Progress Status */}
+        <Card sx={{ mb: 4, backgroundColor: "#f5f5f5" }}>
+          <CardContent>
+            {theoreticalExamStatus === "Passed" ? (
+              <Box>
+                <Typography
+                  variant="h5"
+                  sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                >
+                  <EmojiEvents sx={{ color: "#FFD700" }} />
+                  Congratulations! You've passed the theoretical exam
+                </Typography>
+                {!hasBookedTrainer && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    endIcon={<ArrowForward />}
+                    onClick={() => navigate("/student/new-booking")}
+                    sx={{ mt: 2 }}
                   >
-                    <ListItemIcon>
-                      <Box 
-                        sx={{
-                          backgroundColor: 'primary.light',
-                          color: 'primary.main',
-                          borderRadius: '50%',
-                          p: 1,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}
-                      >
-                        {material.icon}
-                      </Box>
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={material.title}
-                      secondary={material.description}
-                      primaryTypographyProps={{
-                        fontWeight: 600,
-                        color: 'text.primary'
-                      }}
-                      secondaryTypographyProps={{
-                        color: 'text.secondary'
-                      }}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            </Card>
-          </Grid>
+                    Book Your First Practical Lesson
+                  </Button>
+                )}
+              </Box>
+            ) : (
+              <Box>
+                <Typography variant="h6">Theoretical Exam Progress</Typography>
+                <Typography variant="body1" sx={{ mt: 1, mb: 2 }}>
+                  Current Success Rate: {successRate}%
+                </Typography>
+                <LinearProgress
+                  variant="determinate"
+                  value={successRate}
+                  sx={{
+                    height: 10,
+                    borderRadius: 5,
+                    mb: 2,
+                    backgroundColor: "#e0e0e0",
+                    "& .MuiLinearProgress-bar": {
+                      backgroundColor:
+                        successRate >= 80 ? "#4caf50" : "#ff9800",
+                      borderRadius: 5,
+                    },
+                  }}
+                />
+                {successRate >= 90 ? (
+                  <Box>
+                    <Typography
+                      variant="body1"
+                      color="success.main"
+                      sx={{ mb: 2 }}
+                    >
+                      🎉 Great job! You're ready to take the official
+                      theoretical exam.
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      color="success"
+                      onClick={() => navigate("/student/theory")}
+                      sx={{ mt: 2 }}
+                    >
+                      Request Official Exam
+                    </Button>
+                  </Box>
+                ) : (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => navigate("/student/theory")}
+                    sx={{ mt: 2 }}
+                  >
+                    Continue Studying
+                  </Button>
+                )}
+              </Box>
+            )}
+          </CardContent>
+        </Card>
 
-          <Grid item xs={12} md={4}>
-            <Card
-              sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                p: 4,
-                borderRadius: 3,
-                boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
-                background: 'linear-gradient(135deg, #2196F3 0%, #1976D2 100%)',
-                color: 'white'
-              }}
-            >
-              <MenuBook sx={{ fontSize: 80, mb: 3, opacity: 0.7 }} />
-              <Typography 
-                variant="h5" 
-                sx={{ 
-                  mb: 3, 
-                  fontWeight: 700,
-                  textAlign: 'center'
-                }}
-              >
-                Ready to Practice?
+        {/* Next Lesson Card (show only if passed exam and has booked trainer) */}
+        {theoreticalExamStatus === "Passed" && hasBookedTrainer && (
+          <Card sx={{ mb: 4, backgroundColor: "#e8f5e9" }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Next Practical Lesson
               </Typography>
-              <Button
-                variant="contained"
-                color="secondary"
-                fullWidth
-                onClick={() => navigate('/student/theory')}
-                startIcon={<Assessment />}
+              <Grid container spacing={2} alignItems="center">
+                <Grid item>
+                  <Avatar
+                    src={nextLesson.car.avatar}
+                    alt={nextLesson.car.name}
+                    sx={{ width: 60, height: 60 }}
+                  />
+                </Grid>
+                <Grid item xs>
+                  <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+                    <Chip
+                      icon={<DateRange />}
+                      label={new Date(nextLesson.date).toLocaleDateString()}
+                    />
+                    <Chip icon={<AccessTime />} label={nextLesson.time} />
+                    <Chip
+                      icon={<DirectionsCar />}
+                      label={nextLesson.car.name}
+                    />
+                  </Box>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Platform Services Grid */}
+        <Typography variant="h5" gutterBottom sx={{ mt: 4, mb: 3 }}>
+          What would you like to do?
+        </Typography>
+        <Grid container spacing={3}>
+          {platformServices.map((service, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Card
                 sx={{
-                  py: 2,
-                  fontSize: '1rem',
-                  fontWeight: 600,
-                  borderRadius: 2,
-                  transition: 'all 0.3s ease',
-                  '&:hover': {
-                    transform: 'scale(1.05)',
-                    boxShadow: '0 10px 20px rgba(0,0,0,0.2)'
+                  cursor:
+                    service.requiresTheoryPass &&
+                    theoreticalExamStatus !== "Passed"
+                      ? "not-allowed"
+                      : "pointer",
+                  transition: "transform 0.2s",
+                  "&:hover": {
+                    transform:
+                      service.requiresTheoryPass &&
+                      theoreticalExamStatus !== "Passed"
+                        ? "none"
+                        : "translateY(-4px)",
+                  },
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  opacity:
+                    service.requiresTheoryPass &&
+                    theoreticalExamStatus !== "Passed"
+                      ? 0.6
+                      : 1,
+                }}
+                onClick={() => {
+                  if (
+                    !service.requiresTheoryPass ||
+                    theoreticalExamStatus === "Passed"
+                  ) {
+                    navigate(service.path);
                   }
                 }}
               >
-                Start Theory Practice
-              </Button>
-            </Card>
-          </Grid>
-        </Grid>
-
-        <Box 
-          sx={{ 
-            mt: 4, 
-            display: 'flex', 
-            justifyContent: 'center' 
-          }}
-        >
-          <Card
-            sx={{
-              width: '100%',
-              p: 3,
-              borderRadius: 3,
-              background: 'linear-gradient(135deg, #4CAF50 0%, #388E3C 100%)',
-              color: 'white',
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
-            <Typography 
-              variant="h6" 
-              sx={{ 
-                fontWeight: 600, 
-                mb: 2,
-                textAlign: 'center'
-              }}
-            >
-              Additional Learning Resources
-            </Typography>
-            <Grid container spacing={2}>
-              {/* PDF Resources */}
-              {pdfResources.map((resource, index) => (
-                <Grid item xs={12} sm={6} key={index}>
-                  <Card
-                    sx={{
-                      background: 'rgba(255,255,255,0.2)',
-                      color: 'white',
-                      p: 2,
-                      display: 'flex',
-                      alignItems: 'center',
-                      transition: 'transform 0.3s ease',
-                      '&:hover': {
-                        transform: 'scale(1.05)',
-                        background: 'rgba(255,255,255,0.3)'
-                      },
-                      cursor: 'pointer'
-                    }}
-                    onClick={() => handleOpenPdf(resource)}
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Box
+                    sx={{ display: "flex", flexDirection: "column", gap: 1 }}
                   >
-                    <Box 
-                      sx={{
-                        backgroundColor: 'rgba(255,255,255,0.3)',
-                        borderRadius: '50%',
-                        p: 1,
-                        mr: 2,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}
-                    >
-                      {resource.icon}
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                      {service.icon}
+                      <Typography variant="h6">{service.title}</Typography>
                     </Box>
-                    <Box>
-                      <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                        {resource.title}
-                      </Typography>
-                      <Typography variant="body2">
-                        {resource.description}
-                      </Typography>
-                    </Box>
-                  </Card>
-                </Grid>
-              ))}
-
-              {/* Signs Viewer */}
-              <Grid item xs={12} sm={6}>
-                <Card
-                  sx={{
-                    background: 'rgba(255,255,255,0.2)',
-                    color: 'white',
-                    p: 2,
-                    display: 'flex',
-                    alignItems: 'center',
-                    transition: 'transform 0.3s ease',
-                    '&:hover': {
-                      transform: 'scale(1.05)',
-                      background: 'rgba(255,255,255,0.3)'
-                    },
-                    cursor: 'pointer'
-                  }}
-                  onClick={() => setOpenSignsDialog(true)}
-                >
-                  <Box 
-                    sx={{
-                      backgroundColor: 'rgba(255,255,255,0.3)',
-                      borderRadius: '50%',
-                      p: 1,
-                      mr: 2,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                  >
-                    <RemoveRedEye />
-                  </Box>
-                  <Box>
-                    <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                      View Road Signs
+                    <Typography variant="body2" color="text.secondary">
+                      {service.description}
                     </Typography>
-                    <Typography variant="body2">
-                      Explore different categories of road signs
-                    </Typography>
-                  </Box>
-                </Card>
-              </Grid>
-            </Grid> 
-          </Card>
-        </Box>
-      </Container>
-
-      {/* PDF Viewer Dialog */}
-      <Dialog 
-        open={openPdfDialog} 
-        onClose={handleClosePdfDialog}
-        maxWidth="md"
-        fullWidth
-      >
-        <DialogTitle>{selectedPdf?.title}</DialogTitle>
-        <DialogContent>
-          {selectedPdf && (
-            <iframe
-              src={selectedPdf.pdfUrl}
-              width="100%"
-              height="500px"
-              title={selectedPdf.title}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
-
-      {/* Signs Viewer Dialog */}
-      <Dialog 
-        open={openSignsDialog} 
-        onClose={handleCloseSignsDialog}
-        maxWidth="xl"
-        fullWidth
-      >
-        <DialogTitle>Road Signs Categories</DialogTitle>
-        <DialogContent>
-          <Grid container spacing={3}>
-            {signCategories.map((category, index) => (
-              <Grid item xs={12} key={index}>
-                <Card 
-                  className={`${category.color} p-4 mb-4`}
-                >
-                  <Typography 
-                    variant="h5" 
-                    className="mb-3 text-center" 
-                    sx={{
-                      fontWeight: 700,
-                      background: 'linear-gradient(45deg, #4CAF50 30%, #81C784 90%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      textTransform: 'uppercase',
-                      letterSpacing: '2px',
-                      borderBottom: '3px solid',
-                      borderColor: 'green.600',
-                      paddingBottom: '10px'
-                    }}
-                  >
-                    {category.title}
-                  </Typography>
-                  <Grid container spacing={2}>
-                    {category.signs[0].signs.map((sign, signIndex) => (
-                      <Grid item xs={6} sm={4} md={3} key={signIndex}>
-                        <Card 
-                          className="p-3 text-center hover:shadow-lg transition-shadow"
-                          sx={{
-                            display: 'flex', 
-                            flexDirection: 'column', 
-                            alignItems: 'center', 
-                            justifyContent: 'space-between',
-                            height: '100%'
-                          }}
+                    {service.requiresTheoryPass &&
+                      theoreticalExamStatus !== "Passed" && (
+                        <Typography
+                          variant="caption"
+                          color="error"
+                          sx={{ mt: 1 }}
                         >
-                          <img 
-                            src={sign.img} 
-                            alt={sign.label} 
-                            className="mx-auto h-24 object-contain mb-2"
-                          />
-                          <Box>
-                            <Typography variant="subtitle1" fontWeight="bold">
-                              {sign.label}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                              {sign.description || 'No description available'}
-                            </Typography>
-                          </Box>
-                        </Card>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </DialogContent>
-      </Dialog>
+                          Pass theoretical exam to unlock
+                        </Typography>
+                      )}
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
     </div>
   );
 };
