@@ -1,12 +1,7 @@
 import {
-  faEnvelope,
-  faCar,
-  faPersonChalkboard,
   faMessage,
   faSchool,
-  faUserPlus,  
-  faSchoolCircleCheck,
-  faUserGroup,
+  faSchoolCircleCheck
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { useLocation } from "react-router-dom";
