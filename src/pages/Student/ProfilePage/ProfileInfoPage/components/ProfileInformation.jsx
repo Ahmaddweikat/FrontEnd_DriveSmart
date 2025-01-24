@@ -46,6 +46,38 @@ const ProfileInformation = () => {
             </div>
           </section>
 
+          {/* New Driving Examinations Status Section */}
+          <section className="mb-8 border rounded-lg p-6">
+            <h3 className="text-xl font-semibold">
+              Driving Examinations Status
+            </h3>
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <InfoField
+                label="Theoretical Exam Status"
+                value={user.theoreticalExamStatus || "Not Attempted"}
+                // Add a color indicator based on status
+                className={`${
+                  user.theoreticalExamStatus === "Passed"
+                    ? "text-green-600"
+                    : user.theoreticalExamStatus === "Failed"
+                    ? "text-red-600"
+                    : "text-gray-600"
+                }`}
+              />
+              <InfoField
+                label="Practical Exam Status"
+                value={user.practicalExamStatus || "Not Attempted"}
+                className={`${
+                  user.practicalExamStatus === "Passed"
+                    ? "text-green-600"
+                    : user.practicalExamStatus === "Failed"
+                    ? "text-red-600"
+                    : "text-gray-600"
+                }`}
+              />
+            </div>
+          </section>
+
           {/* Address Section with Border */}
           <section className="border rounded-lg p-6">
             <h3 className="text-xl font-semibold">Address</h3>
