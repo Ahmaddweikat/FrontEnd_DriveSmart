@@ -66,9 +66,9 @@ export const useConversations = () => {
         participantsInfo: {
           [currentUserId]: {
             name: currentUser.name,
-            profilePicture: currentUser.profilePicture,
+            profilePicture: currentUser?.profilePicture,
           },
-          [user.id]: { name: user.name, profilePicture: user.profilePicture },
+          [user.id]: { name: user?.name, profilePicture: user?.profilePicture },
         },
         lastMessageAt: serverTimestamp(),
         createdAt: serverTimestamp(),

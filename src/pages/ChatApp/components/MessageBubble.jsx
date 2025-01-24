@@ -1,12 +1,12 @@
 import React from "react";
+import useGetProfile from "../../../hooks/useGetProfile";
 import useAuthStore from "../../../store/auth.store";
-import useGetStudentProfile from "../../Student/ProfilePage/ProfileInfoPage/hooks/useGetStudentProfile";
 import getOtherParticipantInfo from "../utils/getOtherParticipantInfo";
 
 const MessageBubble = ({ msg, currentChat }) => {
   const { user } = useAuthStore();
   const isSender = msg.senderId === user.id; // Check if the message is from the current user
-  const { data } = useGetStudentProfile();
+  const { data } = useGetProfile();
   const otherUser = getOtherParticipantInfo(
     currentChat.participantsInfo,
     user.id
@@ -16,7 +16,7 @@ const MessageBubble = ({ msg, currentChat }) => {
     <div className={`mb-4 flex ${isSender ? "justify-end" : ""}`}>
       {!isSender && (
         <img
-          src={otherUser.profilePicture}
+          src={otherUser?.profilePicture}
           alt="Receiver Avatar"
           className="w-8 h-8 rounded-full mr-2 border-2 border-gray-200 shadow-sm object-cover"
         />
@@ -51,7 +51,7 @@ const MessageBubble = ({ msg, currentChat }) => {
 
       {isSender && (
         <img
-          src={data.profilePicture}
+          src={data?.profilePicture}
           alt="Your Avatar"
           className="w-8 h-8 rounded-full ml-2 border-2 border-gray-200 shadow-sm object-cover"
         />
