@@ -5,6 +5,7 @@ import useSidebarState from "../../../hooks/useSidebarState";
 import Breadcrumb from "./components/Breadcrumb";
 import TopBar from "./components/TopBar";
 import SideBar from "./components/SideBar";
+import InAppNotification from "../../../components/InAppNotification";
 
 const TrainerLayout = () => {
   const { isExpanded, toggleSidebar } = useSidebarState();
@@ -30,6 +31,7 @@ const TrainerLayout = () => {
         />
         <Breadcrumb />
         <Outlet />
+        <InAppNotification />
       </div>
     </div>
   );

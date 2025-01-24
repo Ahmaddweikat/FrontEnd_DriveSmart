@@ -1,12 +1,10 @@
 import {
-  faEnvelope,
-  faCar,
-  faPersonChalkboard,
-  faMessage,
-  faSchool,
-  faChalkboard,
-  faPersonCircleCheck,
   faBullhorn,
+  faCar,
+  faEnvelope,
+  faMessage,
+  faPersonChalkboard,
+  faSchool,
   faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
@@ -32,13 +30,13 @@ const sidebarRoutes = [
   },
   {
     icon: faPersonChalkboard,
-    label:"Trainers",
-    path:"trainers"
+    label: "Trainers",
+    path: "trainers",
   },
   {
     icon: faCar,
-    label:"Cars",
-    path:"cars"
+    label: "Cars",
+    path: "cars",
   },
   {
     icon: faUserGroup,
@@ -54,8 +52,9 @@ const sidebarRoutes = [
 
 const SideBar = ({ isExpanded, activePage, setActivePage }) => {
   const location = useLocation();
-  const pathSegments = location.pathname.split('/');
-  const currentPath = pathSegments.length > 2 ? pathSegments[2] : pathSegments[1];
+  const pathSegments = location.pathname.split("/");
+  const currentPath =
+    pathSegments.length > 2 ? pathSegments[2] : pathSegments[1];
 
   return (
     <div className="flex h-screen overflow-hidden">

@@ -147,7 +147,7 @@ const useTrainers = () => {
         setLoading(true);
         setTimeout(() => {
             setLoading(false);
-        }, 1000);
+        }, 0);
     }, []);
 
     const filterTrainers = (searchTerm, statusFilter) => {

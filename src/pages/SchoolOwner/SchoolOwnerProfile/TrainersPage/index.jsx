@@ -31,8 +31,7 @@ const TrainersPage = () => {
         setCurrentPage(value);
     };
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+
 
     return (
         <div className="h-full overflow-y-auto bg-gray-100">
