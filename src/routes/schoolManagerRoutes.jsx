@@ -10,6 +10,14 @@ import Home from "../pages/SchoolOwner/HomePage";
 
 const schoolManagerRoutes = [
   { index: true, element: <Home /> },
+  {
+    path: "profile",
+    element: <h1 className="text-center"> School Manager Profile </h1>,
+  },
+  {
+    path: "settings",
+    element: <h1 className="text-center"> School Manager Settings </h1>,
+  },
   { path: "school", element: <School /> },
   { path: "requests", element: <RegistrationRequests /> },
   { path: "invitetrainers", element: <InvitePage /> },

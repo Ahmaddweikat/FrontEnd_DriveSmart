@@ -3,7 +3,7 @@ import ChatApp from "../pages/ChatApp/ChatApp";
 import School from "../pages/SchoolPage";
 import NewBookingPage from "../pages/Student/BookingandScheduling/NewBookingPage";
 import ProfileInfoPage from "../pages/Student/ProfilePage/ProfileInfoPage/ProfileInfoPage";
-import QuizPage from "../pages/Student/ProfilePage/QuizPage";
+// import QuizPage from "../pages/Student/ProfilePage/QuizPage";
 import TestPage from "../pages/Student/ProfilePage/TestPage/TestPage";
 import QuizApp from "../pages/Student/QuestionsForm/components/QuizApp";
 import QuizHistory from "../pages/Student/QuestionsForm/components/QuizHistory";
@@ -12,6 +12,7 @@ import StudyMaterialPage from "../pages/StudyMaterialPage";
 import Theory from "../pages/TheoryPage";
 import LessonsPage from "./../pages/Student/ProfilePage/LessonsPage/LessonsPage";
 import Settings from "./../pages/Student/ProfilePage/SettingsPage/Settings";
+
 const studentRoutes = [
   { index: true, element: <WelcomePage /> },
   { path: "lessons", element: <LessonsPage /> },
@@ -19,7 +20,7 @@ const studentRoutes = [
   { path: "settings", element: <Settings /> },
   { path: "test", element: <TestPage /> },
   { path: "new-booking", element: <NewBookingPage /> },
-  { path: "Quizzes", element: <QuizPage /> },
+  // { path: "Quizzes", element: <QuizPage /> },
   { path: "messages", element: <ChatApp /> },
   { path: "school", element: <School /> },
   {
