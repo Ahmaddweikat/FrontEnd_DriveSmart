@@ -21,6 +21,19 @@ const statusColors = {
   },
 };
 
+const formatTime = (timeString) => {
+  const [hours, minutes] = timeString.split(":");
+  const date = new Date();
+  date.setHours(parseInt(hours));
+  date.setMinutes(parseInt(minutes));
+
+  return date.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+};
+
 const BookingRequestStatus = ({ bookingRequest }) => {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const { mutate: cancelBooking } = useCancelBooking();
@@ -99,7 +112,7 @@ const BookingRequestStatus = ({ bookingRequest }) => {
               </Typography>
               <AccessTimeIcon color="action" />
               <Typography>
-                {startTime} - {days}
+                {formatTime(startTime)} - {days}
               </Typography>
             </Stack>
 

@@ -36,7 +36,7 @@ import { useCreateBooking, useGetBookings } from "./hooks/ussBookings";
 import {
   useCheckGoogleConnection,
   useDisconnectGoogle,
-} from "./hooks/useGoogleConnection";
+} from "../../../hooks/useGoogleConnection";
 
 const NewBookingPage = () => {
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
@@ -66,7 +66,7 @@ const NewBookingPage = () => {
     }));
   };
 
-  const {
+  let {
     filters,
     trainers,
     cars,
@@ -75,7 +75,6 @@ const NewBookingPage = () => {
     handleClearFilter,
   } = useAvailabilityFilters(availabilities);
 
-  const [isGoogleConnected, setIsGoogleConnected] = useState(false);
   const { data: googleConnection } = useCheckGoogleConnection(user.id);
   const { mutate: disconnectGoogle } = useDisconnectGoogle();
 
@@ -116,6 +115,19 @@ const NewBookingPage = () => {
         setErrorMessage(error?.response?.data?.message);
         setErrorModalOpen(true);
       },
+    });
+  };
+
+  const formatTime = (timeString) => {
+    const [hours, minutes] = timeString.split(":");
+    const date = new Date();
+    date.setHours(parseInt(hours));
+    date.setMinutes(parseInt(minutes));
+
+    return date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
     });
   };
 
@@ -331,7 +343,7 @@ const NewBookingPage = () => {
                         "17:00",
                       ].map((time) => (
                         <MenuItem key={time} value={time}>
-                          {time}
+                          {formatTime(time)}
                         </MenuItem>
                       ))}
                     </Select>
@@ -339,7 +351,7 @@ const NewBookingPage = () => {
                 </Stack>
 
                 {/* Table View */}
-                <Box sx={{ height: "calc(100vh - 450px)", overflow: "auto" }}>
+                <Box sx={{ height: "calc(100vh - 60vh)", overflow: "auto" }}>
                   <TableContainer>
                     <Table sx={{ minWidth: 650 }}>
                       <TableHead>
@@ -382,7 +394,9 @@ const NewBookingPage = () => {
                                 ))}
                               </Stack>
                             </TableCell>
-                            <TableCell>{availability.startTime}</TableCell>
+                            <TableCell>
+                              {formatTime(availability.startTime)}
+                            </TableCell>
                             <TableCell>
                               {availability.cars.length === 1 ? (
                                 <Stack
@@ -480,7 +494,11 @@ const NewBookingPage = () => {
         title="Confirm Booking"
         message={
           selectedBooking
-            ? `Are you sure you want to book a session with ${selectedBooking.trainerName} at ${selectedBooking.startTime} on ${selectedBooking.days}?`
+            ? `Are you sure you want to book a session with ${
+                selectedBooking.trainerName
+              } at ${formatTime(selectedBooking.startTime)} on ${
+                selectedBooking.days
+              }?`
             : ""
         }
         onConfirm={handleConfirmBooking}
