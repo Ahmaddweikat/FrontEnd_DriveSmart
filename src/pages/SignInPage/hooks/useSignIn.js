@@ -12,7 +12,6 @@ const useSignIn = () => {
   const signInMutation = useMutation({
     mutationFn: async (credentials) => {
       const fcmToken = await getFCMToken();
-      console.log("🚀 ~ mutationFn: ~ fcmToken:", fcmToken);
       return apiClient.post({ ...credentials, fcmToken });
     },
 
