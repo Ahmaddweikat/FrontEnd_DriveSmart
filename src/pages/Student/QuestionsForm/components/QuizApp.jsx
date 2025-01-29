@@ -3,13 +3,17 @@ import { useQuizState } from "../hooks/useQuizState";
 import { useTimer } from "../hooks/useTimer";
 import { QuestionDisplay } from "./QuestionDisplay";
 import { NavigationButtons } from "./NavigationButtons";
-import  QuizHistory  from "./QuizHistory";
+import QuizHistory from "./QuizHistory";
 import { questions as quizQuestions } from "../data/Form1";
 // import { questions as quizQuestions } from "../data/Form2";
 
-const QuizApp = ({ questions = quizQuestions, title = "Form1", timeLimit = "40 minutes" }) => {
+const QuizApp = ({
+  questions = quizQuestions,
+  title = "Form1",
+  timeLimit = "40 minutes",
+}) => {
   // Parse time limit from string (e.g., "40 minutes")
-  const parsedTimeLimit = parseInt(timeLimit.split(' ')[0], 10);
+  const parsedTimeLimit = parseInt(timeLimit.split(" ")[0], 10);
 
   const {
     currentQuestionIndex,
@@ -35,12 +39,12 @@ const QuizApp = ({ questions = quizQuestions, title = "Form1", timeLimit = "40 m
   const [startTime, setStartTime] = useState(null);
 
   const hasAttempts = () => {
-    const history = JSON.parse(localStorage.getItem('quizHistory') || '{}');
+    const history = JSON.parse(localStorage.getItem("quizHistory") || "{}");
     return (history[title] || []).length > 0;
   };
 
   const getLastAttempt = () => {
-    const history = JSON.parse(localStorage.getItem('quizHistory') || '{}');
+    const history = JSON.parse(localStorage.getItem("quizHistory") || "{}");
     const attempts = history[title] || [];
     return attempts[0] || null;
   };
@@ -66,21 +70,21 @@ const QuizApp = ({ questions = quizQuestions, title = "Form1", timeLimit = "40 m
   const handleFinishWithTimer = useCallback(() => {
     stopTimer();
     handleFinishQuiz();
-    
+
     // Save quiz attempt to history
     const endTime = new Date();
     const timeSpent = startTime ? Math.floor((endTime - startTime) / 1000) : 0;
     const formattedTime = formatTime(timeSpent);
-    
-    const quizHistory = JSON.parse(localStorage.getItem('quizHistory') || '{}');
-    
+
+    const quizHistory = JSON.parse(localStorage.getItem("quizHistory") || "{}");
+
     // Calculate correct answers and score
     const correctAnswers = answersState.filter(
       (q, idx) => q.selectedOption === questions[idx].correctAnswer
     ).length;
     const calculatedScore = (correctAnswers / questions.length) * 100;
     const isPassed = calculatedScore >= 84;
-    
+
     const newAttempt = {
       formName: title,
       date: new Date().toISOString(),
@@ -88,24 +92,22 @@ const QuizApp = ({ questions = quizQuestions, title = "Form1", timeLimit = "40 m
       correctAnswers: correctAnswers,
       totalQuestions: questions.length,
       timeSpent: formattedTime,
-      passed: isPassed
+      passed: isPassed,
     };
 
-    quizHistory[title] = [
-      ...(quizHistory[title] || []),
-      newAttempt
-    ].sort((a, b) => new Date(b.date) - new Date(a.date));
+    quizHistory[title] = [...(quizHistory[title] || []), newAttempt].sort(
+      (a, b) => new Date(b.date) - new Date(a.date)
+    );
 
-    localStorage.setItem('quizHistory', JSON.stringify(quizHistory));
+    localStorage.setItem("quizHistory", JSON.stringify(quizHistory));
 
     // Log results to console
-    console.log('Quiz Results:');
-    console.log('Form:', title);
-    console.log('Status:', isPassed ? 'PASSED' : 'FAILED');
-    console.log('Score:', Math.round(calculatedScore) + '%');
-    console.log('Correct Answers:', correctAnswers, 'out of', questions.length);
-    console.log('Time Spent:', formattedTime);
-    
+    console.log("Quiz Results:");
+    console.log("Form:", title);
+    console.log("Status:", isPassed ? "PASSED" : "FAILED");
+    console.log("Score:", Math.round(calculatedScore) + "%");
+    console.log("Correct Answers:", correctAnswers, "out of", questions.length);
+    console.log("Time Spent:", formattedTime);
   }, [stopTimer, handleFinishQuiz, answersState, questions, startTime]);
 
   const handleRestartWithTimer = useCallback(() => {
@@ -136,7 +138,9 @@ const QuizApp = ({ questions = quizQuestions, title = "Form1", timeLimit = "40 m
               <div className="w-20 h-20 bg-green-100 rounded-full mx-auto flex items-center justify-center mb-4">
                 <span className="text-4xl">📝</span>
               </div>
-              <h2 className="font-bold text-3xl text-green-600 mb-2">Ready to Start?</h2>
+              <h2 className="font-bold text-3xl text-green-600 mb-2">
+                Ready to Start?
+              </h2>
               <h3 className="text-xl text-gray-700 mb-4">{title}</h3>
               {hasAttempts() && (
                 <div className="mb-4 p-3 bg-blue-50 rounded-lg">
@@ -144,14 +148,19 @@ const QuizApp = ({ questions = quizQuestions, title = "Form1", timeLimit = "40 m
                     {(() => {
                       const lastAttempt = getLastAttempt();
                       if (lastAttempt) {
-                        return `Last attempt: ${lastAttempt.passed ? 'Passed' : 'Failed'} with ${Math.round(lastAttempt.score)}%`;
+                        return `Last attempt: ${
+                          lastAttempt.passed ? "Passed" : "Failed"
+                        } with ${Math.round(lastAttempt.score)}%`;
                       }
-                      return '';
+                      return "";
                     })()}
                   </p>
                 </div>
               )}
-              <p className="text-gray-600 mb-6">You have {parsedTimeLimit} minutes to complete all questions. Good luck!</p>
+              <p className="text-gray-600 mb-6">
+                You have {parsedTimeLimit} minutes to complete all questions.
+                Good luck!
+              </p>
               <div className="space-y-4">
                 <button
                   onClick={() => {
@@ -176,46 +185,10 @@ const QuizApp = ({ questions = quizQuestions, title = "Form1", timeLimit = "40 m
       )}
 
       {showHistory && (
-        <QuizHistory
-          formName={title}
-          onClose={() => setShowHistory(false)}
-        />
+        <QuizHistory formName={title} onClose={() => setShowHistory(false)} />
       )}
 
-      {/* Question Navigation */}
-      <div className="w-full bg-white/90 backdrop-blur-sm border-b border-gray-200">
-        <div className="max-w-full mx-auto px-2 py-1">
-          <div className="overflow-x-auto hide-scrollbar">
-            <div className="flex justify-between w-full">
-              {questions.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleCalendarClick(index)}
-                  className={`flex-1 h-10 rounded-lg transition-all duration-300 ease-in-out 
-                    ${index === currentQuestionIndex
-                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md ring-1 ring-blue-300 scale-105"
-                      : "bg-white text-gray-600 border border-blue-100 hover:border-blue-300 hover:text-blue-600 hover:shadow-sm hover:scale-105"
-                    } flex justify-center items-center font-medium`}
-                >
-                  <span className="text-sm">{index + 1}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <style jsx>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
-
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex justify-center items-center py-6">
+      <div className="flex justify-center items-center py-6">
         <div className="bg-white p-6 shadow-xl rounded-2xl w-full max-w-6xl flex mb-18 mx-4">
           {/* Main Content */}
           <div className="w-full p-0">
@@ -251,16 +224,18 @@ const QuizApp = ({ questions = quizQuestions, title = "Form1", timeLimit = "40 m
                 <div className="bg-white rounded-2xl p-8 max-w-lg w-full mx-4 transform animate-slideUp shadow-2xl border-2 border-green-200">
                   <div className="text-center">
                     <div
-                      className={`w-20 h-20 ${score >= 84 ? "bg-green-100" : "bg-red-100"
-                        } rounded-full mx-auto flex items-center justify-center mb-4`}
+                      className={`w-20 h-20 ${
+                        score >= 84 ? "bg-green-100" : "bg-red-100"
+                      } rounded-full mx-auto flex items-center justify-center mb-4`}
                     >
                       <span className="text-4xl">
                         {score >= 84 ? "🎉" : "😔"}
                       </span>
                     </div>
                     <h2
-                      className={`font-bold text-3xl ${score >= 84 ? "text-green-600" : "text-red-600"
-                        } mb-2`}
+                      className={`font-bold text-3xl ${
+                        score >= 84 ? "text-green-600" : "text-red-600"
+                      } mb-2`}
                     >
                       {title} - {score >= 84 ? "Pass!" : "Fail"}
                     </h2>
@@ -271,8 +246,9 @@ const QuizApp = ({ questions = quizQuestions, title = "Form1", timeLimit = "40 m
                     </p>
                     <div className="bg-gray-50 rounded-xl p-4 mb-8">
                       <p
-                        className={`font-bold text-2xl ${score >= 84 ? "text-green-600" : "text-red-600"
-                          }`}
+                        className={`font-bold text-2xl ${
+                          score >= 84 ? "text-green-600" : "text-red-600"
+                        }`}
                       >
                         {score.toFixed(0)}%
                       </p>
@@ -336,12 +312,14 @@ const QuizApp = ({ questions = quizQuestions, title = "Form1", timeLimit = "40 m
                       className="sr-only"
                     />
                     <div
-                      className={`block w-14 h-8 rounded-full transition duration-300 ${isAutoMove ? "bg-green-600" : "bg-gray-300"
-                        }`}
+                      className={`block w-14 h-8 rounded-full transition duration-300 ${
+                        isAutoMove ? "bg-green-600" : "bg-gray-300"
+                      }`}
                     ></div>
                     <div
-                      className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-all duration-300 shadow-sm ${isAutoMove ? "translate-x-6" : ""
-                        }`}
+                      className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-all duration-300 shadow-sm ${
+                        isAutoMove ? "translate-x-6" : ""
+                      }`}
                     ></div>
                   </div>
                   <span className="ml-3 text-gray-700">Auto Move</span>
@@ -362,18 +340,19 @@ const QuizApp = ({ questions = quizQuestions, title = "Form1", timeLimit = "40 m
                 <button
                   key={index}
                   onClick={() => handleCalendarClick(index)}
-                  className={`w-11 h-11 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-110 ${answersState[index].isAnswerChecked
-                    ? answersState[index].isCorrect
-                      ? "bg-green-500 text-white shadow-lg"
-                      : "bg-red-500 text-white shadow-lg"
-                    : answersState[index].isFlagged
+                  className={`w-11 h-11 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-110 ${
+                    answersState[index].isAnswerChecked
+                      ? answersState[index].isCorrect
+                        ? "bg-green-500 text-white shadow-lg"
+                        : "bg-red-500 text-white shadow-lg"
+                      : answersState[index].isFlagged
                       ? "bg-yellow-400 text-white shadow-lg"
                       : answersState[index].selectedOption !== null
-                        ? "bg-gray-700 text-white shadow-lg"
-                        : index === currentQuestionIndex
-                          ? "bg-gray-400 text-white shadow-lg"
-                          : "bg-white text-gray-700 border hover:border-green-400"
-                    } flex justify-center items-center font-medium`}
+                      ? "bg-gray-700 text-white shadow-lg"
+                      : index === currentQuestionIndex
+                      ? "bg-gray-400 text-white shadow-lg"
+                      : "bg-white text-gray-700 border hover:border-green-400"
+                  } flex justify-center items-center font-medium`}
                 >
                   {index + 1}
                 </button>
