@@ -1,99 +1,27 @@
 import React, { useState, useMemo } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import ProfilePanel from "./components/ProfilePanel";
 import LessonsList from "./components/LessonsList";
 import SearchAndFilter from "./components/SearchAndFilter";
 import Pagination from "@mui/material/Pagination";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import { useLessons } from "./hooks/useLessons";
+import DayMapping from "../../../../constants/dayMapping";
 
 const LessonsPage = () => {
   const location = useLocation();
-  const showList = location.pathname === '/trainer/lessons';
+  const showList = location.pathname === "/trainer/lessons";
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [currentTab, setCurrentTab] = useState(0);
 
   const [hoveredRating, setHoveredRating] = useState(0);
-  const [currentSubTab, setCurrentSubTab] = useState(0);
   const [selectedRating, setSelectedRating] = useState(0);
   const [selectedLesson, setSelectedLesson] = useState(null);
 
-  const [lessons, setLessons] = useState([
-    {
-      title: "Winter Driving Techniques",
-      date: "2024-12-28",
-      duration: "2 hours",
-      student: "Emily Davis",
-      note: "Focus on winter driving safety",
-      car: "Toyota Corolla",
-      status: "out of date",  
-      rating: 0
-    },
-    {
-      title: "Advanced Highway Navigation",
-      date: "2025-01-15",
-      duration: "1.5 hours",
-      student: "Robert Wilson",
-      note: "Complex highway scenarios",
-      car: "Toyota Corolla",
-      status: "upcoming",  
-      rating: 0
-    },
-    {
-      title: "Advanced Parking",
-      date: "2024-12-10",
-      duration: "1 hour",
-      student: "Jane Smith",
-      note: "Parallel parking practice",
-      car: "Toyota Corolla",
-      status: "completed",
-      rating: 5,
-    },
-    {
-      title: "Highway Driving",
-      date: "2024-12-08",
-      duration: "2 hours",
-      student: "Mike Johnson",
-      note: "Canceled due to weather",
-      car: "Toyota Corolla",
-      status: "canceled",
-      reason: "Weather",
-      rating: 0,
-    },
-    {
-      title: "Night Driving",
-      date: "2024-12-01",
-      duration: "1.5 hours",
-      student: "Sarah Wilson",
-      note: "Basic night driving techniques",
-      car: "Toyota Corolla",
-      status: "completed",
-      rating: 4,
-    },
-    {
-      title: "Basic Training",
-      date: "2024-11-30",
-      duration: "1 hour",
-      student: "Alice Brown",
-      note: "This lesson is out of date",
-      car: "Toyota Corolla",
-      status: "out of date",  
-      rating: 0,
-    },
-    {
-      title: "Driving Assessment",
-      date: "2024-12-05",
-      duration: "1 hour",
-      student: "Tom Hanks",
-      note: "Assessment of driving skills",
-      car: "Toyota Corolla",
-      status: "completed",
-      rating: 0,
-    },
-  ]);
+  const [lessons, setLessons] = useState([]);
 
   const itemsPerPage = 5;
 
@@ -113,13 +41,8 @@ const LessonsPage = () => {
     setCurrentTab(newValue);
 
     setCurrentPage(1);
-    setCurrentSubTab(0);
   };
 
-  const handleSubTabChange = (event, newValue) => {
-    setCurrentSubTab(newValue);
-    setCurrentPage(1);
-  };
   const updateLessonRating = (
     selectedLesson,
     rating,
@@ -135,7 +58,7 @@ const LessonsPage = () => {
               status: newStatus || lesson.status,
               rating: rating,
               feedback: feedback,
-              reason: newStatus === "canceled" ? feedback : lesson.reason
+              reason: newStatus === "canceled" ? feedback : lesson.reason,
             }
           : lesson
       )
@@ -144,12 +67,16 @@ const LessonsPage = () => {
 
   const getTabCounts = () => {
     return {
-      outOfDate: lessons.filter(l => l.status === "out of date").length,
-      upcoming: lessons.filter(l => l.status === "upcoming").length,
-      completed: lessons.filter(l => l.status === "completed").length,
-      canceled: lessons.filter(l => l.status === "canceled").length,
-      withRating: lessons.filter(l => l.status === "completed" && l.rating > 0).length,
-      withoutRating: lessons.filter(l => l.status === "completed" && l.rating === 0).length,
+      outOfDate: lessons.filter((l) => l.status === "out of date").length,
+      upcoming: lessons.filter((l) => l.status === "upcoming").length,
+      completed: lessons.filter((l) => l.status === "completed").length,
+      canceled: lessons.filter((l) => l.status === "canceled").length,
+      withRating: lessons.filter(
+        (l) => l.status === "completed" && l.rating > 0
+      ).length,
+      withoutRating: lessons.filter(
+        (l) => l.status === "completed" && l.rating === 0
+      ).length,
     };
   };
 
@@ -157,7 +84,7 @@ const LessonsPage = () => {
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
 
-    return lessons.filter(lesson => {
+    return lessons.filter((lesson) => {
       const lessonDate = new Date(lesson.date);
       lessonDate.setHours(0, 0, 0, 0);
 
@@ -167,27 +94,53 @@ const LessonsPage = () => {
         case 1: // Upcoming
           return lesson.status === "upcoming";
         case 2: // Completed
-          if (currentSubTab === 0) {
-            return lesson.status === "completed" && lesson.rating > 0;
-          } else {
-            return lesson.status === "completed" && lesson.rating === 0;
-          }
+          return lesson.status === "completed";
         case 3: // Canceled
           return lesson.status === "canceled";
         default:
           return true;
       }
     });
-  }, [currentTab, currentSubTab, lessons]);
+  }, [currentTab, lessons]);
 
   const displayedLessons = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
-    return filteredAndSortedLessons.slice(startIndex, startIndex + itemsPerPage);
+    return filteredAndSortedLessons.slice(
+      startIndex,
+      startIndex + itemsPerPage
+    );
   }, [filteredAndSortedLessons, currentPage, itemsPerPage]);
 
   const totalPages = Math.ceil(filteredAndSortedLessons.length / itemsPerPage);
 
   const tabCounts = getTabCounts();
+
+  const { data: upcomingLessons = [], isLoading: isUpcomingLoading } =
+    useLessons("upcoming");
+
+  const { data: completedLessons = [], isLoading: isCompletedLoading } =
+    useLessons("completed");
+
+  const { data: outdatedLessons = [], isLoading: isOutdatedLoading } =
+    useLessons("outdated");
+
+  const { data: canceledLessons = [], isLoading: isCanceledLoading } =
+    useLessons("canceled");
+
+  const getCurrentLessons = () => {
+    switch (currentTab) {
+      case 0:
+        return outdatedLessons;
+      case 1:
+        return upcomingLessons;
+      case 2:
+        return completedLessons;
+      case 3:
+        return canceledLessons;
+      default:
+        return [];
+    }
+  };
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-100">
@@ -195,10 +148,6 @@ const LessonsPage = () => {
         <div className="flex-1 p-8 overflow-y-auto">
           {showList ? (
             <>
-              <div className="max-w-7xl mx-auto grid grid-cols-1 gap-6 mb-12">
-                <ProfilePanel totalLicenses={3} />
-              </div>
-
               <div className="max-w-7xl mx-auto">
                 <SearchAndFilter
                   searchTerm={searchTerm}
@@ -209,26 +158,43 @@ const LessonsPage = () => {
                   hoveredRating={hoveredRating}
                   resetRating={resetRating}
                 />
-                <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%", mb: 1 }}>
-                  <Tabs value={currentTab} onChange={handleTabChange} variant="fullWidth">
+                <Box
+                  sx={{
+                    borderBottom: 1,
+                    borderColor: "divider",
+                    width: "100%",
+                    mb: 1,
+                  }}
+                >
+                  <Tabs
+                    value={currentTab}
+                    onChange={handleTabChange}
+                    variant="fullWidth"
+                  >
                     <Tab label={`Out of Date (${tabCounts.outOfDate})`} />
                     <Tab label={`Upcoming (${tabCounts.upcoming})`} />
                     <Tab label={`Completed (${tabCounts.completed})`} />
                     <Tab label={`Canceled (${tabCounts.canceled})`} />
                   </Tabs>
                 </Box>
-                {currentTab === 2 && (
-                  <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%", mb: 1 }}>
-                    <Tabs value={currentSubTab} onChange={handleSubTabChange} variant="fullWidth">
-                      <Tab label={`With Rating (${tabCounts.withRating})`} />
-                      <Tab label={`Without Rating (${tabCounts.withoutRating})`} />
-                    </Tabs>
-                  </Box>
-                )}
               </div>
 
               <LessonsList
-                lessons={displayedLessons}
+                lessons={getCurrentLessons().map((lesson) => ({
+                  title: `Lesson with ${lesson.student.name}`,
+                  date: new Date(lesson.date).toLocaleDateString("en-CA"),
+                  time: lesson.startTime || "00:00:00",
+                  day: DayMapping[lesson.day],
+                  duration: "1 hour",
+                  student: lesson.student.name,
+                  studentImage: lesson.student.profilePicture,
+                  car: lesson.car.name,
+                  carImage: lesson.car.profilePicture,
+                  status: lesson.status,
+                  rating: lesson.studentRating || 0,
+                  feedback: lesson.trainerFeedback || lesson.studentFeedback,
+                  reason: lesson.cancellationReason,
+                }))}
                 selectedRating={selectedRating}
                 closeModal={handleClosePanel}
                 onUpdateLesson={updateLessonRating}
@@ -244,7 +210,26 @@ const LessonsPage = () => {
               </div>
             </>
           ) : (
-            <Outlet context={{ lessons, setLessons, updateLessonRating }} />
+            <Outlet
+              context={{
+                lessons: getCurrentLessons().map((lesson) => ({
+                  title: `Lesson with ${lesson.student.name}`,
+                  date: new Date(lesson.date).toLocaleDateString("en-CA"),
+                  time: lesson.startTime,
+                  day: DayMapping[lesson.day],
+                  duration: "1 hour",
+                  student: lesson.student.name,
+                  studentImage: lesson.student.profilePicture,
+                  car: lesson.car.name,
+                  carImage: lesson.car.profilePicture,
+                  status: lesson.status,
+                  rating: lesson.studentRating || 0,
+                  feedback: lesson.trainerFeedback || lesson.studentFeedback,
+                  reason: lesson.cancellationReason,
+                })),
+                updateLessonRating,
+              }}
+            />
           )}
         </div>
       </div>

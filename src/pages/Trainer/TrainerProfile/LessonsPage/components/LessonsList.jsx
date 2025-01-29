@@ -5,33 +5,32 @@ import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 import useFilteredLessons from "../hooks/useFilteredLessons";
 import useLessonStyling from "../hooks/useLessonStyling";
 import { useNavigate } from "react-router-dom";
+import { Avatar } from "@mui/material";
+import formatTime from "../../../../../utils/formatTime";
 
-const LessonsList = ({
-  lessons = [],
-  selectedRating,
-}) => {
+const LessonsList = ({ lessons = [], selectedRating }) => {
   const navigate = useNavigate();
   const filteredLessons = useFilteredLessons(lessons, selectedRating);
   const { getLessonStatusStyle } = useLessonStyling();
 
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
-      case 'completed':
-        return 'bg-green-500';
-      case 'upcoming':
-        return 'bg-blue-500';
-      case 'canceled':
-        return 'bg-red-500';
-      case 'out of date':
-        return 'bg-red-600';
+      case "completed":
+        return "bg-green-500";
+      case "upcoming":
+        return "bg-blue-500";
+      case "canceled":
+        return "bg-red-500";
+      case "out of date":
+        return "bg-red-600";
       default:
-        return 'bg-gray-500';
+        return "bg-gray-500";
     }
   };
 
   const handleLessonClick = (lesson) => {
-    const formattedTitle = lesson.title.replace(/\s+/g, '');
-    navigate(`/trainer/lessons/${formattedTitle}`);
+    const formattedDate = new Date(lesson.date).toLocaleDateString("en-CA");
+    navigate(`/trainer/lessons/${formattedDate}`);
   };
 
   return (
@@ -50,7 +49,7 @@ const LessonsList = ({
           >
             <div className="flex justify-between items-center">
               <h3 className="text-xl font-semibold">{lesson.title}</h3>
-              <div className="flex space-x-1">
+              {/* <div className="flex space-x-1">
                 {Array.from({ length: 5 }, (_, i) => (
                   <span
                     key={i}
@@ -65,26 +64,38 @@ const LessonsList = ({
                     />
                   </span>
                 ))}
-              </div>
+              </div> */}
             </div>
             <p className="text-gray-500 text-sm mt-1">
-              Date: {lesson.date} | Duration: {lesson.duration}
+              Date: {lesson.date} | Day: {lesson.day} | Time:{" "}
+              {formatTime(lesson.time)}
             </p>
             <div className="mt-4">
-              <p className="text-black-700 font-small">
-                <strong>Student:</strong> {lesson.student}
-              </p>
-              {lesson.status !== "canceled" ? (
-                <p className="text-black-500 text-sm mt-2">
-                  <strong>Note:</strong> {lesson.note}
-                </p>
-              ) : (
+              <div className="flex items-center space-x-4 mt-4">
+                <div className="flex items-center">
+                  <Avatar src={lesson.studentImage} alt={lesson.student} />
+                  <div className="ml-2">
+                    <p className="text-sm font-medium">{lesson.student}</p>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <Avatar src={lesson.carImage} alt={lesson.car} />
+                  <div className="ml-2">
+                    <p className="text-sm font-medium">{lesson.car}</p>
+                  </div>
+                </div>
+              </div>
+              {lesson.status === "canceled" && (
                 <p className="text-black text-sm mt-2">
                   <strong>Reason for Cancellation:</strong> {lesson.reason}
                 </p>
               )}
               <div className="flex items-center mt-2">
-                <span className={`${getStatusColor(lesson.status)} text-white text-sm px-3 py-1 rounded-full`}>
+                <span
+                  className={`${getStatusColor(
+                    lesson.status
+                  )} text-white text-sm px-3 py-1 rounded-full`}
+                >
                   {lesson.status}
                 </span>
               </div>
