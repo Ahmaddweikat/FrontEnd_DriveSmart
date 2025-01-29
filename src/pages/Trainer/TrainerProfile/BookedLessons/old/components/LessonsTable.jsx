@@ -165,3 +165,12 @@ const LessonsTable = ({ lessons, handleStatusChange, currentPage, totalPages, ha
 };
 
 export default LessonsTable;
+
+/*
+student name + avatar
+car name + avatar
+Days
+start time
+
+
+*/
