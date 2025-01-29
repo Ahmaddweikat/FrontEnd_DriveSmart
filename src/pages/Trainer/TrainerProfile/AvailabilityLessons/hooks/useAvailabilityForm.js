@@ -1,158 +1,94 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { joiResolver } from "@hookform/resolvers/joi";
-import { availabilitySchema } from "../schema/schema";
+import { useTrainerAvailability } from "./useTrainerAvailability";
 
 export const useAvailabilityForm = () => {
-  const initialState = {
-    daysOfWeek: [],
-    specificDate: "",
-    startTime: "",
-    isRecurring: true,
-  };
-
-  const [lessons, setLessons] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
-  const [error, setError] = useState("");
+  const [daysOfWeek, setDaysOfWeek] = useState([]);
+  const [error, setError] = useState(null);
+
+  const { availabilities, createAvailability, updateAvailability } =
+    useTrainerAvailability();
 
   const {
     register,
-    handleSubmit: validateSubmit,
-    formState: { errors },
+    handleSubmit,
     setValue,
     watch,
     reset,
-    trigger,  
-  } = useForm({
-    resolver: joiResolver(availabilitySchema),
-    defaultValues: initialState,
-    mode: 'onChange',  
-  });
+    formState: { errors },
+  } = useForm();
+  const isRecurring = watch("isRecurring");
 
-  const checkForConflict = (newLesson) => {
-    return lessons.some((lesson, index) => {
-      if (editingIndex === index) return false;
-
-      if (newLesson.isRecurring && lesson.isRecurring) {
-        return newLesson.daysOfWeek.some(day => 
-          lesson.daysOfWeek.includes(day) && lesson.startTime === newLesson.startTime
-        );
-      } else if (!newLesson.isRecurring && !lesson.isRecurring) {
-        return lesson.specificDate === newLesson.specificDate && 
-               lesson.startTime === newLesson.startTime;
-      } else if (newLesson.isRecurring && !lesson.isRecurring) {
-        const lessonDate = new Date(lesson.specificDate);
-        const dayOfWeek = lessonDate.getDay() || 7;
-        return newLesson.daysOfWeek.includes(dayOfWeek) && 
-               lesson.startTime === newLesson.startTime;
-      } else if (!newLesson.isRecurring && lesson.isRecurring) {
-        const newLessonDate = new Date(newLesson.specificDate);
-        const dayOfWeek = newLessonDate.getDay() || 7;
-        return lesson.daysOfWeek.includes(dayOfWeek) && 
-               lesson.startTime === newLesson.startTime;
-      } else if (!newLesson.isRecurring) {
-        return lessons.some((lesson) => lesson.specificDate === newLesson.specificDate && lesson.startTime === newLesson.startTime);
-      }
-      return false;
-    });
-  };
-
-  const handleDaysChange = async (day) => {
-    setError("");
-    const daysOfWeek = watch("daysOfWeek") || [];
-    const newDays = daysOfWeek.includes(day)
-      ? daysOfWeek.filter((d) => d !== day)
-      : [...daysOfWeek, day];
-    await setValue("daysOfWeek", newDays, { shouldValidate: true });
-    trigger("daysOfWeek");
-  };
-
-  const handleSubmit = (onSubmitCallback) => {
-    const handleFormSubmit = (data) => {
-      const currentTime = new Date('2024-12-26T16:56:15+02:00');
-      let specificDate = null;
-      let daysOfWeek = [];
-
-      if (!data.isRecurring && data.specificDate) {
-        specificDate = new Date(data.specificDate).toISOString().split('T')[0];
-        const dayOfWeek = new Date(data.specificDate).getDay();
-        daysOfWeek = [dayOfWeek === 0 ? 7 : dayOfWeek];
-      } else if (data.isRecurring) {
-        daysOfWeek = data.daysOfWeek;
-      }
-
-      const formattedData = {
-        ...data,
-        startTime: data.startTime || currentTime.toLocaleTimeString().split(' ')[0],
-        specificDate,
-        daysOfWeek
-      };
-
-      if (checkForConflict(formattedData)) {
-        setError("A lesson already exists at this time slot");
-        return;
-      }
-
-      const availabilityData = {
-        availability: {
-          daysOfWeek: formattedData.daysOfWeek,
-          id: "2c2174c9-1999-4d03-82d2-78663df60d29",
-          isBooked: false,
-          isRecurring: formattedData.isRecurring,
-          startTime: formattedData.startTime,
-          TrainerId: "3c66f0f0-5cbb-4bd8-b9f9-70b0020d42fc",
-        }
-      };
-
-      console.log('data = ', JSON.stringify(availabilityData, null, 4));
-
-      onSubmitCallback(formattedData, availabilityData);
-      
-      // Reset form
-      setError("");
-      setValue("daysOfWeek", []);
-      setValue("specificDate", "");
-      setValue("startTime", "");
-    };
-
-    return validateSubmit(handleFormSubmit);
-  };
-
-  const handleEdit = (index) => {
-    setError("");
-    const lessonToEdit = lessons[index];
-    reset({
-      ...lessonToEdit,
-      specificDate: lessonToEdit.specificDate || '',
-      isRecurring: lessonToEdit.isRecurring,
-    });
+  const handleEdit = (index, availability) => {
     setEditingIndex(index);
-  };
+    setDaysOfWeek(availability.daysOfWeek || []);
 
-  const handleCancel = (index) => {
-    setLessons(prev => prev.filter((_, i) => i !== index));
+    // Set form values
+    setValue("isRecurring", availability.isRecurring);
+    setValue("startTime", availability.startTime);
+
+    if (availability.isRecurring) {
+      setValue("daysOfWeek", availability.daysOfWeek);
+    } else {
+      // Format the date to YYYY-MM-DD for the date input
+      const formattedDate = availability.specificDate.split("T")[0];
+      setValue("specificDate", formattedDate);
+    }
   };
 
   const resetForm = () => {
     setEditingIndex(null);
-    setError("");
-    reset(initialState);
+    setDaysOfWeek([]);
+    reset();
+  };
+
+  const handleDaysChange = (day) => {
+    setDaysOfWeek((prev) => {
+      if (prev.includes(day)) {
+        return prev.filter((d) => d !== day);
+      }
+      return [...prev, day];
+    });
+  };
+
+  const onSubmit = (formData) => {
+    // Format startTime to HH:mm by removing seconds
+    const startTime = formData.startTime.split(":").slice(0, 2).join(":");
+
+    const requestData = {
+      startTime,
+      isRecurring: formData.isRecurring,
+    };
+
+    if (formData.isRecurring) {
+      requestData.daysOfWeek = daysOfWeek;
+    } else {
+      requestData.specificDate = formData.specificDate;
+    }
+
+    if (editingIndex !== null) {
+      updateAvailability({
+        id: availabilities[editingIndex].id,
+        data: requestData,
+      });
+    } else {
+      createAvailability(requestData);
+    }
+    resetForm();
   };
 
   return {
-    lessons,
-    setLessons,
     editingIndex,
     error,
     register,
     handleSubmit,
     errors,
-    watch,
     handleDaysChange,
     handleEdit,
-    handleCancel,
     resetForm,
-    isRecurring: watch("isRecurring"),
-    daysOfWeek: watch("daysOfWeek") || [],
+    isRecurring,
+    daysOfWeek,
+    onSubmit,
   };
 };

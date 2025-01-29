@@ -1,29 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Stack, Pagination } from "@mui/material";
-import { days } from '../constants/days';
+import DayMapping from "../../../../../constants/dayMapping";
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 };
 
-export const AvailabilityTable = ({ 
-  lessons, 
-  handleEdit, 
-  handleCancel 
-}) => {
-  const [filterDay, setFilterDay] = useState('');
-  const [filterDate, setFilterDate] = useState('');
-  const [filterTime, setFilterTime] = useState('');
+export const AvailabilityTable = ({ lessons, handleEdit, handleCancel }) => {
+  const [filterDay, setFilterDay] = useState("");
+  const [filterDate, setFilterDate] = useState("");
+  const [filterTime, setFilterTime] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
 
-  const filteredLessons = lessons.filter(lesson => {
-    const matchesDay = filterDay ? lesson.daysOfWeek.includes(Number(filterDay)) : true;
+  const filteredLessons = lessons.filter((lesson) => {
+    const matchesDay = filterDay
+      ? lesson.daysOfWeek.includes(Number(filterDay))
+      : true;
     const matchesDate = filterDate ? lesson.specificDate === filterDate : true;
     const matchesTime = filterTime ? lesson.startTime === filterTime : true;
     return matchesDay && matchesDate && matchesTime;
@@ -40,9 +38,22 @@ export const AvailabilityTable = ({
   };
 
   const clearFilters = () => {
-    setFilterDay('');
-    setFilterDate('');
-    setFilterTime('');
+    setFilterDay("");
+    setFilterDate("");
+    setFilterTime("");
+  };
+
+  const formatTime = (timeString) => {
+    const [hours, minutes] = timeString.split(":");
+    const date = new Date();
+    date.setHours(parseInt(hours));
+    date.setMinutes(parseInt(minutes));
+
+    return date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
   };
 
   return (
@@ -54,14 +65,16 @@ export const AvailabilityTable = ({
       <div className="overflow-x-auto">
         {/* Filter Section */}
         <div className="flex justify-end space-x-4 mb-4">
-          <select 
-            value={filterDay} 
-            onChange={(e) => setFilterDay(e.target.value)} 
+          <select
+            value={filterDay}
+            onChange={(e) => setFilterDay(e.target.value)}
             className="border rounded p-2"
           >
             <option value="">All Days</option>
-            {days.map(({ day, label }) => (
-              <option key={day} value={day}>{label}</option>
+            {Object.entries(DayMapping).map(([value, label]) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
             ))}
           </select>
           <input
@@ -98,6 +111,9 @@ export const AvailabilityTable = ({
                 Type
               </th>
               <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider w-1/5">
+                Status
+              </th>
+              <th className="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider w-1/5">
                 Actions
               </th>
             </tr>
@@ -114,7 +130,7 @@ export const AvailabilityTable = ({
                             key={day}
                             className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-customGreen/20 text-customGreen"
                           >
-                            {days.find(d => d.day === day)?.label.slice(0, 3)}
+                            {DayMapping[day].slice(0, 3)}
                           </span>
                         ))}
                       </div>
@@ -125,7 +141,7 @@ export const AvailabilityTable = ({
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
                   <div className="text-sm text-gray-900">
-                    {lesson.startTime}
+                    {formatTime(lesson.startTime)}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
@@ -139,9 +155,20 @@ export const AvailabilityTable = ({
                     {lesson.isRecurring ? "Recurring" : "One-time"}
                   </span>
                 </td>
+                <td className="px-6 py-4 whitespace-nowrap text-center">
+                  <span
+                    className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      lesson.isBooked
+                        ? "bg-red-100 text-red-800"
+                        : "bg-green-100 text-green-800"
+                    }`}
+                  >
+                    {lesson.isBooked ? "Booked" : "Available"}
+                  </span>
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center space-x-4">
                   <button
-                    onClick={() => handleEdit(index)}
+                    onClick={() => handleEdit(index, lesson)}
                     className="text-customGreen hover:text-customGreen/80"
                   >
                     Edit

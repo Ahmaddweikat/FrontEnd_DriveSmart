@@ -1,5 +1,5 @@
-import React from 'react';
-import { days } from '../constants/days';
+import React from "react";
+import DayMapping from "../../../../../constants/dayMapping";
 
 export const AvailabilityForm = ({
   register,
@@ -10,12 +10,13 @@ export const AvailabilityForm = ({
   daysOfWeek,
   error,
   editingIndex,
-  resetForm
+  resetForm,
 }) => {
+  console.log("🚀 ~ daysOfWeek:", daysOfWeek)
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center">
-        {editingIndex !== null ? 'Edit Lesson' : 'Create Lesson'}
+        {editingIndex !== null ? "Edit Lesson" : "Create Lesson"}
       </h2>
 
       {error && (
@@ -43,13 +44,13 @@ export const AvailabilityForm = ({
         {isRecurring && (
           <div className="space-y-2">
             <div className="flex flex-wrap gap-3">
-              {days.map(({ day, label }) => (
+              {Object.entries(DayMapping).map(([value, label]) => (
                 <button
                   type="button"
-                  key={day}
-                  onClick={() => handleDaysChange(day)}
+                  key={value}
+                  onClick={() => handleDaysChange(Number(value))}
                   className={`px-6 py-2 rounded-full transition-all duration-200 ${
-                    daysOfWeek.includes(day)
+                    daysOfWeek.includes(Number(value))
                       ? "bg-customGreen text-white shadow-md"
                       : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                   }`}
@@ -59,7 +60,9 @@ export const AvailabilityForm = ({
               ))}
             </div>
             {errors.daysOfWeek && (
-              <p className="text-red-500 text-sm">{errors.daysOfWeek.message}</p>
+              <p className="text-red-500 text-sm">
+                {errors.daysOfWeek.message}
+              </p>
             )}
           </div>
         )}
@@ -75,7 +78,9 @@ export const AvailabilityForm = ({
               />
             </label>
             {errors.specificDate && (
-              <p className="text-red-500 text-sm mt-1">{errors.specificDate.message}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.specificDate.message}
+              </p>
             )}
           </div>
         )}
@@ -90,7 +95,9 @@ export const AvailabilityForm = ({
             />
           </label>
           {errors.startTime && (
-            <p className="text-red-500 text-sm mt-1">{errors.startTime.message}</p>
+            <p className="text-red-500 text-sm mt-1">
+              {errors.startTime.message}
+            </p>
           )}
         </div>
 
@@ -99,7 +106,7 @@ export const AvailabilityForm = ({
             type="submit"
             className="flex-1 bg-customGreen text-white py-3 px-4 rounded-xl hover:bg-customGreen/90 transition duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
-            {editingIndex !== null ? 'Save Changes' : 'Create Lesson'}
+            {editingIndex !== null ? "Save Changes" : "Create Lesson"}
           </button>
           {editingIndex !== null && (
             <button
