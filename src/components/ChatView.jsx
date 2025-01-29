@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
+import Avatar from "@mui/material/Avatar";
 
 const ChatView = ({ initialMessages = [], onClose }) => {
   const [messagesList, setMessagesList] = useState(initialMessages);
@@ -37,7 +38,7 @@ const ChatView = ({ initialMessages = [], onClose }) => {
         </button>
         {messagesList.length > 0 && (
           <>
-            <img
+            <Avatar
               src={messagesList[0].profileImage}
               alt="Profile"
               className="w-12 h-12 rounded-full ml-8"
@@ -78,7 +79,7 @@ const ChatView = ({ initialMessages = [], onClose }) => {
               )}
 
               <div className="flex items-start">
-                <img
+                <Avatar
                   src={msg.profileImage}
                   alt="Profile"
                   className="w-6 h-6 rounded-full mr-2"

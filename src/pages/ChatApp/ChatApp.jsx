@@ -10,6 +10,7 @@ import { useChat } from "./hooks/useChat";
 import { useMessageHandlers } from "./hooks/useMessageHandlers";
 import useAuthStore from "../../store/auth.store";
 import getOtherParticipantInfo from "./utils/getOtherParticipantInfo";
+import { Avatar } from "@mui/material";
 
 const ChatApp = ({ isTopBarChat = false, onUnreadCountChange }) => {
   const {
@@ -48,147 +49,6 @@ const ChatApp = ({ isTopBarChat = false, onUnreadCountChange }) => {
       setEmojiPickerVisible
     );
 
-  // useEffect(() => {
-  //   if (onUnreadCountChange) {
-  //     onUnreadCountChange(getTotalUnreadCount());
-  //   }
-  // }, [getTotalUnreadCount, onUnreadCountChange, filteredConversations]);
-
-  // if (isTopBarChat) {
-  //   return (
-  //     <div className="flex h-full w-full bg-white overflow-hidden">
-  //       <div className="flex w-full h-full">
-  //         {!selectedChatId ? (
-  //           // Conversations List View
-  //           <div className="w-full bg-white flex flex-col h-full">
-  //             <div className="sticky top-0 bg-white z-30 border-b border-gray-200">
-  //               <div className="px-4 pb-3">
-  //                 <SearchBar
-  //                   searchQuery={searchQuery}
-  //                   setSearchQuery={setSearchQuery}
-  //                 />
-  //               </div>
-  //             </div>
-  //             <div className="flex-1 overflow-y-auto divide-y divide-gray-100">
-  //               {filteredConversations.map((chat) => (
-  //                 <ChatItem
-  //                   key={chat.id}
-  //                   chat={chat}
-  //                   selectedChatId={selectedChatId}
-  //                   setSelectedChatId={setSelectedChatId}
-  //                   unreadCount={getUnreadCount(chat.id)}
-  //                 />
-  //               ))}
-  //             </div>
-  //           </div>
-  //         ) : (
-  //           // Chat Messages View
-  //           <div className="flex flex-col flex-1 bg-gray-50 h-full">
-  //             {/* Sticky Header */}
-  //             <div className="sticky top-0 z-30 bg-white border-b border-gray-200">
-  //               <div className="px-6 py-4 flex items-center">
-  //                 <button
-  //                   onClick={() => setSelectedChatId(null)}
-  //                   className="mr-4 text-gray-500 hover:text-gray-700"
-  //                 >
-  //                   <ArrowBackOutlinedIcon />
-  //                 </button>
-  //                 <div className="flex items-center relative">
-  //                   <div className="relative">
-  //                     <img
-  //                       src={currentChat.avatar}
-  //                       alt={`${currentChat.name}'s avatar`}
-  //                       className="w-12 h-12 rounded-full border-2 border-gray-200 mr-4"
-  //                     />
-  //                     {currentChat.status === "Online" && (
-  //                       <div className="absolute bottom-0.5 right-5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white"></div>
-  //                     )}
-  //                   </div>
-  //                   <div>
-  //                     <div className="font-semibold text-gray-800 text-lg">
-  //                       {currentChat.name}
-  //                     </div>
-  //                     <div className="text-sm text-gray-500">
-  //                       {currentChat.status}
-  //                     </div>
-  //                   </div>
-  //                 </div>
-  //               </div>
-  //             </div>
-
-  //             {/* Messages Area with Auto Scroll */}
-  //             <div
-  //               ref={chatWindowRef}
-  //               className="flex-1 overflow-y-auto px-6 py-4 space-y-4 scroll-smooth"
-  //             >
-  //               {currentChat?.messages.map((msg, idx) => (
-  //                 <div key={idx}>
-  //                   {idx === 0 ||
-  //                   currentChat.messages[idx - 1].date !== msg.date ? (
-  //                     <div className="flex items-center justify-center my-6">
-  //                       <div className="text-sm text-gray-500 bg-white px-4 py-1 rounded-full shadow-sm border border-gray-100">
-  //                         {formatDate(msg.date)}
-  //                       </div>
-  //                     </div>
-  //                   ) : null}
-  //                   <MessageBubble msg={msg} currentChat={currentChat} />
-  //                 </div>
-  //               ))}
-  //             </div>
-
-  //             {/* Sticky Input Area */}
-  //             <div className="sticky bottom-0 bg-white border-t border-gray-200 p-4 z-30">
-  //               <div className="flex items-center space-x-4">
-  //                 <button
-  //                   onClick={() => setEmojiPickerVisible((prev) => !prev)}
-  //                   className="p-2 rounded-full hover:bg-gray-100 transition-colors"
-  //                 >
-  //                   <img src={smileyIcon} alt="smiley" className="w-6 h-6" />
-  //                 </button>
-
-  //                 <div className="flex-1 relative">
-  //                   <input
-  //                     type="text"
-  //                     value={newMessage}
-  //                     onChange={(e) => setNewMessage(e.target.value)}
-  //                     onClick={handleInputClick}
-  //                     onKeyDown={(e) => {
-  //                       if (e.key === "Enter") {
-  //                         e.preventDefault();
-  //                         handleSendMessage(newMessage);
-  //                       }
-  //                     }}
-  //                     placeholder="Type your message here..."
-  //                     className="w-full px-4 py-3 bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors"
-  //                   />
-  //                   {emojiPickerVisible && (
-  //                     <div className="absolute bottom-full right-0 mb-2">
-  //                       <EmojiPicker onEmojiClick={handleEmojiClick} />
-  //                     </div>
-  //                   )}
-  //                 </div>
-
-  //                 <button
-  //                   onClick={() => handleSendMessage(newMessage)}
-  //                   className="p-3 bg-blue-500 hover:bg-blue-600 text-white rounded-full transition-colors"
-  //                 >
-  //                   <SendIcon
-  //                     sx={{
-  //                       width: 24,
-  //                       height: 24,
-  //                       transform: "rotate(310deg)",
-  //                     }}
-  //                   />
-  //                 </button>
-  //               </div>
-  //             </div>
-  //           </div>
-  //         )}
-  //       </div>
-  //     </div>
-  //   );
-  // }
-  // For Main Messages Page - Split View
   return (
     <div className="flex h-full w-full bg-white overflow-hidden">
       <div className="flex w-full h-full">
@@ -213,10 +73,15 @@ const ChatApp = ({ isTopBarChat = false, onUnreadCountChange }) => {
                     className="flex items-center p-4 hover:bg-gray-50 cursor-pointer"
                   >
                     <div className="relative">
-                      <img
+                      <Avatar
                         src={user.profilePicture}
                         alt={`${user.name}'s avatar`}
-                        className="w-12 h-12 rounded-full border-2 border-gray-200"
+                        sx={{
+                          width: 48,
+                          height: 48,
+                          border: 2,
+                          borderColor: "grey.200",
+                        }}
                       />
                       {user.status === "Online" && (
                         <div className="absolute bottom-0.5 right-0.5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white"></div>
@@ -254,10 +119,16 @@ const ChatApp = ({ isTopBarChat = false, onUnreadCountChange }) => {
               <div className="px-6 py-4 bg-white border-b border-gray-200 flex items-center">
                 <div className="flex items-center relative">
                   <div className="relative">
-                    <img
+                    <Avatar
                       src={otherUser.profilePicture}
                       alt={`${otherUser.name}'s avatar`}
-                      className="w-12 h-12 rounded-full border-2 border-gray-200 mr-4"
+                      sx={{
+                        width: 48,
+                        height: 48,
+                        marginRight: 2,
+                        border: 2,
+                        borderColor: "grey.200",
+                      }}
                     />
                     {currentChat.status === "Online" && (
                       <div className="absolute bottom-0.5 right-5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white"></div>

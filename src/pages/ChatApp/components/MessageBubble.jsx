@@ -2,6 +2,7 @@ import React from "react";
 import useGetProfile from "../../../hooks/useGetProfile";
 import useAuthStore from "../../../store/auth.store";
 import getOtherParticipantInfo from "../utils/getOtherParticipantInfo";
+import { Avatar } from "@mui/material";
 
 const MessageBubble = ({ msg, currentChat }) => {
   const { user } = useAuthStore();
@@ -15,9 +16,9 @@ const MessageBubble = ({ msg, currentChat }) => {
   return (
     <div className={`mb-4 flex ${isSender ? "justify-end" : ""}`}>
       {!isSender && (
-        <img
-          src={otherUser?.profilePicture}
-          alt="Receiver Avatar"
+        <Avatar
+          src={otherUser.profilePicture}
+          alt={otherUser.name}
           className="w-8 h-8 rounded-full mr-2 border-2 border-gray-200 shadow-sm object-cover"
         />
       )}
@@ -50,9 +51,9 @@ const MessageBubble = ({ msg, currentChat }) => {
       </div>
 
       {isSender && (
-        <img
+        <Avatar
           src={data?.profilePicture}
-          alt="Your Avatar"
+          alt={data?.name}
           className="w-8 h-8 rounded-full ml-2 border-2 border-gray-200 shadow-sm object-cover"
         />
       )}

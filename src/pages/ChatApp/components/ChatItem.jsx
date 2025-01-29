@@ -1,6 +1,7 @@
 import React from "react";
 import useAuthStore from "../../../store/auth.store";
 import getOtherParticipantInfo from "../utils/getOtherParticipantInfo";
+import { Avatar } from "@mui/material";
 
 const ChatItem = ({ chat, selectedChatId, setSelectedChatId, unreadCount }) => {
   const { user: currentUser } = useAuthStore();
@@ -22,7 +23,7 @@ const ChatItem = ({ chat, selectedChatId, setSelectedChatId, unreadCount }) => {
       onClick={setSelectedChatId}
     >
       <div className="relative flex-shrink-0">
-        <img
+        <Avatar
           src={otherUser.profilePicture}
           alt={`${chat.name}'s avatar`}
           className={`w-12 h-12 rounded-full mr-3 transition-transform duration-200 ${
