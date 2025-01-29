@@ -2,16 +2,27 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useLocation } from "react-router-dom";
 
-function SidebarButton({ icon, label, isExpanded, active, pageName }) {
+function SidebarButton({
+  icon,
+  label,
+  isExpanded,
+  active,
+  pageName,
+  routePath,
+}) {
   const location = useLocation();
   const fullPath = location.pathname;
 
   // Check if the current route is part of this section
   const isActive = () => {
-    const baseRoute = pageName.split('/')[1]; // Gets 'test' from 'student/test'
-    return fullPath.includes(baseRoute);
+    // For Dashboard (empty path), only match exact root student path
+    if (pageName === "student/") {
+      return fullPath === "/student";
+    }
+    // For other routes, match their specific paths
+    return fullPath.includes(`/student/${routePath}`);
   };
-
+  
   return (
     <Link
       to={`/${pageName}`}
@@ -43,7 +54,7 @@ function SidebarButton({ icon, label, isExpanded, active, pageName }) {
           {label}
         </span>
       )}
-    </Link> 
+    </Link>
   );
 }
 

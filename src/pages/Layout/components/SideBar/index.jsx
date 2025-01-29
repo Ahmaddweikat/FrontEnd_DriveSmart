@@ -5,7 +5,8 @@ import {
   faMessage,
   faSchool,
   faPen,
-  faChalkboard
+  faChalkboard,
+  faHomeUser,
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { useLocation } from "react-router-dom";
@@ -13,6 +14,21 @@ import Logo from "../../../../assets/DRIVESMART.png";
 import SidebarButton from "./SidebarButton";
 
 const sidebarRoutes = [
+  {
+    icon: faHomeUser,
+    label: "Dashboard",
+    path: "",
+  },
+  {
+    icon: faClipboardCheck,
+    label: "Theoretical exam practice",
+    path: "theory",
+  },
+  {
+    icon: faBookOpen,
+    label: "Study Material",
+    path: "material",
+  },
   {
     icon: faSchool,
     label: "School",
@@ -29,15 +45,10 @@ const sidebarRoutes = [
     path: "new-booking",
   },
   // {
-  //   icon: faCalendarCheck,
-  //   label: "Upcoming Lessons",
-  //   path: "upcoming",
+  //   icon: faChalkboard,
+  //   label: "Quizzes",
+  //   path: "Quizzes",
   // },
-  {
-    icon: faChalkboard,
-    label: "Quizzes",
-    path: "Quizzes",
-  },
   {
     icon: faClipboardCheck,
     label: "Test",
@@ -52,8 +63,9 @@ const sidebarRoutes = [
 
 const SideBar = ({ isExpanded, activePage, setActivePage }) => {
   const location = useLocation();
-  const pathSegments = location.pathname.split('/');
-  const currentPath = pathSegments.length > 2 ? pathSegments[2] : pathSegments[1];
+  const pathSegments = location.pathname.split("/");
+  const currentPath =
+    pathSegments.length > 2 ? pathSegments[2] : pathSegments[1];
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -76,6 +88,7 @@ const SideBar = ({ isExpanded, activePage, setActivePage }) => {
               active={currentPath === route.path}
               pageName={"student/" + route.path}
               fullPath={location.pathname}
+              routePath={route.path}
             />
           ))}
         </nav>

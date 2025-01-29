@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import useGetProfile from "../../../../../hooks/useGetProfile";
 import useAuthStore from "../../../../../store/auth.store";
 import NotificationsPanel from "./components/NotificationsPanel";
+import useDeleteFCMToken from "../../../../../hooks/useDeleteFCMToken";
 
 function TopBar({ toggleSidebar }) {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
@@ -21,6 +22,7 @@ function TopBar({ toggleSidebar }) {
   };
 
   const { user, logout } = useAuthStore();
+  const { mutate: deleteFCMToken } = useDeleteFCMToken();
   const { data, isLoading, error } = useGetProfile();
 
   return (
@@ -87,7 +89,10 @@ function TopBar({ toggleSidebar }) {
                 </button>
               </Link>
               <button
-                onClick={() => logout()}
+                onClick={() => {
+                  logout();
+                  deleteFCMToken();
+                }}
                 className="w-full text-left px-4 py-2 hover:bg-gray-200"
               >
                 Logout

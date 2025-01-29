@@ -38,3 +38,19 @@ const Layout = () => {
 };
 
 export default Layout;
+
+/*
+      <div className="flex h-screen overflow-hidden bg-gray-100">
+        <div className="flex-1 flex flex-col">
+          <div className="flex-1 p-8 overflow-y-auto">
+            <div className="max-w-7xl mx-auto">
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+*/
