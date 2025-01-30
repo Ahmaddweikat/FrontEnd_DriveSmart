@@ -18,7 +18,7 @@ const schoolManagerRoutes = [
     path: "settings",
     element: <h1 className="text-center"> School Manager Settings </h1>,
   },
-  { path: "school", element: <School /> },
+  { path: "school/:id", element: <School /> },
   { path: "requests", element: <RegistrationRequests /> },
   { path: "invitetrainers", element: <InvitePage /> },
   { path: "trainers", element: <TrainersPage /> },

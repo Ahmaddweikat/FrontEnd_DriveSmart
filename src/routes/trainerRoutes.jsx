@@ -18,7 +18,7 @@ const trainerRoutes = [
     element: <h1 className="text-center"> Trainer Settings </h1>,
   },
   { path: "students", element: <StudentsPage /> },
-  { path: "school", element: <School /> },
+  { path: "school/:id", element: <School /> },
   {
     path: "lessons",
     element: <Lessons />,

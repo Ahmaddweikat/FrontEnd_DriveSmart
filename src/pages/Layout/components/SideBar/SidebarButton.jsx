@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useLocation } from "react-router-dom";
+import useAuthStore from "../../../../store/auth.store";
 
 function SidebarButton({
   icon,
@@ -12,6 +13,14 @@ function SidebarButton({
 }) {
   const location = useLocation();
   const fullPath = location.pathname;
+  const { user } = useAuthStore();
+
+  const getPagePath = () => {
+    if (pageName === "student/school") {
+      return `student/school/${user.schoolId}`;
+    }
+    return pageName;
+  };
 
   // Check if the current route is part of this section
   const isActive = () => {
@@ -22,10 +31,10 @@ function SidebarButton({
     // For other routes, match their specific paths
     return fullPath.includes(`/student/${routePath}`);
   };
-  
+
   return (
     <Link
-      to={`/${pageName}`}
+      to={`/${getPagePath()}`}
       className="group relative flex items-center w-full"
     >
       <button

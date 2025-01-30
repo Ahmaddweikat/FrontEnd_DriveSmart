@@ -22,7 +22,7 @@ const studentRoutes = [
   { path: "new-booking", element: <NewBookingPage /> },
   // { path: "Quizzes", element: <QuizPage /> },
   { path: "messages", element: <ChatApp /> },
-  { path: "school", element: <School /> },
+  { path: "school/:id", element: <School /> },
   {
     path: "theory",
     children: [

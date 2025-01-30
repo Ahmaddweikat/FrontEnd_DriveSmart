@@ -5,24 +5,32 @@ import { Link, useLocation } from "react-router-dom";
 
 function Breadcrumb() {
   const location = useLocation();
-  const pathnames = location.pathname.split("/").filter((x) => x);
+  const pathnames = location.pathname
+    .split("/")
+    .filter((x) => x)
+    .filter(
+      (path) =>
+        !path.match(
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+        )
+    );
 
   const formatName = (name) => {
     // Special cases
-    if (name === 'invitetrainers') {
-      return 'Invite Trainers';
+    if (name === "invitetrainers") {
+      return "Invite Trainers";
     }
 
     // Handle camelCase
     if (/^[A-Z][a-z]*(?:[A-Z][a-z]*)+$/.test(name)) {
-      return name.replace(/([A-Z])/g, ' $1').trim();
+      return name.replace(/([A-Z])/g, " $1").trim();
     }
 
     // Handle regular paths with multiple words
     const words = name.split(/(?=[A-Z])|[-_]/);
     return words
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
   };
 
   return (

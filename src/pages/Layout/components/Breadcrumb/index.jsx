@@ -5,8 +5,16 @@ import { Link, useLocation } from "react-router-dom";
 
 function Breadcrumb() {
   const location = useLocation();
-  const pathnames = location.pathname.split("/").filter((x) => x);
-
+  const pathnames = location.pathname
+    .split("/")
+    .filter((x) => x)
+    .filter(
+      (path) =>
+        !path.match(
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+        )
+    );
+    
   return (
     <nav className="flex p-4 text-gray-600 bg-gray-100">
       <ol className="flex items-center space-x-2">

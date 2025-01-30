@@ -1,12 +1,20 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useLocation } from "react-router-dom";
+import useAuthStore from "../../../../../store/auth.store";
 
 function SidebarButton({ icon, label, isExpanded, active, pageName }) {
   const location = useLocation();
   const fullPath = location.pathname;
+  const { user } = useAuthStore();
 
- 
+  const getPagePath = () => {
+    if (pageName === "schoolManager/school") {
+      return `schoolManager/school/${user.schoolId}`;
+    }
+    return pageName;
+  };
+
   const isActive = () => {
     const pathSegments = fullPath.split('/');
     const currentPath = pathSegments.length > 2 ? pathSegments[2] : pathSegments[1];
@@ -15,13 +23,12 @@ function SidebarButton({ icon, label, isExpanded, active, pageName }) {
     if (currentPath.startsWith('schoolManager/')) {
       return buttonPath === 'schoolManager';
     }
-    
     return currentPath === buttonPath;
   };
 
   return (
     <Link
-      to={`/${pageName}`}
+      to={`/${getPagePath()}`}
       className="group relative flex items-center w-full"
     >
       <button
@@ -50,7 +57,7 @@ function SidebarButton({ icon, label, isExpanded, active, pageName }) {
           {label}
         </span>
       )}
-    </Link> 
+    </Link>
   );
 }
 

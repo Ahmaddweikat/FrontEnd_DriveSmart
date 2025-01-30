@@ -30,8 +30,8 @@ const sidebarRoutes = [
   },
   {
     icon: faClock,
-    label:"Availability",
-    path:"availability"
+    label: "Availability",
+    path: "availability",
   },
   {
     icon: faPersonCircleCheck,
@@ -43,7 +43,7 @@ const sidebarRoutes = [
     label: "Quizzes",
     path: "Quizzes",
   },
-  
+
   {
     icon: faMessage,
     label: "Messages",
@@ -53,8 +53,9 @@ const sidebarRoutes = [
 
 const SideBar = ({ isExpanded, activePage, setActivePage }) => {
   const location = useLocation();
-  const pathSegments = location.pathname.split('/');
-  const currentPath = pathSegments.length > 2 ? pathSegments[2] : pathSegments[1];
+  const pathSegments = location.pathname.split("/");
+  const currentPath =
+    pathSegments.length > 2 ? pathSegments[2] : pathSegments[1];
 
   return (
     <div className="flex h-screen overflow-hidden">
