@@ -133,7 +133,6 @@ const SchoolPage = () => {
                 <Tab label="About" />
                 <Tab label="Trainers" />
                 <Tab label="Cars" />
-                <Tab label="Gallery" />
               </Tabs>
 
               {/* About Tab */}
@@ -234,17 +233,6 @@ const SchoolPage = () => {
                     </Grid>
                   ))}
                 </Grid>
-              </TabPanel>
-
-              {/* Gallery Tab */}
-              <TabPanel value={tabValue} index={3}>
-                <ImageList cols={3} gap={8}>
-                  {galleryImages.map((item) => (
-                    <ImageListItem key={item.id}>
-                      <img src={item.img} alt={item.title} loading="lazy" />
-                    </ImageListItem>
-                  ))}
-                </ImageList>
               </TabPanel>
             </Box>
 
