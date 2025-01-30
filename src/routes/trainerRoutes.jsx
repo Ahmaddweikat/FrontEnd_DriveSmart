@@ -6,9 +6,10 @@ import Lessons from "../pages/Trainer/TrainerProfile/LessonsPage";
 import LessonDetails from "../pages/Trainer/TrainerProfile/LessonsPage/components/LessonDetails";
 import Quizzes from "../pages/Trainer/TrainerProfile/QuizzesMaker";
 import StudentsPage from "../pages/Trainer/TrainerProfile/StudentsPage";
+import WelcomePage from "../pages/Trainer/WelcomPage";
 
 const trainerRoutes = [
-  { index: true, element: <h1 className="text-center"> Welcome Trainer </h1> },
+  { index: true, element: <WelcomePage /> },
   {
     path: "profile",
     element: <h1 className="text-center"> Trainer Profile </h1>,
