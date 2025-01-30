@@ -3,7 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useLocation } from "react-router-dom";
 import useAuthStore from "../../../../../store/auth.store";
 
-function SidebarButton({ icon, label, isExpanded, active, pageName }) {
+function SidebarButton({
+  icon,
+  label,
+  isExpanded,
+  active,
+  pageName,
+  routePath,
+}) {
   const location = useLocation();
   const fullPath = location.pathname;
   const { user } = useAuthStore();
@@ -16,8 +23,12 @@ function SidebarButton({ icon, label, isExpanded, active, pageName }) {
   };
 
   const isActive = () => {
-    const baseRoute = pageName.split("/")[1];
-    return fullPath.includes(baseRoute);
+    // For Dashboard (empty path), only match exact root student path
+    if (pageName === "trainer/") {
+      return fullPath === "/trainer";
+    }
+    // For other routes, match their specific paths
+    return fullPath.includes(`/trainer/${routePath}`);
   };
 
   return (

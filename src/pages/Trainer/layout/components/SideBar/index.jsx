@@ -6,6 +6,7 @@ import {
   faChalkboard,
   faUserGroup,
   faPersonCircleCheck,
+  faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { useLocation } from "react-router-dom";
@@ -13,6 +14,11 @@ import Logo from "../../../../../assets/DRIVESMART.png";
 import SidebarButton from "./SidebarButton";
 
 const sidebarRoutes = [
+  {
+    icon: faHome,
+    label: "Home",
+    path: "",
+  },
   {
     icon: faSchool,
     label: "School",
@@ -78,6 +84,7 @@ const SideBar = ({ isExpanded, activePage, setActivePage }) => {
               active={currentPath === route.path}
               pageName={"trainer/" + route.path}
               fullPath={location.pathname}
+              routePath={route.path}
             />
           ))}
         </nav>
