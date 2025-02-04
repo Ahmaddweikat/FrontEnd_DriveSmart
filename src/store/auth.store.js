@@ -1,6 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import useStudentProgressStore from "./studentProgress.store";
 
 const useAuthStore = create(
   persist(
@@ -15,6 +16,7 @@ const useAuthStore = create(
           token,
           isAuthenticated: true,
         });
+        useStudentProgressStore.getState().initializeProgress();
       },
 
       logout: () => {
