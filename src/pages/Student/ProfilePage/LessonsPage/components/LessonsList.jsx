@@ -6,6 +6,7 @@ import SmileRating from "./SmileRating";
 import useRatingFeedback from "../hooks/useRatingFeedback";
 import useModal from "../hooks/useModal";
 import useFilteredLessons from "../hooks/useFilteredLessons";
+import { Avatar } from "@mui/material";
 
 const LessonsList = ({ lessons = [], selectedRating }) => {
   const {
@@ -26,7 +27,7 @@ const LessonsList = ({ lessons = [], selectedRating }) => {
 
   const handleOpenModal = (lesson) => {
     openModal(lesson);
-    resetFeedback(); // Reset feedback when opening a new modal
+    resetFeedback();
   };
 
   return (
@@ -39,38 +40,26 @@ const LessonsList = ({ lessons = [], selectedRating }) => {
             <div
               key={index}
               className="bg-white rounded-lg shadow-lg p-6 cursor-pointer"
-              onClick={() => handleOpenModal(lesson)} // Use new function to reset feedback
+              onClick={() => handleOpenModal(lesson)}
             >
               <div className="flex justify-between items-center">
                 <h3 className="text-xl font-semibold">{lesson.title}</h3>
-                <div className="flex space-x-1">
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <span
-                      key={i}
-                      className={`transition-transform duration-300 transform ${
-                        i < lesson.rating
-                          ? "scale-110 text-yellow-400"
-                          : "text-gray-400"
-                      }`}
-                    >
-                      <FontAwesomeIcon
-                        icon={i < lesson.rating ? solidStar : regularStar}
-                      />
-                    </span>
-                  ))}
-                </div>
               </div>
               <p className="text-gray-500 text-sm mt-1">
                 Date: {lesson.date} | Duration: {lesson.duration}
               </p>
-              <div className="flex justify-between items-start mt-10">
-                <div>
-                  <p className="text-black-700 font-small">
-                    <strong>Instructor:</strong> {lesson.instructor}
-                  </p>
-                  <p className="text-black-500 text-sm mt-2">
-                    <strong>Note:</strong> {lesson.note}
-                  </p>
+              <div className="flex items-center space-x-4 mt-4">
+                <div className="flex items-center">
+                  <Avatar src={lesson.trainerImage} alt={lesson.instructor} />
+                  <div className="ml-2">
+                    <p className="text-sm font-medium">{lesson.instructor}</p>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <Avatar src={lesson.carImage} alt={lesson.car} />
+                  <div className="ml-2">
+                    <p className="text-sm font-medium">{lesson.car}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -82,6 +71,28 @@ const LessonsList = ({ lessons = [], selectedRating }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg w-11/12 sm:w-1/3 p-6">
             <h3 className="text-2xl font-semibold">{selectedLesson.title}</h3>
+            <div className="flex items-center space-x-4 mt-4">
+              <div className="flex items-center">
+                <Avatar
+                  src={selectedLesson.trainerImage}
+                  alt={selectedLesson.instructor}
+                />
+                <div className="ml-2">
+                  <p className="text-sm font-medium">
+                    {selectedLesson.instructor}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <Avatar
+                  src={selectedLesson.carImage}
+                  alt={selectedLesson.car}
+                />
+                <div className="ml-2">
+                  <p className="text-sm font-medium">{selectedLesson.car}</p>
+                </div>
+              </div>
+            </div>
             <p className="text-gray-500 text-sm mt-2">
               <strong>Date:</strong> {selectedLesson.date}
             </p>
@@ -89,13 +100,7 @@ const LessonsList = ({ lessons = [], selectedRating }) => {
               <strong>Duration:</strong> {selectedLesson.duration}
             </p>
             <p className="text-gray-500 text-sm mt-2">
-              <strong>Instructor:</strong> {selectedLesson.instructor}
-            </p>
-            <p className="text-gray-500 text-sm mt-2">
               <strong>Note:</strong> {selectedLesson.note}
-            </p>
-            <p className="text-gray-500 text-sm mt-2">
-              <strong>Car:</strong> {selectedLesson.car}
             </p>
 
             {selectedLesson.rating !== null && selectedLesson.rating >= 1 && (
@@ -108,7 +113,6 @@ const LessonsList = ({ lessons = [], selectedRating }) => {
                     <SmileRating onRatingChange={handleRatingChange} />
                   </div>
                 </div>
-
                 <p className="text-xs text-gray-400 mt-2">
                   *This rating and feedback will be visible to the school owner
                   only.
@@ -137,7 +141,6 @@ const LessonsList = ({ lessons = [], selectedRating }) => {
                   Submit Feedback
                 </button>
               )}
-
               <button
                 onClick={closeModal}
                 className="px-4 py-2 bg-red-500 text-white rounded-lg"

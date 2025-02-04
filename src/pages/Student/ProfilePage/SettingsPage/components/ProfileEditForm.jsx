@@ -9,6 +9,7 @@ import Spinner from "./../../../../../components/Spinner";
 import useGetStudentProfile from "./../../ProfileInfoPage/hooks/useGetStudentProfile";
 import useChangeProfilePicture from "../hooks/useChangeProfilePicture";
 import LoadingSpinner from "../img/LoadingSpinner.svg";
+import dayjs from "dayjs";
 
 const ProfileEditForm = ({ handleSave, selectedImage, handleImageChange }) => {
   const { data: user, isLoading, error } = useGetStudentProfile();
@@ -79,23 +80,12 @@ const ProfileEditForm = ({ handleSave, selectedImage, handleImageChange }) => {
                   <div className="flex space-x-4">
                     <div className="flex-1">
                       <label className="block text-sm font-medium text-gray-700">
-                        First Name
+                        Name
                       </label>
                       <input
                         type="text"
                         className="mt-1 block w-full px-3 py-2 border rounded-md bg-gray-100"
-                        placeholder="Ahmad"
-                        disabled
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <label className="block text-sm font-medium text-gray-700">
-                        Last Name
-                      </label>
-                      <input
-                        type="text"
-                        className="mt-1 block w-full px-3 py-2 border rounded-md bg-gray-100"
-                        placeholder="Dweikat"
+                        value={user?.name}
                         disabled
                       />
                     </div>
@@ -109,7 +99,7 @@ const ProfileEditForm = ({ handleSave, selectedImage, handleImageChange }) => {
                     <input
                       type="text"
                       className="mt-1 block w-full px-3 py-2 border rounded-md bg-gray-100"
-                      placeholder="123456789"
+                      value={user?.idNumber}
                       disabled
                     />
                   </div>
@@ -119,7 +109,10 @@ const ProfileEditForm = ({ handleSave, selectedImage, handleImageChange }) => {
                     <label className="block text-sm font-medium text-gray-700">
                       Blood Group
                     </label>
-                    <select className="mt-1 block w-full px-3 py-2 border rounded-md">
+                    <select
+                      className="mt-1 block w-full px-3 py-2 border rounded-md"
+                      value={user?.bloodGroup}
+                    >
                       <option value="">Select Blood Group</option>
                       <option value="A+">A+</option>
                       <option value="A-">A-</option>
@@ -150,10 +143,12 @@ const ProfileEditForm = ({ handleSave, selectedImage, handleImageChange }) => {
                     <label className="block text-sm font-medium text-gray-700">
                       Gender
                     </label>
-                    <select className="mt-1 block w-full px-3 py-2 border rounded-md">
+                    <select
+                      className="mt-1 block w-full px-3 py-2 border rounded-md"
+                      value={user?.gender || "Male"}
+                    >
                       <option>Male</option>
                       <option>Female</option>
-                      <option>Other</option>
                     </select>
                   </div>
                   <div>
@@ -162,7 +157,10 @@ const ProfileEditForm = ({ handleSave, selectedImage, handleImageChange }) => {
                     </label>
                     <div className="flex space-x-2">
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker />
+                        <DatePicker
+                          value={dayjs(user?.dateOfBirth)}
+                          disabled={true}
+                        />
                       </LocalizationProvider>{" "}
                     </div>
                   </div>
@@ -173,7 +171,7 @@ const ProfileEditForm = ({ handleSave, selectedImage, handleImageChange }) => {
                     <input
                       type="text"
                       className="mt-1 block w-full px-3 py-2 border rounded-md"
-                      placeholder="Nablus"
+                      value={user?.city}
                     />
                   </div>
                   <div>

@@ -3,9 +3,11 @@ import InfoField from "./InfoField";
 import Avatar from "@mui/material/Avatar";
 import Spinner from "../../../../../components/Spinner";
 import useGetStudentProfile from "../hooks/useGetStudentProfile";
+import useStudentProgressStore from "../../../../../store/studentProgress.store";
 
 const ProfileInformation = () => {
   const { data: user, isLoading, error } = useGetStudentProfile();
+  const { theoreticalExamStatus } = useStudentProgressStore();
 
   if (isLoading) return <Spinner />;
   if (error) return <div>Error loading profile information</div>;
@@ -54,12 +56,12 @@ const ProfileInformation = () => {
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
               <InfoField
                 label="Theoretical Exam Status"
-                value={user.theoreticalExamStatus || "Not Attempted"}
+                value={theoreticalExamStatus || "Not Attempted"}
                 // Add a color indicator based on status
                 className={`${
-                  user.theoreticalExamStatus === "Passed"
+                  theoreticalExamStatus === "Passed"
                     ? "text-green-600"
-                    : user.theoreticalExamStatus === "Failed"
+                    : theoreticalExamStatus === "Failed"
                     ? "text-red-600"
                     : "text-gray-600"
                 }`}
