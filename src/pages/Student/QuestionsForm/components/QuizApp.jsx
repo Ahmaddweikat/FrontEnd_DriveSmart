@@ -4,7 +4,7 @@ import { useTimer } from "../hooks/useTimer";
 import { QuestionDisplay } from "./QuestionDisplay";
 import { NavigationButtons } from "./NavigationButtons";
 import QuizHistory from "./QuizHistory";
-import { questions as quizQuestions } from "../data/Form1";
+import { questions as quizQuestions } from "../data/Form2";
 // import { questions as quizQuestions } from "../data/Form2";
 
 const QuizApp = ({

@@ -178,8 +178,8 @@ function SignUpPage() {
               </h3>
               <div className="space-y-2">
                 <p className="text-gray-600">Type: {selectedLicense}</p>
-                <p className="text-gray-600">Duration: {license.duration}</p>
-                <p className="text-gray-600">Price: {license.price}</p>
+                {/* <p className="text-gray-600">Duration: {license.duration}</p> */}
+                {/* <p className="text-gray-600">Price: {license.price}</p> */}
               </div>
             </div>
           </div>

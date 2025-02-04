@@ -24,15 +24,18 @@ import {
   ArrowForward,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import useStudentProgressStore from "../../../store/studentProgress.store";
+import useAuthStore from "../../../store/auth.store";
 
 const WelcomePage = () => {
   const navigate = useNavigate();
 
   // Static flags (replace with actual data later)
-  const studentName = "Ahmad";
-  const theoreticalExamStatus = "Passed"; // "Not Attempted" | "Failed" | "Passed"
-  const hasBookedTrainer = true;
-  const successRate = 95;
+  const { user } = useAuthStore();
+  const studentName = user.name.split(" ")[0];
+
+  const { theoreticalExamStatus, hasBookedTrainer, successRate } =
+    useStudentProgressStore();
 
   // Mock next lesson data
   const nextLesson = {
