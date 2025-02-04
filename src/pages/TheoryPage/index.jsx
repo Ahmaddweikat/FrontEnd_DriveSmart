@@ -16,11 +16,18 @@ import {
   TableRow,
   Paper,
   Divider,
+  Link,
 } from "@mui/material";
-import { QuestionMark, PlayArrow, Timer } from "@mui/icons-material";
+import { QuestionMark, PlayArrow } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { personalLicenseForms } from "./data/personalLicense/index";
 import ExamEligibility from "./components/ExamEligibility";
+import useStudentProgressStore from "../../store/studentProgress.store";
+import ChatInterface from "../SchoolPage/components/ChatInterface";
+import {
+  Timer,
+  SmartToyOutlined as SmartToyOutlinedIcon,
+} from "@mui/icons-material";
 
 const customGreen = {
   main: "#4CAF50",
@@ -84,6 +91,8 @@ const questionSets = personalLicenseForms.map((form) => ({
 const TheoryPage = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { successRate } = useStudentProgressStore();
+  const [open, setOpen] = React.useState(false);
 
   const handleStartQuiz = (quizId, formType) => {
     // Navigate to the specific quiz
@@ -209,7 +218,49 @@ const TheoryPage = () => {
           >
             Official Exam Eligibility
           </Typography>
-          <ExamEligibility successRate={99} />
+          <ExamEligibility successRate={successRate} />
+        </Box>
+
+        {/* Theoretical Exam Results Section */}
+        <Box sx={{ mb: 10 }}>
+          <Typography
+            variant="h4"
+            sx={{
+              mb: 4,
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Check Official Exam Results
+          </Typography>
+          <Card sx={{ p: 4, textAlign: "center" }}>
+            <Typography variant="h6" gutterBottom>
+              View Your Theoretical Exam Results
+            </Typography>
+            <Typography variant="body1" sx={{ mb: 3 }}>
+              Access your official theoretical driving test results on the
+              Ministry of Transportation website
+            </Typography>
+            <Link
+              href="http://www.mot.gov.ps/?page_id=641"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: "none" }}
+            >
+              <Button
+                variant="contained"
+                sx={{
+                  background: `linear-gradient(45deg, ${customGreen.main} 30%, ${customGreen.light} 90%)`,
+                  color: "white",
+                  "&:hover": {
+                    background: `linear-gradient(45deg, ${customGreen.dark} 30%, ${customGreen.main} 90%)`,
+                  },
+                }}
+              >
+                View Official Results
+              </Button>
+            </Link>
+          </Card>
         </Box>
 
         {/* Quiz History Section */}
@@ -279,6 +330,29 @@ const TheoryPage = () => {
           </TableContainer>
         </Box>
       </Container>
+      <ChatInterface open={open} onClose={() => setOpen(false)} />
+      <Button
+        variant="contained"
+        onClick={() => setOpen(!open)}
+        sx={{
+          position: "fixed",
+          bottom: 20,
+          right: 20,
+          borderRadius: "50%",
+          width: "60px",
+          height: "60px",
+          background: "linear-gradient(135deg, #4CAF50, #388E3C)",
+          boxShadow: "0 4px 12px rgba(76,175,80,0.3)",
+          "&:hover": {
+            background: "linear-gradient(135deg, #388E3C, #2E7D32)",
+            boxShadow: "0 6px 16px rgba(76,175,80,0.4)",
+            transform: "translateY(-2px)",
+          },
+          transition: "all 0.3s ease",
+        }}
+      >
+        <SmartToyOutlinedIcon sx={{ fontSize: 40 }} />
+      </Button>
     </div>
   );
 };

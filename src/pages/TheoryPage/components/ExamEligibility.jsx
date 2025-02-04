@@ -41,7 +41,7 @@ const ExamEligibility = ({ successRate = 95 }) => {
       };
       setExamDetails(response);
       setRequestStatus("approved");
-    }, 2000);
+    }, 8000);
   };
 
   const renderExamStatus = () => {
@@ -87,41 +87,51 @@ const ExamEligibility = ({ successRate = 95 }) => {
   };
 
   return (
-    <Box sx={{ 
-      bgcolor: 'background.paper', 
-      borderRadius: 2, 
-      boxShadow: 2,
-      p: 4,
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 3
-    }}>
-      <Box sx={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: 2 
-      }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-          <CircularProgress 
-            variant="determinate" 
-            value={successRate} 
+    <Box
+      sx={{
+        bgcolor: "background.paper",
+        borderRadius: 2,
+        boxShadow: 2,
+        p: 4,
+        display: "flex",
+        flexDirection: "column",
+        gap: 3,
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: 2,
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
+          <CircularProgress
+            variant="determinate"
+            value={successRate}
             size={80}
             thickness={4}
-            sx={{ color: successRate >= 90 ? 'success.main' : 'warning.main' }}
+            sx={{ color: successRate >= 90 ? "success.main" : "warning.main" }}
           />
           <Box>
-            <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1 }}>
+            <Typography variant="h5" sx={{ fontWeight: "bold", mb: 1 }}>
               Success Rate
             </Typography>
-            <Typography variant="h4" sx={{ fontWeight: 'bold', color: successRate >= 90 ? 'success.main' : 'warning.main' }}>
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: "bold",
+                color: successRate >= 90 ? "success.main" : "warning.main",
+              }}
+            >
               {successRate}%
             </Typography>
           </Box>
         </Box>
 
-        {successRate >= 90 && requestStatus === 'none' && (
+        {successRate >= 90 && requestStatus === "none" && (
           <Button
             variant="contained"
             color="success"
@@ -137,7 +147,8 @@ const ExamEligibility = ({ successRate = 95 }) => {
 
       {successRate < 90 && (
         <Alert severity="info" variant="filled">
-          Complete more practice tests to reach 90% success rate and qualify for the official exam
+          Complete more practice tests to reach 90% success rate and qualify for
+          the official exam
         </Alert>
       )}
 
