@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 import {
   TextField,
   Button,
   Box,
   FormControlLabel,
   Checkbox,
-} from '@mui/material';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+} from "@mui/material";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 const QuestionInput = ({
   questionText,
@@ -16,11 +16,11 @@ const QuestionInput = ({
   onQuestionTextChange,
   onQuestionImageChange,
   onToggleTextEnabled,
-  onToggleImageEnabled
+  onToggleImageEnabled,
 }) => {
   return (
     <Box sx={{ mb: 3 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+      <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
         <FormControlLabel
           control={
             <Checkbox
@@ -50,6 +50,7 @@ const QuestionInput = ({
           multiline
           rows={2}
           required={!isQuestionImageEnabled}
+          sx={{ width: "30%" }}
         />
       )}
 
@@ -57,7 +58,7 @@ const QuestionInput = ({
         <Box>
           <input
             accept="image/*"
-            style={{ display: 'none' }}
+            style={{ display: "none" }}
             id="question-image-upload"
             type="file"
             onChange={(e) => onQuestionImageChange(e.target.files[0])}
@@ -73,10 +74,10 @@ const QuestionInput = ({
           </label>
           {questionImage && (
             <Box sx={{ mt: 2 }}>
-              <img 
-                src={questionImage} 
-                alt="Question" 
-                style={{ maxWidth: '300px', maxHeight: '300px' }} 
+              <img
+                src={questionImage}
+                alt="Question"
+                style={{ maxWidth: "300px", maxHeight: "300px" }}
               />
             </Box>
           )}

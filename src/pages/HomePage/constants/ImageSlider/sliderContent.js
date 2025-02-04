@@ -1,5 +1,4 @@
 // sliderContent.js
-import img1 from "../../../../assets/HomePage/ImageSlider/Images/111.jpg";
 import img2 from "../../../../assets/HomePage/ImageSlider/Images/44.jpg";
 import img3 from "../../../../assets/HomePage/ImageSlider/Images/333.jpg";
 
@@ -7,13 +6,12 @@ import img11 from "../../../../assets/HomePage/ImageSlider/Images/alquds.jpg";
 import img12 from "../../../../assets/HomePage/ImageSlider/Images/alquds2.jpg";
 
 const sliderContent = [
-  { img: img1, name: "DRIVE SMART", desc: "Learn Faster, Drive Smarter" },
   {
     img: img2,
-    name: "DRIVE SMART",
-    desc: "Drive Smart is the biggest website containing all you want",
+    name: "DriveMaster",
+    desc: "DriveMaster is the plafform for managing your driving school",
   },
-  { img: img3, name: "DRIVE SMART", desc: "Vehicles World in one website" },
+  { img: img3, name: "DriveMaster", desc: "Organize your driving school with DriveMaster" },
 ];
 
 export const sliderContent2 = [

@@ -5,8 +5,8 @@ const sampleRequests = [
     id: 1,
     status: "pending",
     student: {
-      name: "John Doe",
-      email: "john.doe@example.com",
+      name: "Rami Zidan",
+      email: "rami.zidan@example.com",
       phone: "+1234567890",
       licenseType: "Class B"
     },
@@ -20,8 +20,8 @@ const sampleRequests = [
     id: 2,
     status: "pending",
     student: {
-      name: "Jane Smith",
-      email: "jane.smith@example.com",
+      name: "Hanan Qasim",
+      email: "hanan.qasim@example.com",
       phone: "+9876543210",
       licenseType: "Class A"
     },
@@ -35,8 +35,8 @@ const sampleRequests = [
     id: 3,
     status: "accepted",
     student: {
-      name: "Robert Wilson",
-      email: "robert.wilson@example.com",
+      name: "Malik Saeed",
+      email: "malik.saeed@example.com",
       phone: "+1122334455",
       licenseType: "Class B"
     },
@@ -50,8 +50,8 @@ const sampleRequests = [
     id: 4,
     status: "rejected",
     student: {
-      name: "Emily Davis",
-      email: "emily.davis@example.com",
+      name: "Samira Nasser",
+      email: "samira.nasser@example.com",
       phone: "+5544332211",
       licenseType: "Class A"
     },
@@ -66,8 +66,8 @@ const sampleRequests = [
     id: 5,
     status: "pending",
     student: {
-      name: "Michael Brown",
-      email: "michael.brown@example.com",
+      name: "Tariq Masoud",
+      email: "tariq.masoud@example.com",
       phone: "+1234567890",
       licenseType: "Class B"
     },
@@ -81,8 +81,8 @@ const sampleRequests = [
     id: 6,
     status: "accepted",
     student: {
-      name: "Sarah Johnson",
-      email: "sarah.johnson@example.com",
+      name: "Leila Khoury",
+      email: "leila.khoury@example.com",
       phone: "+9876543210",
       licenseType: "Class A"
     },
@@ -96,8 +96,8 @@ const sampleRequests = [
     id: 7,
     status: "rejected",
     student: {
-      name: "David Lee",
-      email: "david.lee@example.com",
+      name: "Waleed Mansour",
+      email: "waleed.mansour@example.com",
       phone: "+1122334455",
       licenseType: "Class B"
     },
@@ -112,8 +112,8 @@ const sampleRequests = [
     id: 8,
     status: "pending",
     student: {
-      name: "Lisa Anderson",
-      email: "lisa.anderson@example.com",
+      name: "Dania Farah",
+      email: "dania.farah@example.com",
       phone: "+5544332211",
       licenseType: "Class A"
     },
@@ -124,7 +124,6 @@ const sampleRequests = [
     submissionDate: "2024-12-31"
   }
 ];
-
 const useRegistrationRequests = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);

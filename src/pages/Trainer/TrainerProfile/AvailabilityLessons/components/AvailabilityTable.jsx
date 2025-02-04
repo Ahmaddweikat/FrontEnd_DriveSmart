@@ -59,7 +59,7 @@ export const AvailabilityTable = ({ lessons, handleEdit, handleCancel }) => {
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
       <h3 className="text-xl font-bold mb-6 text-gray-800 flex items-center">
-        Scheduled Lessons
+        Your Availability
       </h3>
 
       <div className="overflow-x-auto">

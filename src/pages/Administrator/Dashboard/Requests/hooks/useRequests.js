@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const useRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -11,112 +11,107 @@ const useRequests = () => {
         id: 1,
         school: {
           id: 1,
-          name: "Drive Master Academy",
-          email: "info@drivemaster.com",
+          name: "Al-Noor Driving Academy",
+          email: "info@alnoor.com",
           phone: "123-456-7890",
-          address: "123 Drive St",
-          city: "New York",
-          description: "Premier driving school with over 20 years of experience in driver education. We offer comprehensive courses for all skill levels.",
-          website: "www.drivemaster.com",
+          address: "123 Al-Quds St",
+          city: "Nablus",
+          description:
+            "Premier driving school with over 20 years of experience in driver education. We offer comprehensive courses for all skill levels.",
+          website: "www.alnoor.com",
           manager: {
             id: 1,
-            firstName: "John",
-            lastName: "Smith",
-            email: "john.smith@drivemaster.com"
-          }
+            firstName: "Mahmoud",
+            lastName: "Khalil",
+            email: "mahmoud.khalil@alnoor.com",
+          },
         },
         status: "pending",
-        submissionDate: "2024-01-15T10:30:00",
-        message: "Request for school registration approval"
       },
       {
         id: 2,
         school: {
           id: 2,
-          name: "Pro Drivers School",
-          email: "contact@prodrivers.com",
+          name: "Al-Amal Driving School",
+          email: "contact@alamal.com",
           phone: "098-765-4321",
-          address: "456 Pro Ave",
-          city: "Los Angeles",
-          description: "Specializing in defensive driving techniques and advanced driver training. State-certified instructors and modern fleet.",
-          website: "www.prodrivers.com",
+          address: "456 Al-Salam Ave",
+          city: "Ramallah",
+          description:
+            "Specializing in defensive driving techniques and advanced driver training. State-certified instructors and modern fleet.",
+          website: "www.alamal.com",
           manager: {
             id: 2,
-            firstName: "Sarah",
-            lastName: "Johnson",
-            email: "sarah.j@prodrivers.com"
-          }
+            firstName: "Rania",
+            lastName: "Hassan",
+            email: "rania.h@alamal.com",
+          },
         },
         status: "accepted",
-        submissionDate: "2024-01-14T15:45:00",
-        message: "Request for school registration approval"
       },
       {
         id: 3,
         school: {
           id: 3,
-          name: "Safe Drive Institute",
-          email: "info@safedrive.com",
+          name: "Al-Safwa Institute",
+          email: "info@safwa.com",
           phone: "111-222-3333",
-          address: "789 Safe Rd",
-          city: "Chicago",
-          description: "Focused on safety-first driving education with personalized learning plans. Offering both theory and practical lessons.",
-          website: "www.safedrive.com",
+          address: "789 Al-Nasser Rd",
+          city: "Hebron",
+          description:
+            "Focused on safety-first driving education with personalized learning plans. Offering both theory and practical lessons.",
+          website: "www.safwa.com",
           manager: {
             id: 3,
-            firstName: "Michael",
-            lastName: "Brown",
-            email: "m.brown@safedrive.com"
-          }
+            firstName: "Kareem",
+            lastName: "Mansour",
+            email: "k.mansour@safwa.com",
+          },
         },
         status: "rejected",
-        submissionDate: "2024-01-13T09:15:00",
-        message: "Request for school registration approval"
       },
       {
         id: 4,
         school: {
           id: 4,
-          name: "Elite Driving Academy",
-          email: "contact@elitedriving.com",
+          name: "Al-Mumtaz Academy",
+          email: "contact@mumtaz.com",
           phone: "444-555-6666",
-          address: "321 Elite Blvd",
-          city: "Miami",
-          description: "Luxury driving instruction with focus on high-performance vehicles and defensive driving techniques.",
-          website: "www.elitedriving.com",
+          address: "321 Al-Zahra Blvd",
+          city: "Jenin",
+          description:
+            "Luxury driving instruction with focus on high-performance vehicles and defensive driving techniques.",
+          website: "www.mumtaz.com",
           manager: {
             id: 4,
-            firstName: "David",
-            lastName: "Wilson",
-            email: "d.wilson@elitedriving.com"
-          }
+            firstName: "Ziad",
+            lastName: "Qasim",
+            email: "z.qasim@mumtaz.com",
+          },
         },
         status: "pending",
-        submissionDate: "2024-01-16T08:20:00",
-        message: "Request for school registration approval"
       },
       {
         id: 5,
         school: {
           id: 5,
-          name: "City Drivers School",
-          email: "info@citydrivers.com",
+          name: "Al-Maher Drivers School",
+          email: "info@maher.com",
           phone: "777-888-9999",
-          address: "555 Urban St",
-          city: "Boston",
-          description: "Specialized in urban driving instruction with emphasis on city navigation and parallel parking.",
-          website: "www.citydrivers.com",
+          address: "555 Al-Manara St",
+          city: "Tulkarm",
+          description:
+            "Specialized in urban driving instruction with emphasis on city navigation and parallel parking.",
+          website: "www.maher.com",
           manager: {
             id: 5,
-            firstName: "Emily",
-            lastName: "Davis",
-            email: "emily.d@citydrivers.com"
-          }
+            firstName: "Layla",
+            lastName: "Othman",
+            email: "layla.o@maher.com",
+          },
         },
         status: "accepted",
-        submissionDate: "2024-01-12T14:30:00",
-        message: "Request for school registration approval"
-      }
+      },
     ];
 
     // Simulate API call
@@ -129,10 +124,10 @@ const useRequests = () => {
   const handleAccept = async (requestId) => {
     try {
       // Simulate API call
-      setRequests(prevRequests =>
-        prevRequests.map(request =>
+      setRequests((prevRequests) =>
+        prevRequests.map((request) =>
           request.id === requestId
-            ? { ...request, status: 'accepted' }
+            ? { ...request, status: "accepted" }
             : request
         )
       );
@@ -146,10 +141,10 @@ const useRequests = () => {
   const handleReject = async (requestId) => {
     try {
       // Simulate API call
-      setRequests(prevRequests =>
-        prevRequests.map(request =>
+      setRequests((prevRequests) =>
+        prevRequests.map((request) =>
           request.id === requestId
-            ? { ...request, status: 'rejected' }
+            ? { ...request, status: "rejected" }
             : request
         )
       );
@@ -165,7 +160,7 @@ const useRequests = () => {
     loading,
     error,
     handleAccept,
-    handleReject
+    handleReject,
   };
 };
 

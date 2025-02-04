@@ -8,7 +8,7 @@ import StudentListHeader from "./components/StudentListHeader";
 const students = [
   {
     id: 1,
-    name: "John Doe",
+    name: "Mohammed Al-Ahmad",
     avatar: "https://randomuser.me/api/portraits/men/1.jpg",
     gender: "Male",
     licenseType: "Class A",
@@ -18,7 +18,7 @@ const students = [
   },
   {
     id: 2,
-    name: "Jane Smith",
+    name: "Fatima Al-Said",
     avatar: "https://randomuser.me/api/portraits/women/2.jpg",
     gender: "Female",
     licenseType: "Class B",
@@ -28,8 +28,8 @@ const students = [
   },
   {
     id: 3,
-    name: "Emily Davis",
-    avatar: "https://randomuser.me/api/portraits/women/3.jpg",
+    name: "Layla Mahmoud",
+    avatar: "",
     gender: "Female",
     licenseType: "Class B",
     contactNumber: "555-123-4567",
@@ -38,7 +38,7 @@ const students = [
   },
   {
     id: 4,
-    name: "Michael Johnson",
+    name: "Ahmad Al-Rashid",
     avatar: "https://randomuser.me/api/portraits/men/4.jpg",
     gender: "Male",
     licenseType: "Class A",
@@ -48,7 +48,7 @@ const students = [
   },
   {
     id: 5,
-    name: "Sarah Wilson",
+    name: "Noor Al-Hassan",
     avatar: "https://randomuser.me/api/portraits/women/5.jpg",
     gender: "Female",
     licenseType: "Class B",
@@ -57,7 +57,6 @@ const students = [
     bloodType: "O+",
   },
 ];
-
 const StudentsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);

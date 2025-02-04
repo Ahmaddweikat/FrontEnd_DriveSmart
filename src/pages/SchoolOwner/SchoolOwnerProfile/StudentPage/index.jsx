@@ -9,8 +9,8 @@ const StudentPage = () => {
     const [students, setStudents] = useState([
         {
             id: 1,
-            firstName: 'John',
-            lastName: 'Doe',
+            firstName: 'Yousef',
+            lastName: 'Hamdan',
             gender: 'Male',
             phone: '+1234567890',
             licenseType: 'Class B',
@@ -20,8 +20,8 @@ const StudentPage = () => {
         },
         {
             id: 2,
-            firstName: 'Jane',
-            lastName: 'Smith',
+            firstName: 'Mariam',
+            lastName: 'Khalil',
             gender: 'Female',
             phone: '+9876543210',
             licenseType: 'Class A',
@@ -29,8 +29,40 @@ const StudentPage = () => {
             image: 'https://example.com/jane.jpg',
             numberOfLessons: 8
         },
+        {
+            id: 3,
+            firstName: 'Hassan',
+            lastName: 'Nasser',
+            gender: 'Male',
+            phone: '+9876543211',
+            licenseType: 'Class B',
+            trainer: 'Mike Johnson',
+            image: 'https://example.com/hassan.jpg',
+            numberOfLessons: 15
+        },
+        {
+            id: 4,
+            firstName: 'Rawan',
+            lastName: 'Zaid',
+            gender: 'Female',
+            phone: '+9876543212',
+            licenseType: 'Class A',
+            trainer: 'Sarah Wilson',
+            image: 'https://example.com/rawan.jpg',
+            numberOfLessons: 10
+        },
+        {
+            id: 5,
+            firstName: 'Kamal',
+            lastName: 'Othman',
+            gender: 'Male',
+            phone: '+9876543213',
+            licenseType: 'Class B',
+            trainer: 'Mike Johnson',
+            image: 'https://example.com/kamal.jpg',
+            numberOfLessons: 6
+        }
     ]);
-
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedTrainer, setSelectedTrainer] = useState('');
     const [currentPage, setCurrentPage] = useState(1);

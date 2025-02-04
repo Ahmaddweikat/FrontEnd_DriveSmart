@@ -85,8 +85,38 @@ const SchoolsPage = () => {
 
   if (!isLoading)
     return (
-      <div className="bg-custombg">
+      <div className="bg-custombg min-h-screen">
         {/* Top Bar */}
+        <header className="bg-white shadow-md w-full mb-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
+              <div className="flex-shrink-0">
+                <Link to="/" className="flex items-center">
+                  <img
+                    src="DRIVESMART.png"
+                    alt="DriveSmart Logo"
+                    className="h-8 w-auto"
+                  />
+                  {/* <span className="ml-2 text-xl font-bold text-customGreen">
+                    DriveSmart
+                  </span> */}
+                </Link>
+              </div>
+              <div className="flex items-center gap-4">
+                <Link to="/signin">
+                  <button className="px-4 py-2 text-customGreen hover:text-customGreen/80 font-medium">
+                    Sign In
+                  </button>
+                </Link>
+                <Link to="/signup/student">
+                  <button className="px-4 py-2 bg-customGreen text-white rounded-lg hover:bg-customGreen/90 transition-colors font-medium">
+                    Register
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </header>
 
         <div className="relative">
           {/* Filter Panel */}
@@ -211,7 +241,7 @@ const SchoolsPage = () => {
         </div>
 
         {/* Footer */}
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
 };

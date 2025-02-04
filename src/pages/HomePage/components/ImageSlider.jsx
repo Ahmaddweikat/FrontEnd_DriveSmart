@@ -15,12 +15,9 @@ const ImageSlider = forwardRef(({ isExpanded }, ref) => {
     useImageSlider(sliderContent);
 
   return (
-    <div ref={ref} className="h-screen grid">
-      <div className="relative">
-        <div
-          className="h-[650px] relative"
-          style={{ width: isExpanded ? "1275px" : "1518px" }}
-        >
+    <div ref={ref} className="h-screen w-full">
+      <div className="relative w-full">
+        <div className="h-[650px] relative w-full">
           {sliderContent.map((slide, i) => (
             <img
               src={slide.img}
@@ -30,7 +27,7 @@ const ImageSlider = forwardRef(({ isExpanded }, ref) => {
                 i === active && !animating
                   ? "opacity-100 animate-slide-enter"
                   : "opacity-0 animate-slide-exit"
-              } brightness-50`} // Added brightness-50 here
+              } brightness-50`}
             />
           ))}
         </div>
@@ -48,18 +45,6 @@ const ImageSlider = forwardRef(({ isExpanded }, ref) => {
           )}
         </div>
 
-        {/* Top Container for Line and Text */}
-        <div className="absolute top-14 left-52 w-3/4 flex items-center">
-          <hr className="border-t border-white w-10/12 mx-auto" />
-          <span className="text-white text-sm ml-4 absolute top-[-35px] right-8">
-            <AccessTimeIcon
-              style={{ width: 17, height: 17, marginBottom: 2, marginRight: 4 }}
-            />
-            Works Day: Saturday - Thursday 8 AM - 8 PM
-          </span>
-        </div>
-
-        {/* Numbered Buttons for Image Navigation */}
         <div className="absolute bottom-[15%] left-[10%] transform -translate-x-1/2 flex space-x-4">
           {sliderContent.map((_, index) => (
             <button
@@ -76,7 +61,6 @@ const ImageSlider = forwardRef(({ isExpanded }, ref) => {
           ))}
         </div>
 
-        {/* Arrow Buttons for Image Navigation */}
         <div className="absolute bottom-[15%] right-[5%] transform -translate-x-1/2 flex space-x-4">
           <button
             onClick={() => changeSlide("prev")}
@@ -90,54 +74,6 @@ const ImageSlider = forwardRef(({ isExpanded }, ref) => {
           >
             <ArrowForwardIosOutlinedIcon />
           </button>
-        </div>
-
-        {/* Logo and Buttons Container */}
-        <div className="absolute top-4 left-32 flex items-center mt-16">
-          <div className="flex space-x-8">
-            {/* Home Button */}
-            <button className="text-white hover:text-customGreen flex items-center font-medium text-sm mx-4">
-              <HomeIcon className="h-4 w-4 mr-2" />
-              Home
-            </button>
-
-            {/* Theory Questions Dropdown */}
-            <Dropdown
-              title="Theory Questions"
-              icon={<HelpCenterIcon className="h-4 w-4 mr-2" />}
-              items={[
-                "Motorcycle Theory Questions",
-                "Car Theory Questions",
-                "Tractor Theory Questions",
-                "Light Charge Theory Questions",
-                "Heavy Charge Theory Questions",
-                "Taxi Charge Theory Questions",
-              ]}
-            />
-
-            {/* Theory Learning Dropdown */}
-            <Dropdown
-              title="Theory Learning"
-              icon={<AutoStoriesIcon className="h-4 w-4 mr-2" />}
-              items={[
-                "Steps to study theory",
-                "Traffic signals study",
-                "Study of traffic signals on the street",
-                "Study of the theory book",
-              ]}
-            />
-
-            {/* Inquiry About Dropdown */}
-            <Dropdown
-              title="Inquiry About"
-              icon={<InfoIcon className="h-4 w-4 mr-2" />}
-              items={[
-                "Theory exam results",
-                "Practical exam results",
-                "License Requirements",
-              ]}
-            />
-          </div>
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@ export const AvailabilityForm = ({
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center">
-        {editingIndex !== null ? "Edit Lesson" : "Create Lesson"}
+        {editingIndex !== null ? "Edit availability" : "Create Your availability"}
       </h2>
 
       {error && (

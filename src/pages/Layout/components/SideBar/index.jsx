@@ -7,6 +7,9 @@ import {
   faPen,
   faChalkboard,
   faHomeUser,
+  faChalkboardUser,
+  faCarSide,
+  faUserTie,
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { useLocation } from "react-router-dom";
@@ -20,6 +23,11 @@ const sidebarRoutes = [
     path: "",
   },
   {
+    icon: faSchool,
+    label: "School",
+    path: "school",
+  },
+  {
     icon: faClipboardCheck,
     label: "Theoretical exam practice",
     path: "theory",
@@ -30,29 +38,24 @@ const sidebarRoutes = [
     path: "material",
   },
   {
-    icon: faSchool,
-    label: "School",
-    path: "school",
-  },
-  {
-    icon: faBook,
+    icon: faCarSide,
     label: "Lessons",
     path: "lessons",
   },
   {
-    icon: faPen,
+    icon: faUserTie,
     label: "Booking Lesson",
     path: "new-booking",
   },
   // {
-  //   icon: faChalkboard,
-  //   label: "Quizzes",
-  //   path: "Quizzes",
+  //   icon: faClipboardCheck,
+  //   label: "Test",
+  //   path: "test",
   // },
   {
-    icon: faClipboardCheck,
-    label: "Test",
-    path: "test",
+    icon: faChalkboardUser,
+    label: "Practical Exam",
+    path: "practical-exam",
   },
   {
     icon: faMessage,

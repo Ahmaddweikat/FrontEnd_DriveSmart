@@ -149,12 +149,12 @@ const SchoolPage = () => {
                     height="400"
                     width="100%"
                     image={school.SchoolManager.profilePicture}
-                    alt={`${school.SchoolManager.firstName} ${school.SchoolManager.lastName}`}
+                    alt={`${school.SchoolManager.name}`}
                     sx={{ objectFit: "cover" }}
                   />
                   <Box sx={{ p: 2 }}>
                     <Typography variant="h6" gutterBottom>
-                      {`${school.SchoolManager.firstName} ${school.SchoolManager.lastName}`}
+                      {`${school.SchoolManager.name}`}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                       Email: {school.SchoolManager.email}
@@ -248,10 +248,10 @@ const SchoolPage = () => {
                         {license}
                       </Typography>
                       <Typography variant="h6" color="primary">
-                        {license.price ?? "300$"}
+                        {license.price}
                       </Typography>
                       <Typography variant="subtitle1">
-                        Duration: {license.duration ?? "3 months"}
+                        {license.duration}
                       </Typography>
                       <List>
                         {license?.features?.map((feature, index) => (

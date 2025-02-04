@@ -7,6 +7,9 @@ import {
   faUserGroup,
   faPersonCircleCheck,
   faHome,
+  faCar,
+  faCarSide,
+  faBoxArchive,
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { useLocation } from "react-router-dom";
@@ -30,7 +33,7 @@ const sidebarRoutes = [
     path: "students",
   },
   {
-    icon: faBook,
+    icon: faCarSide,
     label: "Lessons",
     path: "lessons",
   },
@@ -45,11 +48,15 @@ const sidebarRoutes = [
     path: "bookings",
   },
   {
+    icon: faBoxArchive,
+    label: "Exam Requests",
+    path: "exam-requests",
+  },
+  {
     icon: faChalkboard,
     label: "Quizzes",
     path: "Quizzes",
   },
-
   {
     icon: faMessage,
     label: "Messages",

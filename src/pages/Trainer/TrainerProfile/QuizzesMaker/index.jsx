@@ -1,32 +1,20 @@
-import React from 'react';
-import {
-  Box,
-  Grid,
-  Paper,
-  Typography,
-} from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import NewQuizDialog from './components/NewQuizDialog';
-import QuestionDialog from './components/QuestionDialog';
-import LicenseCard from './components/LicenseCard';
-import useQuizManagement from './hooks/useQuizManagement';
-import usePagination from './hooks/usePagination';
+import React from "react";
+import { Box, Grid, Paper, Typography } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import NewQuizDialog from "./components/NewQuizDialog";
+import QuestionDialog from "./components/QuestionDialog";
+import LicenseCard from "./components/LicenseCard";
+import useQuizManagement from "./hooks/useQuizManagement";
+import usePagination from "./hooks/usePagination";
 
-const LICENSE_TYPES = [
-  'A - Motorcycle',
-  'B - Car',
-  'C - Truck',
-  'D - Bus',
-  'E - Heavy Equipment',
-  'G - Special License'
-];
+const LICENSE_TYPES = ["A - Motorcycle", "B - Car"];
 
 const ROWS_PER_PAGE = 5;
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#72b626',
+      main: "#72b626",
     },
   },
 });
@@ -58,29 +46,31 @@ const QuizzesMaker = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ 
-        width: '100%', 
-        height: 'calc(100vh - 64px)',
-        p: 3,
-        backgroundColor: '#f5f5f5',
-        overflowY: 'auto',
-        '&::-webkit-scrollbar': {
-          width: '8px',
-        },
-        '&::-webkit-scrollbar-track': {
-          background: '#f1f1f1',
-          borderRadius: '4px',
-        },
-        '&::-webkit-scrollbar-thumb': {
-          background: '#888',
-          borderRadius: '4px',
-          '&:hover': {
-            background: '#555',
+      <Box
+        sx={{
+          width: "100%",
+          height: "calc(100vh - 64px)",
+          p: 3,
+          backgroundColor: "#f5f5f5",
+          overflowY: "auto",
+          "&::-webkit-scrollbar": {
+            width: "8px",
           },
-        },
-      }}>
+          "&::-webkit-scrollbar-track": {
+            background: "#f1f1f1",
+            borderRadius: "4px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "#888",
+            borderRadius: "4px",
+            "&:hover": {
+              background: "#555",
+            },
+          },
+        }}
+      >
         <Paper sx={{ p: 3, mb: 3 }}>
-          <Typography variant="h5" gutterBottom sx={{ color: '#72b626' }}>
+          <Typography variant="h5" gutterBottom sx={{ color: "#72b626" }}>
             Quiz Management
           </Typography>
           <Typography variant="body1" color="textSecondary" paragraph>
@@ -108,13 +98,13 @@ const QuizzesMaker = () => {
           open={isNewQuizDialogOpen}
           onClose={() => {
             setIsNewQuizDialogOpen(false);
-            setFormError('');
+            setFormError("");
           }}
           selectedLicenseType={selectedLicenseType}
           formData={newQuizForm}
           onFormChange={(updates) => {
-            setNewQuizForm(prev => ({ ...prev, ...updates }));
-            setFormError('');
+            setNewQuizForm((prev) => ({ ...prev, ...updates }));
+            setFormError("");
           }}
           formError={formError}
           onStartQuestions={handleStartQuestions}
@@ -135,4 +125,3 @@ const QuizzesMaker = () => {
 };
 
 export default QuizzesMaker;
-      
