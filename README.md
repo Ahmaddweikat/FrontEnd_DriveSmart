@@ -1,4 +1,5 @@
 Drive Smart
+
 This project is the frontend component of the DriveSmart system—a smart driving school platform that helps administrators manage instructors, students, and schedules efficiently. The interface is designed with responsiveness and usability in mind, supporting various user roles with access-controlled views.
 
 🚀 Features
