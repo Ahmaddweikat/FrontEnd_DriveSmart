@@ -25,12 +25,19 @@ This project is the frontend component of the DriveSmart system—a smart drivin
 
 src/
 ├── components/       # Reusable UI components
+
 ├── pages/            # Main views for each route
+
 ├── context/          # Global app context
+
 ├── hooks/            # Custom React hooks
+
 ├── services/         # API interaction logic
+
 ├── utils/            # Utility functions
+
 └── App.jsx           # Main application component
+
 
 ✅ How to Run
 
