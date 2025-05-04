@@ -48,8 +48,11 @@ src/
 * VITE_API_BASE_URL=http://your-api-url.com/api
 
 👨‍💻 Authors
+
 Ahmad Dweikat Frontend Developer
+
 Ibrahim Qadi  Frontend Developer
+
 LinkedIn: www.linkedin.com/in/ahmaddweikat
 
 
