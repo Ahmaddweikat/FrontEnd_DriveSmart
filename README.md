@@ -45,7 +45,7 @@ src/
 
 👨‍💻 Authors
 Ahmad Dweikat Frontend Developer
-Ibrahim Qadi  Backend Developer
+Ibrahim Qadi  Frontend Developer
 LinkedIn: www.linkedin.com/in/ahmaddweikat
 
 
