@@ -24,6 +24,7 @@ This project is the frontend component of the DriveSmart system—a smart drivin
 📦 Project Structure
 
 src/
+
 ├── components/       # Reusable UI components
 
 ├── pages/            # Main views for each route
