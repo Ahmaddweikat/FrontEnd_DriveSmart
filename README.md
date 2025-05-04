@@ -1,6 +1,7 @@
 This project is the frontend component of the DriveSmart system—a smart driving school platform that helps administrators manage instructors, students, and schedules efficiently. The interface is designed with responsiveness and usability in mind, supporting various user roles with access-controlled views.
 
 🚀 Features
+
 * Role-Based Access Control for Admin, Trainer, and Student.
 * Schedule and Booking Management including calendar integration.
 * Real-Time Notifications via the sidebar and dashboard.
@@ -9,6 +10,7 @@ This project is the frontend component of the DriveSmart system—a smart drivin
 * Support for Dynamic Routing with lazy-loaded components for performance.
 
 🛠 Technologies Used
+
 * React.js (with Hooks)
 * React Router
 * Tailwind CSS
@@ -20,6 +22,7 @@ This project is the frontend component of the DriveSmart system—a smart drivin
 * React Toastify for alerts and feedback
   
 📦 Project Structure
+
 src/
 ├── components/       # Reusable UI components
 ├── pages/            # Main views for each route
@@ -30,6 +33,7 @@ src/
 └── App.jsx           # Main application component
 
 ✅ How to Run
+
 ** Clone the repository
 * git clone https://github.com/yourusername/frontend-drivesmart.git
 * cd frontend-drivesmart
